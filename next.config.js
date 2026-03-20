@@ -33,7 +33,7 @@ const nextConfig = {
 
   // Logging configuration
   logging: {
-    browserToTerminal: true,
+    level: 'error',
   },
 
   // Turbopack configuration for Next.js 16

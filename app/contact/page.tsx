@@ -21,22 +21,22 @@ const contactInfo = [
   {
     icon: MapPin,
     title: "Visit Us",
-    details: ["123 Innovation Drive", "Addis Ababa, Bole Japan", "Ethiopia"],
+    details: ["123 Innovation Drive", "Addis Ababa, Bole"],
   },
   {
     icon: Mail,
     title: "Email Us",
-    details: ["hello@digitaladdis.com", "support@digitaladdis.com"],
+    details: ["hello@digitaladdis.com"],
   },
   {
     icon: Phone,
     title: "Call Us",
-    details: ["+251 911 123 456", "+251 911 789 012"],
+    details: ["+251 911 123 456"],
   },
   {
     icon: Clock,
     title: "Working Hours",
-    details: ["Monday - Friday", "9:00 AM - 6:00 PM EAT"],
+    details: ["Mon-Fri: 9AM - 6PM"],
   },
 ];
 
@@ -68,11 +68,8 @@ export default function ContactPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate form submission
     await new Promise(resolve => setTimeout(resolve, 1500));
-    console.log("Form submitted:", formData);
     setIsSubmitting(false);
-    // Reset form
     setFormData({
       fullName: "",
       email: "",
@@ -88,43 +85,43 @@ export default function ContactPage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[60vh] bg-black text-white flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[55vh] md:min-h-[60vh] bg-black text-white flex items-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-lime/10 rounded-full blur-[180px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-lime/10 rounded-full blur-[120px] md:blur-[180px]" />
         </div>
         
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 lg:px-20 py-32 pt-40 text-center">
-          <div className="contact-hero-reveal inline-flex items-center p-1 px-4 mb-8 bg-white/5 rounded-full border border-white/10">
-            <span className="w-2 h-2 bg-lime rounded-full mr-3 animate-pulse" />
-            <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/60">Contact Us</span>
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40 text-center">
+          <div className="contact-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-white/5 rounded-full border border-white/10">
+            <span className="w-2 h-2 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Contact Us</span>
           </div>
           
-          <h1 className="contact-hero-reveal text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-8">
+          <h1 className="contact-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
             Let's Build
             <br />
             <span className="text-lime italic">Something Great</span>
           </h1>
           
-          <p className="contact-hero-reveal text-white/50 text-lg md:text-xl leading-relaxed max-w-2xl mx-auto">
-            Ready to transform your digital presence? Get in touch with our team and let's discuss how we can help bring your vision to life.
+          <p className="contact-hero-reveal text-white/50 text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto px-4">
+            Ready to transform your digital presence? Get in touch and let's bring your vision to life.
           </p>
         </div>
       </section>
 
       {/* Contact Info Cards */}
-      <section className="py-16 px-6 md:px-12 lg:px-20 bg-white -mt-20 relative z-10">
+      <section className="py-10 md:py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-white -mt-12 md:-mt-20 relative z-10">
         <div className="max-w-6xl mx-auto">
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {contactInfo.map((info, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
-                <div className="bg-white rounded-2xl p-6 border border-black/5 hover:border-lime/50 hover:shadow-lg transition-all duration-300 h-full">
-                  <div className="w-12 h-12 bg-lime/10 rounded-xl flex items-center justify-center mb-4">
-                    <info.icon className="w-6 h-6 text-black" />
+                <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 border border-black/5 hover:border-lime/50 hover:shadow-lg transition-all duration-300 h-full">
+                  <div className="w-10 md:w-12 h-10 md:h-12 bg-lime/10 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4">
+                    <info.icon className="w-5 md:w-6 h-5 md:h-6 text-black" />
                   </div>
-                  <h3 className="text-lg font-bold mb-2">{info.title}</h3>
+                  <h3 className="text-sm md:text-lg font-bold mb-1 md:mb-2">{info.title}</h3>
                   {info.details.map((detail, i) => (
-                    <p key={i} className="text-gray-500 text-sm">{detail}</p>
+                    <p key={i} className="text-gray-500 text-xs md:text-sm">{detail}</p>
                   ))}
                 </div>
               </ScrollReveal>
@@ -134,31 +131,31 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 md:py-32 px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-12 md:py-20 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
         <div className="max-w-6xl mx-auto">
-          <div className="grid lg:grid-cols-5 gap-12">
+          <div className="grid lg:grid-cols-5 gap-8 md:gap-12">
             {/* Left Side - Info */}
             <div className="lg:col-span-2">
               <ScrollReveal>
-                <div className="sticky top-32">
-                  <div className="inline-flex items-center p-1 px-4 mb-6 bg-black/5 rounded-full">
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em]">Get In Touch</span>
+                <div className="lg:sticky lg:top-32">
+                  <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
+                    <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Get In Touch</span>
                   </div>
-                  <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6">
+                  <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
                     Send Us A
                     <br />
                     <span className="text-lime italic">Message</span>
                   </h2>
-                  <p className="text-gray-500 text-lg leading-relaxed mb-8">
-                    Fill out the form and our team will get back to you within 24 hours. We're excited to learn about your project and explore how we can help.
+                  <p className="text-gray-500 text-base md:text-lg leading-relaxed mb-6 md:mb-8">
+                    Fill out the form and our team will get back to you within 24 hours.
                   </p>
                   
-                  <div className="bg-lime rounded-2xl p-6 mt-8">
-                    <p className="font-bold mb-2">Prefer a quick chat?</p>
-                    <p className="text-black/60 text-sm mb-4">
-                      Schedule a free 30-minute consultation call with our team.
+                  <div className="bg-lime rounded-xl md:rounded-2xl p-4 md:p-6">
+                    <p className="font-bold text-sm md:text-base mb-1 md:mb-2">Prefer a quick chat?</p>
+                    <p className="text-black/60 text-xs md:text-sm mb-3 md:mb-4">
+                      Schedule a free 30-minute consultation call.
                     </p>
-                    <button className="w-full bg-black text-white py-3 rounded-full font-bold text-sm uppercase tracking-wider hover:bg-gray-900 transition-colors">
+                    <button className="w-full bg-black text-white py-2.5 md:py-3 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-gray-900 transition-colors">
                       Book a Call
                     </button>
                   </div>
@@ -169,58 +166,58 @@ export default function ContactPage() {
             {/* Right Side - Form */}
             <div className="lg:col-span-3">
               <ScrollReveal delay={0.2}>
-                <form onSubmit={handleSubmit} className="bg-white p-8 md:p-12 rounded-[2rem] border border-black/5 shadow-sm">
-                  <div className="grid sm:grid-cols-2 gap-6 mb-6">
+                <form onSubmit={handleSubmit} className="bg-white p-5 md:p-8 lg:p-12 rounded-[1.5rem] md:rounded-[2rem] border border-black/5 shadow-sm">
+                  <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                     <div className="relative group">
-                      <User className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                      <User className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                       <Input
                         placeholder="Full Name"
                         required
-                        className="pl-12 py-6 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       />
                     </div>
                     <div className="relative group">
-                      <Mail className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                      <Mail className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                       <Input
                         type="email"
                         placeholder="Email Address"
                         required
-                        className="pl-12 py-6 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       />
                     </div>
                   </div>
 
-                  <div className="grid sm:grid-cols-2 gap-6 mb-6">
+                  <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                     <div className="relative group">
-                      <Phone className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                      <Phone className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                       <Input
                         placeholder="Phone Number"
-                        className="pl-12 py-6 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       />
                     </div>
                     <div className="relative group">
-                      <Building className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                      <Building className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                       <Input
                         placeholder="Company Name"
-                        className="pl-12 py-6 rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all"
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       />
                     </div>
                   </div>
 
-                  <div className="mb-6">
+                  <div className="mb-4 md:mb-6">
                     <Select
                       value={formData.service}
                       onValueChange={(value) => setFormData({ ...formData, service: value })}
                     >
-                      <SelectTrigger className="py-6 px-4 rounded-xl bg-gray-50 border-0">
+                      <SelectTrigger className="py-5 md:py-6 px-3 md:px-4 text-sm md:text-base rounded-lg md:rounded-xl bg-gray-50 border-0">
                         <SelectValue placeholder="Select a Service" />
                       </SelectTrigger>
                       <SelectContent className="rounded-xl border-0 shadow-xl">
@@ -235,12 +232,12 @@ export default function ContactPage() {
                     </Select>
                   </div>
 
-                  <div className="relative group mb-8">
-                    <FileText className="absolute left-4 top-6 h-5 w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                  <div className="relative group mb-6 md:mb-8">
+                    <FileText className="absolute left-3 md:left-4 top-5 md:top-6 h-4 md:h-5 w-4 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                     <Textarea
                       placeholder="Tell us about your project..."
                       required
-                      className="pl-12 pt-6 min-h-[180px] rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all resize-none"
+                      className="pl-10 md:pl-12 pt-5 md:pt-6 text-sm md:text-base min-h-[140px] md:min-h-[180px] rounded-lg md:rounded-xl bg-gray-50 border-0 focus:ring-2 focus:ring-lime/20 transition-all resize-none"
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
@@ -249,7 +246,7 @@ export default function ContactPage() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-black text-white hover:bg-lime hover:text-black rounded-full py-7 text-sm font-black uppercase tracking-wider transition-all duration-500 disabled:opacity-50"
+                    className="w-full bg-black text-white hover:bg-lime hover:text-black rounded-full py-6 md:py-7 text-xs md:text-sm font-black uppercase tracking-wider transition-all duration-500 disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       "Sending..."
@@ -268,12 +265,12 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section Placeholder */}
-      <section className="h-[400px] bg-gray-200 relative">
+      <section className="h-[250px] md:h-[400px] bg-gray-200 relative">
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
-            <MapPin className="w-12 h-12 text-lime mx-auto mb-4" />
-            <p className="text-gray-500 font-medium">Addis Ababa, Ethiopia</p>
-            <p className="text-gray-400 text-sm">Bole Japan, 123 Innovation Drive</p>
+          <div className="text-center px-4">
+            <MapPin className="w-10 md:w-12 h-10 md:h-12 text-lime mx-auto mb-3 md:mb-4" />
+            <p className="text-gray-500 font-medium text-sm md:text-base">Addis Ababa, Ethiopia</p>
+            <p className="text-gray-400 text-xs md:text-sm">Bole Japan, 123 Innovation Drive</p>
           </div>
         </div>
       </section>
