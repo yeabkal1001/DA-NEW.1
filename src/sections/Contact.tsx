@@ -144,7 +144,7 @@ export function Contact() {
                   <FileText className="absolute left-4 md:left-6 top-6 md:top-8 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                   <Textarea
                     placeholder="TELL US ABOUT YOUR PROJECT..."
-                    className="pl-12 md:pl-16 pt-6 md:pt-8 min-h-[140px] md:min-h-[180px] rounded-[1.5rem] md:rounded-[2rem] bg-black text-white border-0 shadow-2xl focus:ring-4 focus:ring-lime/10 transition-all font-bold text-[10px] md:text-xs tracking-wider uppercase leading-loose"
+                    className="pl-12 md:pl-16 pt-6 md:pt-8 min-h-[140px] md:min-h-[180px] rounded-[1.5rem] md:rounded-[2rem] bg-white text-black border border-black/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider uppercase leading-loose"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   />

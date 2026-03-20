@@ -31,9 +31,6 @@ const nextConfig = {
     optimizePackageImports: ['lucide-react'],
   },
 
-  // Logging configuration
-  logging: false,
-
   // Turbopack configuration for Next.js 16
   turbopack: {},
 };

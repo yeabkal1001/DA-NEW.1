@@ -131,7 +131,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-12 md:py-20 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-12 md:py-20 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="grid lg:grid-cols-5 gap-8 md:gap-12">
             {/* Left Side - Info */}
@@ -150,12 +150,12 @@ export default function ContactPage() {
                     Fill out the form and our team will get back to you within 24 hours.
                   </p>
                   
-                  <div className="bg-lime rounded-xl md:rounded-2xl p-4 md:p-6">
-                    <p className="font-bold text-sm md:text-base mb-1 md:mb-2">Prefer a quick chat?</p>
-                    <p className="text-black/60 text-xs md:text-sm mb-3 md:mb-4">
-                      Schedule a free 30-minute consultation call.
+                  <div className="bg-lime rounded-xl md:rounded-2xl p-5 md:p-8 group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
+                    <p className="font-black text-sm md:text-base mb-2 md:mb-3 uppercase tracking-tight">Prefer a quick chat?</p>
+                    <p className="text-black/70 text-xs md:text-sm mb-4 md:mb-6 leading-relaxed">
+                      Schedule a free 30-minute consultation call with our team.
                     </p>
-                    <button className="w-full bg-black text-white py-2.5 md:py-3 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-gray-900 transition-colors">
+                    <button className="w-full bg-black text-white py-3 md:py-4 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-gray-900 group-hover:shadow-xl transition-all">
                       Book a Call
                     </button>
                   </div>
@@ -246,10 +246,13 @@ export default function ContactPage() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-black text-white hover:bg-lime hover:text-black rounded-full py-6 md:py-7 text-xs md:text-sm font-black uppercase tracking-wider transition-all duration-500 disabled:opacity-50"
+                    className="w-full bg-black text-white hover:bg-lime hover:text-black rounded-full py-6 md:py-7 text-xs md:text-sm font-black uppercase tracking-wider transition-all duration-500 disabled:opacity-50 hover:shadow-xl hover:-translate-y-1"
                   >
                     {isSubmitting ? (
-                      "Sending..."
+                      <span className="flex items-center justify-center gap-2">
+                        <span className="animate-spin">●</span>
+                        Sending...
+                      </span>
                     ) : (
                       <span className="flex items-center justify-center gap-2">
                         Send Message
@@ -265,12 +268,21 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section Placeholder */}
-      <section className="h-[250px] md:h-[400px] bg-gray-200 relative">
-        <div className="absolute inset-0 flex items-center justify-center">
+      <section className="h-[250px] md:h-[400px] lg:h-[500px] bg-gradient-to-br from-black via-gray-900 to-black relative overflow-hidden group">
+        <div className="absolute inset-0 opacity-20">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-lime rounded-full blur-[100px]" />
+        </div>
+        <div className="absolute inset-0 flex items-center justify-center z-10">
           <div className="text-center px-4">
-            <MapPin className="w-10 md:w-12 h-10 md:h-12 text-lime mx-auto mb-3 md:mb-4" />
-            <p className="text-gray-500 font-medium text-sm md:text-base">Addis Ababa, Ethiopia</p>
-            <p className="text-gray-400 text-xs md:text-sm">Bole Japan, 123 Innovation Drive</p>
+            <div className="w-16 md:w-20 h-16 md:h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:scale-110 transition-transform">
+              <MapPin className="w-8 md:w-10 h-8 md:h-10 text-black" />
+            </div>
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-white mb-2 md:mb-3 uppercase tracking-tight">Visit Our Office</h3>
+            <p className="text-white/70 font-medium text-sm md:text-base mb-1">Addis Ababa, Ethiopia</p>
+            <p className="text-white/50 text-xs md:text-sm">Bole Japan, 123 Innovation Drive</p>
+            <button className="mt-6 md:mt-8 px-6 md:px-8 py-3 md:py-4 bg-lime text-black rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:scale-105 transition-transform">
+              Get Directions
+            </button>
           </div>
         </div>
       </section>
