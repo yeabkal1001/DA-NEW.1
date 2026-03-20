@@ -29,63 +29,56 @@ export function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-0 left-0 right-0 z-[100] transition-all duration-500 py-6",
-          isScrolled ? "opacity-0 invisible pointer-events-none" : "opacity-100 visible"
+          "fixed top-8 left-0 right-0 z-[100] transition-all duration-700",
+          isScrolled ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0"
         )}
       >
-        <div className="w-full px-6 md:px-12 lg:px-20 mx-auto">
-          <div className="flex items-center justify-between">
-            {/* Large Logo */}
-            <Link href="/" className="group cursor-pointer relative z-[110] flex items-center gap-3">
-              <img 
-                src="/dalogo.webp" 
-                alt="Digital Addis" 
-                className="h-12 w-auto object-contain transition-transform duration-500"
-              />
-              <div className="flex flex-col">
-                <span className="text-[10px] font-medium text-white/60 uppercase tracking-[0.18em] leading-none">
+        <div className="w-full px-6 flex justify-center">
+          <div className="flex items-center justify-between gap-12 border border-white/10 rounded-full bg-black/40 backdrop-blur-xl px-4 py-3 pl-8 shadow-2xl max-w-7xl w-full">
+            {/* Proportional Brand Logo */}
+            <Link href="/" className="group flex items-center gap-4 shrink-0">
+              <div className="relative">
+                <img 
+                  src="/dalogo.webp" 
+                  alt="Digital Addis" 
+                  className="h-10 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-col border-l border-white/10 pl-4 py-0.5">
+                <span className="text-[10px] font-black text-white uppercase tracking-[0.3em] leading-tight">
                   Digital
                 </span>
-                <span className="text-[10px] font-medium text-lime uppercase tracking-[0.18em] leading-none">
+                <span className="text-[10px] font-black text-lime uppercase tracking-[0.3em] leading-tight">
                   Addis
                 </span>
               </div>
             </Link>
 
-            {/* Empty center for space (floating nav will appear on scroll) */}
-            <div className="hidden lg:flex flex-1 justify-center">
-              <nav className="flex items-center gap-10">
-                {navLinks.map((link) => (
-                  <Link
-                    key={link.name}
-                    href={link.link}
-                    className="relative group text-white/70 text-sm font-medium uppercase tracking-[0.15em] transition-colors duration-300 hover:text-lime"
-                  >
-                    {link.name}
-                    <span className="absolute -bottom-1 left-0 h-px w-0 bg-lime transition-all duration-300 group-hover:w-full"></span>
-                  </Link>
-                ))}
-              </nav>
-            </div>
+            {/* Main Navigation */}
+            <nav className="hidden lg:flex items-center gap-10">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.link}
+                  className="relative text-white/40 text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-300 hover:text-white"
+                >
+                  {link.name}
+                </Link>
+              ))}
+            </nav>
 
-            {/* Contact Button */}
-            <div className="flex items-center gap-4">
+            {/* Standardized Contact Button */}
+            <div className="flex items-center">
               <Link
                 href="/contact"
-                className="bg-lime text-black px-8 py-3 rounded-full text-sm font-bold uppercase tracking-widest hover:bg-lime/90 transition-all duration-300 shadow-[0_0_20px_rgba(163,230,53,0.3)] hover:scale-105 active:scale-95"
+                className="bg-lime text-black px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white transition-all duration-500 shadow-xl shadow-lime/10"
               >
-                Contact Us
+                Let's Talk
               </Link>
             </div>
           </div>
         </div>
       </header>
-
-      {/* Floating Navbar that appears on scroll */}
-      <FloatingNav navItems={navLinks} className={cn(
-        "transition-opacity duration-300",
-        !isScrolled && "opacity-0 pointer-events-none"
-      )} />
     </>
   );
 }
