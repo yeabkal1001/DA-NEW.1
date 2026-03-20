@@ -75,7 +75,7 @@ export default function AboutPage() {
                 <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">About Us</span>
               </div>
               
-              <h1 className="about-hero-reveal text-[2.5rem] sm:text-[3rem] md:text-[4.5rem] lg:text-[5.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+              <h1 className="about-hero-reveal text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[5.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
                 About
                 <br />
                 <span className="text-lime italic">DigitalAddis</span>
@@ -123,7 +123,7 @@ export default function AboutPage() {
                 <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
                   <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Our Story</span>
                 </div>
-                <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+                <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] lg:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
                   Technology That
                   <br />
                   <span className="text-lime">Makes Work</span>
@@ -203,7 +203,7 @@ export default function AboutPage() {
             <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Our Values</span>
             </div>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase">
               What <span className="text-lime">Drives</span> Us
             </h2>
           </ScrollReveal>
@@ -235,7 +235,7 @@ export default function AboutPage() {
             <div className="w-16 md:w-20 h-16 md:h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8">
               <Users className="w-8 md:w-10 h-8 md:h-10 text-black" />
             </div>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
               Ready to <span className="text-lime italic">Work Together?</span>
             </h2>
             <p className="text-white/50 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed px-4">

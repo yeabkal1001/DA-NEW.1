@@ -146,7 +146,7 @@ export default function ServicesPage() {
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Our Services</span>
             </div>
             
-            <h1 className="services-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="services-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
               Full-Service
               <br />
               <span className="text-lime italic">Digital Solutions</span>
@@ -193,7 +193,7 @@ export default function ServicesPage() {
             <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">What We Offer</span>
             </div>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
               Core <span className="text-lime italic">Services</span>
             </h2>
             <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto px-4">
@@ -213,7 +213,7 @@ export default function ServicesPage() {
                       <p className={`text-xs md:text-sm font-bold uppercase tracking-wider mb-1 md:mb-2 ${service.textColor === 'text-white' ? 'text-white/40' : 'text-black/40'}`}>
                         {service.tagline}
                       </p>
-                      <h3 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tight mb-3 md:mb-4 ${service.textColor}`}>
+                      <h3 className={`text-xl sm:text-2xl md:text-2xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tight mb-3 md:mb-4 ${service.textColor}`}>
                         {service.title}
                       </h3>
                       <p className={`text-base md:text-lg leading-relaxed ${service.textColor === 'text-white' ? 'text-white/60' : 'text-black/60'}`}>
@@ -336,7 +336,7 @@ export default function ServicesPage() {
       <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-lime">
         <div className="max-w-5xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
               Ready to Transform
               <br />
               Your <span className="italic">Digital Presence?</span>

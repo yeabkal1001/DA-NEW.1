@@ -149,7 +149,7 @@ export default function BlogPage() {
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Blog & Insights</span>
             </div>
             
-            <h1 className="blog-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="blog-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
               Ideas, Insights
               <br />
               <span className="text-lime italic">& Innovation</span>
@@ -187,7 +187,7 @@ export default function BlogPage() {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             {featuredPosts.map((post, index) => (
               <ScrollReveal key={post.id} delay={index * 0.15}>
-                <Link href={`/blog/${post.id}`} className="group block relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[320px] md:h-[450px] lg:h-[500px]">
+                <Link href={`/blog/${post.id}`} className="group block relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[320px] md:h-[380px] lg:h-[500px]">
                   <img 
                     src={post.image} 
                     alt={post.title}

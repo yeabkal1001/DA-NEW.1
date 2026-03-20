@@ -97,7 +97,7 @@ export default function ContactPage() {
             <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Contact Us</span>
           </div>
           
-          <h1 className="contact-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+          <h1 className="contact-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
             Let's Build
             <br />
             <span className="text-lime italic">Something Great</span>
@@ -141,7 +141,7 @@ export default function ContactPage() {
                   <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
                     <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Get In Touch</span>
                   </div>
-                  <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+                  <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
                     Send Us A
                     <br />
                     <span className="text-lime italic">Message</span>

@@ -52,11 +52,11 @@ export function Tools() {
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-5xl xl:text-6xl font-bold mb-4">
             The Tools Powering Our
             <br />
             <span className="text-lime">Digital</span>{" "}
-            <span className="bg-lime px-3 md:px-4 py-0.5 md:py-1 rounded-full inline-block text-xl sm:text-2xl md:text-4xl lg:text-5xl xl:text-6xl">
+            <span className="bg-lime px-3 md:px-4 py-0.5 md:py-1 rounded-full inline-block text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl">
               Innovation
             </span>
           </h2>

@@ -141,17 +141,28 @@ export default function BlogPostPage() {
   const post = blogPostsData[postId];
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      gsap.from(".blog-post-reveal", {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.12,
-        ease: "power4.out",
-      });
-    }, heroRef);
-    return () => ctx.revert();
-  }, [postId]);
+    // Only run animation if post exists and heroRef is available
+    if (!post || !heroRef.current) return;
+    
+    // Small delay to ensure DOM elements are rendered
+    const timer = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        const elements = heroRef.current?.querySelectorAll(".blog-post-reveal");
+        if (elements && elements.length > 0) {
+          gsap.from(elements, {
+            y: 60,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.12,
+            ease: "power4.out",
+          });
+        }
+      }, heroRef);
+      return () => ctx.revert();
+    }, 50);
+    
+    return () => clearTimeout(timer);
+  }, [postId, post]);
 
   if (!post) {
     return (

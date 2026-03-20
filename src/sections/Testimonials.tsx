@@ -74,7 +74,7 @@ export function Testimonials() {
         <ScrollReveal className="mb-12">
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
-              <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
                 What Our <span className="text-lime">Clients</span>
                 <br />
                 Say About Us
@@ -102,13 +102,13 @@ export function Testimonials() {
         {/* Testimonial cards */}
         <div
           ref={cardsRef}
-          className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
+          className="flex gap-4 md:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
         >
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`${testimonial.bgColor} rounded-3xl p-6 min-w-[300px] sm:min-w-[350px] max-w-[400px] flex-shrink-0 snap-start opacity-0`}
+              className={`${testimonial.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 min-w-[280px] sm:min-w-[320px] md:min-w-[350px] max-w-[400px] flex-shrink-0 snap-start opacity-0`}
             >
               {testimonial.type === "text" ? (
                 <>

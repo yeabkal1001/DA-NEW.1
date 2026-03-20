@@ -145,7 +145,7 @@ export default function ProjectsPage() {
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Our Portfolio</span>
             </div>
             
-            <h1 className="projects-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="projects-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
               Showcasing
               <br />
               <span className="text-lime italic">Digital Excellence</span>
@@ -156,11 +156,11 @@ export default function ProjectsPage() {
             </p>
 
             {/* Stats Row */}
-            <div className="projects-hero-reveal grid grid-cols-4 gap-3 md:gap-6 pt-8 md:pt-10 border-t border-white/10">
+            <div className="projects-hero-reveal grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 pt-8 md:pt-10 border-t border-white/10">
               {stats.map((stat, index) => (
                 <div key={index}>
-                  <div className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black text-lime">{stat.number}</div>
-                  <div className="text-[10px] md:text-sm text-white/40 font-medium uppercase tracking-wider">{stat.label}</div>
+                  <div className="text-xl sm:text-2xl md:text-2xl lg:text-4xl font-black text-lime">{stat.number}</div>
+                  <div className="text-[10px] md:text-xs lg:text-sm text-white/40 font-medium uppercase tracking-wider">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -325,7 +325,7 @@ export default function ProjectsPage() {
       <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black text-white">
         <div className="max-w-5xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
               Have a Project
               <br />
               <span className="text-lime italic">In Mind?</span>

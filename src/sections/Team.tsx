@@ -33,7 +33,7 @@ export function Team() {
           
           {/* Left Content */}
           <div className="lg:w-[32%] flex flex-col pt-0">
-            <h2 className="team-reveal text-[2.5rem] sm:text-[3rem] md:text-[4.2rem] font-[900] leading-[0.85] tracking-tighter text-black uppercase mb-4 md:mb-6">
+            <h2 className="team-reveal text-[2.5rem] sm:text-[3rem] md:text-[3.2rem] lg:text-[4.2rem] font-[900] leading-[0.85] tracking-tighter text-black uppercase mb-4 md:mb-6">
               The <br className="hidden sm:block" />
               Minds <br className="hidden sm:block" />
               Behind <br className="hidden sm:block" />

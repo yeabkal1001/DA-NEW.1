@@ -186,9 +186,9 @@ export function HeroSequence() {
           </div>
 
           <h1 className="hero-title select-none w-full" style={{ perspective: "1500px" }}>
-            <span className="hero-line block text-3xl sm:text-5xl md:text-[6rem] lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase">ARCHITECTING</span>
-            <span className="hero-line block text-3xl sm:text-5xl md:text-[6rem] lg:text-[8rem] xl:text-[10rem] font-black text-lime leading-[0.85] tracking-tighter uppercase">THE DIGITAL</span>
-            <span className="hero-line block text-3xl sm:text-5xl md:text-[6rem] lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] italic tracking-tighter uppercase">FUTURE.</span>
+            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase">ARCHITECTING</span>
+            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-lime leading-[0.85] tracking-tighter uppercase">THE DIGITAL</span>
+            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] italic tracking-tighter uppercase">FUTURE.</span>
           </h1>
 
           <div className="hero-subtitle-wrap mt-6 md:mt-10 lg:mt-12 max-w-xl md:max-w-2xl mx-auto px-2">
@@ -210,25 +210,25 @@ export function HeroSequence() {
         {/* About Section */}
         <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-4 sm:px-6 md:px-20 items-center text-center">
           <div className="w-16 md:w-24 h-[1px] bg-lime/40 mb-8 md:mb-12" />
-          <h2 className="text-3xl sm:text-4xl md:text-[5rem] lg:text-[7rem] font-black text-white max-w-7xl leading-[0.9] tracking-tighter uppercase select-none">
+          <h2 className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[7rem] font-black text-white max-w-7xl leading-[0.9] tracking-tighter uppercase select-none">
             <span className="about-title-line block">BEYOND PIXELS.</span>
             <span className="about-title-line block text-white/20 italic">WE BUILD SYSTEMS.</span>
           </h2>
           <p className="mt-6 md:mt-10 text-white/40 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase px-4">
             Multidisciplinary thinking meets cutting-edge engineering. We architect digital ecosystems that drive growth and inspire interaction.
           </p>
-          <div className="mt-10 md:mt-16 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-12 lg:gap-24">
+          <div className="mt-10 md:mt-14 lg:mt-16 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-24">
             <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">120+</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-4 font-bold">Solutions Delivered</p>
+              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">120+</p>
+              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Solutions Delivered</p>
             </div>
             <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">15+</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-4 font-bold">Core Technologists</p>
+              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">15+</p>
+              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Core Technologists</p>
             </div>
             <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">5yr</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-4 font-bold">Innovation Legacy</p>
+              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">5yr</p>
+              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Innovation Legacy</p>
             </div>
           </div>
         </div>

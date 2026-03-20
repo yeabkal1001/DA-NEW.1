@@ -94,7 +94,7 @@ export function Services() {
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold mb-4">
             Mastering the <span className="text-lime">digital</span>
             <br />
             landscape with <span className="text-lime">precision.</span>
@@ -108,7 +108,7 @@ export function Services() {
         {/* Service cards */}
         <div
           ref={cardsRef}
-          className="grid grid-cols-1 md:grid-cols-3 gap-6"
+          className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
         >
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} />

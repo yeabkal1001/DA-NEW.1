@@ -142,15 +142,15 @@ export function Process() {
         
         {/* Header - Responsive */}
         <div className="process-header mb-10 md:mb-16 text-center px-4">
-          <h2 className="process-header-text text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-black tracking-tight">
+          <h2 className="process-header-text text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-black tracking-tight">
             How <span className="text-[#CCFF00] italic">We Bring Ideas</span>
             <br />
             to Life Turning Vision
           </h2>
           <div className="process-header-text mt-3 md:mt-4 inline-block">
             <span className="relative inline-block">
-              <span className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black italic text-black">Into</span>
-              <span className="ml-1 md:ml-2 inline-block bg-[#CCFF00] rounded-full px-4 md:px-8 py-1 md:py-2 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black italic text-black -rotate-2">
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-black">Into</span>
+              <span className="ml-1 md:ml-2 inline-block bg-[#CCFF00] rounded-full px-4 md:px-6 lg:px-8 py-1 md:py-2 text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-black -rotate-2">
                 Digital Reality
               </span>
             </span>
