@@ -70,23 +70,8 @@ export function Process() {
           }
         });
 
-        // Animate path drawing (dash offset)
-        const pathLength = pathRef.current.getTotalLength();
-        gsap.set(pathRef.current, { 
-          strokeDasharray: pathLength,
-          strokeDashoffset: pathLength 
-        });
-
-        gsap.to(pathRef.current, {
-          strokeDashoffset: 0,
-          ease: "none",
-          scrollTrigger: {
-            trigger: ".process-grid-container",
-            start: "top 60%",
-            end: "bottom 40%",
-            scrub: 0.5,
-          }
-        });
+        // Keep path as a visible dashed line (no draw animation to preserve dashes)
+        // The path stays visible as broken/dashed while arrow moves along it
       }
 
       // Card reveal animations with stagger effect
@@ -213,10 +198,10 @@ export function Process() {
                  C 350 1920, 380 2020, 420 2150" 
               fill="none" 
               stroke="black" 
-              strokeWidth="2.5" 
-              strokeDasharray="14 14"
+              strokeWidth="2" 
+              strokeDasharray="12 16"
               strokeLinecap="round"
-              opacity="0.5"
+              opacity="0.7"
             />
           </svg>
 
