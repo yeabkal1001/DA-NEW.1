@@ -1,17 +1,21 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
-gsap.registerPlugin(ScrollTrigger);
+// Register GSAP plugin once at module level
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const FRAME_COUNT = 192;
 const PRIORITY_FRAMES = 10;
 
-const frameNames = Array.from({ length: 192 }, (_, i) => {
+// Pre-compute frame names at module level for performance
+const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
   const num = String(i).padStart(3, "0");
   const delay = (i % 3 === 0 || i === 0) ? "0.041s" : "0.042s";
   return `/images/compressed-files (2)/frame_${num}_delay-${delay}_compressed.webp`;
@@ -60,9 +64,12 @@ export function HeroSequence() {
     let isMounted = true;
 
     const loadImages = async () => {
+      // Load priority frames first for quick initial display
       for (let i = 0; i < PRIORITY_FRAMES; i++) {
         if (!isMounted) return;
         const img = new Image();
+        img.crossOrigin = "anonymous"; // CORS for canvas drawing
+        img.decoding = "async"; // Non-blocking decode
         img.src = frameNames[i];
         await new Promise((resolve) => {
           img.onload = () => {
@@ -78,9 +85,12 @@ export function HeroSequence() {
 
       setIsLoaded(true);
 
+      // Load remaining frames in the background
       for (let i = PRIORITY_FRAMES; i < FRAME_COUNT; i++) {
         if (!isMounted) return;
         const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.decoding = "async";
         img.src = frameNames[i];
         img.onload = () => {
           imagesRef.current[i] = img;

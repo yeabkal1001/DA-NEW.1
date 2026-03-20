@@ -9,6 +9,7 @@ import { ScrollReveal } from "@/src/components/ScrollReveal";
 import { Lightbulb, Award, Shield, Users, Target, Eye, ArrowRight } from "lucide-react";
 import Link from "next/link";
 
+// Note: Metadata export moved to layout or generateMetadata for client components
 gsap.registerPlugin(ScrollTrigger);
 
 const values = [

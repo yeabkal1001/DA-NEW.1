@@ -2,7 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Performance: Content-visibility for off-screen content */
 @layer base {
+  /* GPU acceleration hints for animated elements */
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .will-change-opacity {
+    will-change: opacity;
+  }
+  
+  /* Content visibility optimization for below-fold sections */
+  .content-visibility-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 0%;
@@ -626,7 +642,7 @@
   }
 }
 
-/* Reduced motion */
+/* Reduced motion - Accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
@@ -639,5 +655,61 @@
   .animate-marquee,
   .animate-marquee-reverse {
     animation: none;
+  }
+  
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Hide scrollbar utility class */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--lime);
+  outline-offset: 2px;
+}
+
+/* Skip to content link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: var(--lime);
+  color: var(--black);
+  padding: 8px 16px;
+  z-index: 100;
+  font-weight: 700;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --lime: #00FF00;
+    --border: 0 0% 0%;
   }
 }
