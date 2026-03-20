@@ -1,9 +1,9 @@
-import { getCLS, getFCP, getFID, getLCP, getTTFB } from 'web-vitals';
+import { onCLS, onFCP, onINP, onLCP, onTTFB, type Metric } from 'web-vitals';
 
 export interface WebVitalsMetrics {
   cls?: number;
   fcp?: number;
-  fid?: number;
+  inp?: number; // INP replaced FID in web-vitals v4+
   lcp?: number;
   ttfb?: number;
   timestamp: number;
@@ -22,32 +22,32 @@ class WebVitalsTracker {
   }
 
   private initializeTracking(): void {
-    // Track CLS
-    getCLS((metric) => {
+    // Track CLS (Cumulative Layout Shift)
+    onCLS((metric: Metric) => {
       this.metrics.cls = metric.value;
       this.notifyCallbacks();
     });
 
-    // Track FCP
-    getFCP((metric) => {
+    // Track FCP (First Contentful Paint)
+    onFCP((metric: Metric) => {
       this.metrics.fcp = metric.value;
       this.notifyCallbacks();
     });
 
-    // Track FID (Interaction to Next Paint in some browsers)
-    getFID((metric) => {
-      this.metrics.fid = metric.value;
+    // Track INP (Interaction to Next Paint - replaced FID)
+    onINP((metric: Metric) => {
+      this.metrics.inp = metric.value;
       this.notifyCallbacks();
     });
 
-    // Track LCP
-    getLCP((metric) => {
+    // Track LCP (Largest Contentful Paint)
+    onLCP((metric: Metric) => {
       this.metrics.lcp = metric.value;
       this.notifyCallbacks();
     });
 
-    // Track TTFB
-    getTTFB((metric) => {
+    // Track TTFB (Time to First Byte)
+    onTTFB((metric: Metric) => {
       this.metrics.ttfb = metric.value;
       this.notifyCallbacks();
     });
@@ -75,30 +75,32 @@ class WebVitalsTracker {
   }
 
   /**
-   * Check if metrics meet good thresholds
+   * Check if metrics meet good thresholds (Core Web Vitals)
    */
   isHealthy(): boolean {
     return (
       (this.metrics.cls === undefined || this.metrics.cls < 0.1) &&
       (this.metrics.fcp === undefined || this.metrics.fcp < 1800) &&
-      (this.metrics.fid === undefined || this.metrics.fid < 100) &&
+      (this.metrics.inp === undefined || this.metrics.inp < 200) &&
       (this.metrics.lcp === undefined || this.metrics.lcp < 2500) &&
-      (this.metrics.ttfb === undefined || this.metrics.ttfb < 600)
+      (this.metrics.ttfb === undefined || this.metrics.ttfb < 800)
     );
   }
 
   /**
-   * Log metrics to console
+   * Log metrics to console (development only)
    */
   logMetrics(): void {
-    console.log('[Web Vitals]', {
-      CLS: this.metrics.cls?.toFixed(3),
-      FCP: this.metrics.fcp?.toFixed(0) + 'ms',
-      FID: this.metrics.fid?.toFixed(0) + 'ms',
-      LCP: this.metrics.lcp?.toFixed(0) + 'ms',
-      TTFB: this.metrics.ttfb?.toFixed(0) + 'ms',
-      isHealthy: this.isHealthy(),
-    });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('[Web Vitals]', {
+        CLS: this.metrics.cls?.toFixed(3),
+        FCP: this.metrics.fcp?.toFixed(0) + 'ms',
+        INP: this.metrics.inp?.toFixed(0) + 'ms',
+        LCP: this.metrics.lcp?.toFixed(0) + 'ms',
+        TTFB: this.metrics.ttfb?.toFixed(0) + 'ms',
+        isHealthy: this.isHealthy(),
+      });
+    }
   }
 
   /**
@@ -106,7 +108,7 @@ class WebVitalsTracker {
    */
   async sendMetrics(endpoint: string): Promise<void> {
     try {
-      // Wait a bit for all metrics to be collected
+      // Wait for metrics to be collected
       await new Promise((resolve) => setTimeout(resolve, 3000));
 
       const response = await fetch(endpoint, {
@@ -116,16 +118,18 @@ class WebVitalsTracker {
         keepalive: true,
       });
 
-      if (!response.ok) {
+      if (!response.ok && process.env.NODE_ENV === 'development') {
         console.warn('[Web Vitals] Failed to send metrics');
       }
     } catch (error) {
-      console.warn('[Web Vitals] Error sending metrics:', error);
+      if (process.env.NODE_ENV === 'development') {
+        console.warn('[Web Vitals] Error sending metrics:', error);
+      }
     }
   }
 }
 
 // Export singleton
-export const vitalsTracker = new WebVitalsTracker();
+export const vitalsTracker = typeof window !== 'undefined' ? new WebVitalsTracker() : null;
 
 export default vitalsTracker;
