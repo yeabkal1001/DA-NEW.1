@@ -29,7 +29,6 @@ const nextConfig = {
   // Experimental features for better performance (Next.js 16+)
   experimental: {
     optimizePackageImports: ['lucide-react'],
-    reactCompiler: true,
   },
 
   // Logging configuration
