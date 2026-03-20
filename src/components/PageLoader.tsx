@@ -34,14 +34,14 @@ export function PageLoader() {
       .to(".loader-content", {
         opacity: 1,
         y: 0,
-        duration: 0.8,
-        ease: "power4.out"
+        duration: 0.6,
+        ease: "power3.out"
       })
       .to(".loader-bg", {
         scaleY: 0,
-        duration: 1.2,
+        duration: 1.0,
         ease: "expo.inOut",
-        delay: 2.5, // Give time for progress and text to show
+        delay: 2.2,
         transformOrigin: "top"
       })
       .to(".loader-container", {
