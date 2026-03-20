@@ -5,13 +5,6 @@ import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 export const metadata: Metadata = {
   title: "Digital Addis",
   description: "Digital Addis - Creative Digital Agency",
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 5,
-    userScalable: true,
-    themeColor: "#CCFF00",
-  },
   robots: {
     index: true,
     follow: true,
