@@ -1,590 +1,234 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
-import Threads from "@/components/ui/threads";
 import { ArrowRight, ArrowDown } from "lucide-react";
-import { useDeviceCapabilities } from "@/src/hooks/useDeviceCapabilities";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const FRAME_COUNT = 240;
-const PRIORITY_FRAMES = 8; // Load these frames first
-const BATCH_SIZE = 20; // Load images in batches
-
-function getFramePath(index: number): string {
-  const num = String(index).padStart(3, "0");
-  return `https://vgdhkdqepaxaupyqhqun.supabase.co/storage/v1/object/public/seq/ezgif-frame-${num}_compressed_compressed.webp`;
-}
+// Update this path to your uploaded video in public/
+const VIDEO_SRC = "/Woman_orbiting_in_202603191649.mp4";
 
 export function HeroSequence() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const scrollIndicatorRef = useRef<HTMLDivElement>(null);
-  const progressRef = useRef<HTMLDivElement>(null);
   const progressFillRef = useRef<HTMLDivElement>(null);
-  const threadsRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
-  const frameIndexRef = useRef({ value: 0 });
+  
   const [isLoaded, setIsLoaded] = useState(false);
-  const [loadProgress, setLoadProgress] = useState(0);
-  const capabilities = useDeviceCapabilities();
-  const loadedIndicesRef = useRef<Set<number>>(new Set());
 
-  // Progressive image loading with priority frames
   useEffect(() => {
-    let loadedCount = 0;
-    let isMounted = true;
+    const video = videoRef.current;
+    if (!video) return;
 
-    const loadImagesProgressively = async () => {
-      // Load priority frames first (for visible frames at start)
-      const priorityFrames = Array.from({ length: PRIORITY_FRAMES }, (_, i) => i + 1);
-      
-      for (const frameNum of priorityFrames) {
-        if (!isMounted) return;
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = getFramePath(frameNum);
-        
-        await new Promise<void>((resolve) => {
-          img.onload = () => {
-            imagesRef.current[frameNum - 1] = img;
-            loadedIndicesRef.current.add(frameNum);
-            loadedCount++;
-            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            resolve();
-          };
-          img.onerror = () => {
-            loadedCount++;
-            resolve();
-          };
-        });
-      }
-
-      // Load remaining images in batches
-      for (let batch = 0; batch < Math.ceil(FRAME_COUNT / BATCH_SIZE); batch++) {
-        const batchStart = PRIORITY_FRAMES + batch * BATCH_SIZE + 1;
-        const batchEnd = Math.min(batchStart + BATCH_SIZE, FRAME_COUNT + 1);
-
-        const batchPromises = Array.from({ length: batchEnd - batchStart }, (_, i) => {
-          const frameNum = batchStart + i;
-          return new Promise<void>((resolve) => {
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.src = getFramePath(frameNum);
-            
-            img.onload = () => {
-              imagesRef.current[frameNum - 1] = img;
-              loadedIndicesRef.current.add(frameNum);
-              loadedCount++;
-              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-              resolve();
-            };
-            img.onerror = () => {
-              loadedCount++;
-              resolve();
-            };
-          });
-        });
-
-        await Promise.all(batchPromises);
-        if (!isMounted) return;
-
-        // Small delay between batches to not block main thread
-        await new Promise(resolve => setTimeout(resolve, 10));
-      }
-
-      if (isMounted && loadedCount >= PRIORITY_FRAMES) {
-        setTimeout(() => isMounted && setIsLoaded(true), 400);
-      }
+    // Essential for mobile and desktop precision
+    video.load();
+    video.muted = true;
+    video.playsInline = true;
+    
+    const handleCanPlayThrough = () => {
+      setIsLoaded(true);
     };
 
-    loadImagesProgressively();
-
-    return () => {
-      isMounted = false;
-    };
+    video.addEventListener('canplaythrough', handleCanPlayThrough);
+    return () => video.removeEventListener('canplaythrough', handleCanPlayThrough);
   }, []);
 
-  // Memoized draw function with caching
-  const drawFrame = useCallback((index: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
-    const img = imagesRef.current[index];
-    if (!ctx || !img || !img.complete) return;
-
-    const canvasRatio = canvas.width / canvas.height;
-    const imgRatio = img.naturalWidth / img.naturalHeight;
-
-    let drawWidth: number, drawHeight: number, drawX: number, drawY: number;
-    if (imgRatio > canvasRatio) {
-      drawHeight = canvas.height;
-      drawWidth = drawHeight * imgRatio;
-      drawX = (canvas.width - drawWidth) / 2;
-      drawY = 0;
-    } else {
-      drawWidth = canvas.width;
-      drawHeight = drawWidth / imgRatio;
-      drawX = 0;
-      drawY = (canvas.height - drawHeight) / 2;
-    }
-
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-  }, []);
-
-  // Resize canvas
   useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
+    if (!isLoaded || !videoRef.current || !containerRef.current) return;
 
-    const handleResize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      if (isLoaded) {
-        drawFrame(Math.round(frameIndexRef.current.value));
-      }
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [isLoaded]);
-
-  // Setup GSAP animations
-  useEffect(() => {
-    if (!isLoaded) return;
-
-    const canvas = canvasRef.current;
+    const video = videoRef.current;
     const container = containerRef.current;
-    const heroContent = heroContentRef.current;
-    const aboutContent = aboutContentRef.current;
-    const scrollIndicator = scrollIndicatorRef.current;
-    const progressBar = progressRef.current;
-    const progressFill = progressFillRef.current;
-    if (!canvas || !container || !heroContent || !aboutContent) return;
-
-    drawFrame(0);
+    
+    video.pause();
+    video.currentTime = 0;
 
     const ctx = gsap.context(() => {
       // ─── Entrance animation ───
-      const heroTl = gsap.timeline({
-        defaults: { ease: "power4.out" },
-        delay: 0.3,
-      });
+      const entranceTl = gsap.timeline({ delay: 0.5 });
+      entranceTl.from(".hero-line", {
+        opacity: 0,
+        y: 60,
+        rotateX: -15,
+        duration: 1,
+        stagger: 0.1,
+        sm: 0,
+        ease: "power4.out"
+      })
+      .from(".hero-badge", { opacity: 0, scale: 0.9, stagger: 0.1 }, "-=0.7")
+      .from(".hero-subtitle", { opacity: 0, y: 20 }, "-=0.5")
+      .from(".hero-cta", { opacity: 0, y: 20 }, "-=0.4")
+      .from(scrollIndicatorRef.current, { opacity: 0 }, "-=0.3");
 
-      // Reveal title lines one by one
-      heroTl
-        .fromTo(
-          heroContent.querySelectorAll(".hero-line"),
-          { opacity: 0, y: 60, rotateX: -15 },
-          {
-            opacity: 1,
-            y: 0,
-            rotateX: 0,
-            duration: 1,
-            stagger: 0.12,
-            ease: "power4.out",
-          }
-        )
-        .fromTo(
-          heroContent.querySelectorAll(".hero-badge"),
-          { opacity: 0, y: 15, scale: 0.95 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.08 },
-          "-=0.5"
-        )
-        .fromTo(
-          heroContent.querySelector(".hero-subtitle"),
-          { opacity: 0, y: 20 },
-          { opacity: 1, y: 0, duration: 0.8 },
-          "-=0.4"
-        )
-        .fromTo(
-          heroContent.querySelector(".hero-divider"),
-          { scaleX: 0 },
-          { scaleX: 1, duration: 0.6, ease: "power2.inOut" },
-          "-=0.4"
-        )
-        .fromTo(
-          heroContent.querySelector(".hero-cta"),
-          { opacity: 0, y: 15 },
-          { opacity: 1, y: 0, duration: 0.6 },
-          "-=0.3"
-        )
-        .fromTo(
-          scrollIndicator,
-          { opacity: 0 },
-          { opacity: 0.7, duration: 0.6 },
-          "-=0.2"
-        )
-        .fromTo(
-          heroContent.querySelector(".hero-side-label"),
-          { opacity: 0 },
-          { opacity: 1, duration: 0.5 },
-          "-=0.4"
-        )
-        .fromTo(
-          progressBar,
-          { opacity: 0 },
-          { opacity: 1, duration: 0.4 },
-          "-=0.3"
-        );
-
-      // ─── Scroll-driven timeline ───
+      // ─── High-Precision Scrubbing Logic ───
+      // We use a proxy object to handle sub-frame calculations for buttery smoothness
+      const scrollValue = { time: 0 };
+      
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: container,
           start: "top top",
           end: "bottom bottom",
-          scrub: 0.5,
+          scrub: 1.5, // Increased smoothing value to "weight" the scroll
           pin: ".hero-sequence-pinned",
           pinSpacing: true,
-          anticipatePin: 0,
-          fastScrollEnd: true,
-          preventOverlaps: false,
-        },
+          onUpdate: (self) => {
+             // Sub-millisecond precision scrubbing
+             const targetTime = self.progress * (video.duration || 0);
+             gsap.to(scrollValue, {
+               time: targetTime,
+               duration: 0.1,
+               overwrite: true,
+               onUpdate: () => {
+                 if (video) video.currentTime = scrollValue.time;
+               }
+             });
+          }
+        }
       });
 
-      // Frame scrub - optimized for smooth playback
-      let lastFrame = -1;
-      scrollTl.to(
-        frameIndexRef.current,
-        {
-          value: FRAME_COUNT - 1,
-          ease: "none",
-          duration: 1,
-          onUpdate: () => {
-            const currentFrame = Math.round(frameIndexRef.current.value);
-            // Only redraw if frame actually changed to reduce jank
-            if (currentFrame !== lastFrame) {
-              lastFrame = currentFrame;
-              drawFrame(currentFrame);
-            }
-          },
-        },
-        0
-      );
+      // Progress bar (mirrors the scroll progress)
+      scrollTl.to(progressFillRef.current, {
+        scaleY: 1,
+        ease: "none"
+      }, 0);
 
-      // Progress bar fill
-      if (progressFill) {
-        scrollTl.fromTo(
-          progressFill,
-          { scaleY: 0 },
-          { scaleY: 1, ease: "none", duration: 1 },
-          0
-        );
-      }
+      // Fade out hero content
+      scrollTl.to(heroContentRef.current, {
+        opacity: 0,
+        y: -100,
+        pointerEvents: "none",
+        duration: 0.2
+      }, 0.1);
 
-      // Hero content fade out and visibility toggle
-      scrollTl.fromTo(
-        heroContent,
-        { opacity: 1 },
-        { opacity: 0, ease: "power2.inOut", duration: 0.15 },
-        0.28
-      );
-      scrollTl.set(heroContent, { pointerEvents: "none" }, 0.28);
-
-      // Hero Threads Background Fade Out
-      if (threadsRef.current) {
-        scrollTl.fromTo(
-          threadsRef.current,
-          { opacity: 1 },
-          { opacity: 0, ease: "power2.inOut", duration: 0.15 },
-          0.28
-        );
-        scrollTl.set(threadsRef.current, { pointerEvents: "none" }, 0.28);
-      }
-      scrollTl.fromTo(
-        heroContent.querySelectorAll(".hero-line"),
-        { opacity: 1, y: 0 },
-        {
-          opacity: 0,
-          y: -40,
-          stagger: 0.02,
-          ease: "power2.in",
-          duration: 0.1,
-        },
-        0.25
-      );
-
-      scrollTl.fromTo(
-        heroContent.querySelector(".hero-subtitle"),
-        { opacity: 1, y: 0 },
-        { opacity: 0, y: -20, ease: "power2.in", duration: 0.1 },
-        0.26
-      );
-
-      scrollTl.fromTo(
-        heroContent.querySelector(".hero-divider"),
-        { scaleX: 1 },
-        { scaleX: 0, ease: "power2.in", duration: 0.1 },
-        0.26
-      );
-
-      scrollTl.fromTo(
-        heroContent.querySelector(".hero-cta"),
-        { opacity: 1, y: 0 },
-        { opacity: 0, y: -20, ease: "power2.in", duration: 0.1 },
-        0.27
-      );
-
-      scrollTl.fromTo(
-        heroContent.querySelectorAll(".hero-badge"),
-        { opacity: 1, y: 0, scale: 1 },
-        { opacity: 0, y: -15, scale: 0.95, stagger: 0.01, ease: "power2.in", duration: 0.1 },
-        0.25
-      );
-
-      scrollTl.fromTo(
-        heroContent.querySelector(".hero-side-label"),
-        { opacity: 1 },
-        { opacity: 0, ease: "power2.in", duration: 0.1 },
-        0.26
-      );
-
-      // Scroll indicator fade out
-      scrollTl.to(
-        scrollIndicator,
-        { opacity: 0, duration: 0.08, ease: "power2.in" },
-        0.03
-      );
-
-      // About content reveal
-      scrollTl.set(aboutContent, { pointerEvents: "auto" }, 0.38);
-      scrollTl.fromTo(
-        aboutContent,
-        { opacity: 0 },
-        { opacity: 1, duration: 0.05 },
-        0.38
-      );
-
-      scrollTl.fromTo(
-        aboutContent.querySelector(".about-accent-line"),
-        { scaleX: 0 },
-        { scaleX: 1, duration: 0.15, ease: "power2.out" },
+      // Reveal about content
+      scrollTl.fromTo(aboutContentRef.current, 
+        { opacity: 0, y: 100 },
+        { opacity: 1, y: 0, pointerEvents: "auto", duration: 0.3 },
         0.4
       );
 
-      scrollTl.fromTo(
-        aboutContent.querySelector(".about-label"),
-        { opacity: 0, x: -20 },
-        { opacity: 1, x: 0, duration: 0.1, ease: "power3.out" },
-        0.42
-      );
+      // About section items
+      scrollTl.from(".about-title-line", {
+        opacity: 0,
+        y: 50,
+        stagger: 0.1,
+        duration: 0.2
+      }, 0.5);
 
-      scrollTl.fromTo(
-        aboutContent.querySelectorAll(".about-title-line"),
-        { opacity: 0, y: 50, rotateX: -10 },
-        {
-          opacity: 1,
-          y: 0,
-          rotateX: 0,
-          stagger: 0.04,
-          duration: 0.12,
-          ease: "power3.out",
-        },
-        0.44
-      );
-
-      scrollTl.fromTo(
-        aboutContent.querySelector(".about-description"),
-        { opacity: 0, y: 25 },
-        { opacity: 1, y: 0, duration: 0.1, ease: "power3.out" },
-        0.5
-      );
-
-      scrollTl.fromTo(
-        aboutContent.querySelectorAll(".about-stat"),
-        { opacity: 0, y: 20 },
-        { opacity: 1, y: 0, stagger: 0.03, duration: 0.1, ease: "power3.out" },
-        0.55
-      );
-
-      scrollTl.fromTo(
-        aboutContent.querySelector(".about-cta"),
-        { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.1, ease: "power3.out" },
-        0.62
-      );
-
-      scrollTl.fromTo(
-        aboutContent.querySelector(".about-side-label"),
-        { opacity: 0 },
-        { opacity: 1, duration: 0.1, ease: "power3.out" },
-        0.46
-      );
     }, container);
 
     return () => ctx.revert();
   }, [isLoaded]);
 
   return (
-    <div
-      ref={containerRef}
-      className="hero-sequence-container"
-      style={{ height: "500vh" }}
-    >
-      <div className="hero-sequence-pinned">
-        {/* Canvas */}
-        <canvas ref={canvasRef} className="hero-sequence-canvas" />
+    <div ref={containerRef} className="hero-sequence-container" style={{ height: "500vh" }}>
+      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-black">
+        
+        {/* Video layer */}
+        <video
+          ref={videoRef}
+          src={VIDEO_SRC}
+          playsInline
+          muted
+          preload="auto"
+          className="absolute inset-0 w-full h-full object-cover z-0"
+          style={{ willChange: "transform, opacity" }}
+        />
 
-        {/* ── Threads fullscreen background effect ── */}
-        <div ref={threadsRef} className="absolute inset-0 z-[2] w-full h-full pointer-events-auto opacity-100 overflow-hidden" style={{ willChange: "opacity" }}>
-          <Threads
-            color={[0.8, 1, 0]} /* Exact normalized RGB for #CCFF00 (Lime) */
-            amplitude={3}
-            distance={0.4}
-            enableMouseInteraction
-          />
+        {/* Overlays for premium cinematic depth */}
+        <div className="hero-sequence-overlay absolute inset-0 z-[1] bg-black/50 pointer-events-none" />
+        <div className="hero-sequence-vignette absolute inset-0 z-[3] shadow-[inset_0_0_150px_60px_rgba(0,0,0,0.8)] pointer-events-none" />
+        <div className="hero-sequence-grain absolute inset-0 z-[4] opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+        {/* Dynamic Progress indicator */}
+        <div className="hero-progress-track absolute right-8 top-1/2 -translate-y-1/2 w-[1px] h-32 bg-white/5 z-50">
+          <div ref={progressFillRef} className="hero-progress-fill w-full h-full bg-lime origin-top scale-y-0 shadow-[0_0_15px_rgba(204,255,0,0.4)]" />
         </div>
 
-        {/* Overlays */}
-        <div className="hero-sequence-overlay" />
-        <div className="hero-sequence-vignette" />
-        <div className="hero-sequence-grain" />
-
-        {/* Top border accent */}
-        <div className="hero-top-accent" />
-
-        {/* Progress bar (right edge) */}
-        <div ref={progressRef} className="hero-progress-track" style={{ opacity: 0 }}>
-          <div ref={progressFillRef} className="hero-progress-fill" />
-        </div>
-
-        {/* Loading state */}
+        {/* High-end Loader */}
         {!isLoaded && (
-          <div className="hero-sequence-loader">
-            <div className="hero-loader-content">
-              <div className="hero-loader-brand">Digital Addis</div>
-              <div className="hero-loader-bar-track">
-                <div
-                  className="hero-loader-bar-fill"
-                  style={{ width: `${loadProgress}%` }}
-                />
+          <div className="absolute inset-0 z-[100] bg-black flex flex-col items-center justify-center">
+            <div className="flex flex-col items-center gap-6">
+              <div className="w-16 h-[2px] bg-white/10 overflow-hidden relative">
+                 <div className="absolute inset-0 bg-lime animate-line-loader" />
               </div>
-              <span className="hero-loader-text">{loadProgress}%</span>
+              <p className="text-lime font-mono text-[9px] tracking-[0.4em] uppercase opacity-60">SYNCHRONIZING REPOSITORY</p>
             </div>
           </div>
         )}
 
-        {/* ═══════ Hero Content ═══════ */}
-        <div ref={heroContentRef} className="hero-sequence-content hero-content-left">
-          {/* Side vertical label */}
-          <div className="hero-side-label">
-            <span>Digital Addis — Creative Studio</span>
-          </div>
-
-          <div className="flex flex-wrap gap-3 mb-8">
-            <div className="hero-badge">
-              <span className="hero-badge-dot" />
-              EST. 2018
+        {/* Hero Copy */}
+        <div ref={heroContentRef} className="absolute inset-0 z-10 flex flex-col justify-center px-6 md:px-20 max-w-5xl">
+          <div className="flex gap-4 mb-10 overflow-hidden">
+            <div className="hero-badge border border-white/10 bg-white/5 backdrop-blur-xl px-5 py-2 rounded-full text-[9px] tracking-[0.3em] text-white/60 uppercase">
+              Est. 2018
             </div>
-            <div className="hero-badge">
-              <span className="hero-badge-dot" />
+            <div className="hero-badge border border-lime/20 bg-lime/10 backdrop-blur-xl px-5 py-2 rounded-full text-[9px] tracking-[0.3em] text-lime uppercase font-bold">
               Innovation First
             </div>
           </div>
 
-          <h1 className="hero-title" style={{ perspective: "800px" }}>
-            <span className="hero-line">Architecting the</span>
-            <span className="hero-line">
-              <span className="hero-title-accent">Digital</span> Future
-            </span>
-            <span className="hero-line hero-title-thin">with Precision.</span>
+          <h1 className="hero-title select-none" style={{ perspective: "1000px" }}>
+            <span className="hero-line block text-5xl md:text-[9rem] font-black text-white leading-[0.85] tracking-tighter">ARCHITECTING</span>
+            <span className="hero-line block text-5xl md:text-[9rem] font-black text-lime leading-[0.85] tracking-tighter">THE DIGITAL</span>
+            <span className="hero-line block text-5xl md:text-[9rem] font-black text-white leading-[0.85] italic tracking-tighter">FUTURE.</span>
           </h1>
 
-          <div className="hero-divider" />
+          <div className="hero-subtitle-wrap mt-12 max-w-lg overflow-hidden">
+             <p className="hero-subtitle text-white/40 text-sm md:text-lg leading-relaxed lowercase tracking-tight">
+               We specialize in crafting bespoke digital experiences where advanced strategy meets human-centric design. Elevating bold brands into the new era of interaction.
+             </p>
+          </div>
 
-          <p className="hero-subtitle">
-            We specialize in crafting bespoke digital experiences where 
-            advanced strategy meets human-centric design. Elevating bold 
-            brands into the new era of interaction.
-          </p>
-
-          <div className="hero-cta">
-            <Button
-              size="lg"
-              className="hero-btn-primary"
-            >
-              View Portfolio
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+          <div className="hero-cta mt-12 flex flex-wrap gap-5">
+            <Button className="bg-lime text-black hover:bg-white rounded-full px-10 py-7 text-[10px] font-bold uppercase tracking-[0.2em] transition-all duration-500 shadow-xl shadow-lime/5">
+              Explore Work <ArrowRight className="ml-3 w-4 h-4" />
             </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              className="hero-btn-outline"
-            >
-              Let's Talk
+            <Button variant="outline" className="border-white/10 text-white hover:border-white/40 rounded-full px-10 py-7 text-[10px] font-bold uppercase tracking-[0.2em] hover:bg-white/5 transition-all duration-500">
+              Start Project
             </Button>
           </div>
         </div>
 
-        {/* Scroll indicator */}
-        <div ref={scrollIndicatorRef} className="hero-scroll-indicator">
-          <div className="hero-scroll-line" />
-          <span className="hero-scroll-text">Scroll</span>
-          <ArrowDown className="hero-scroll-arrow" />
+        {/* Scroll Call-to-action */}
+        <div ref={scrollIndicatorRef} className="absolute bottom-12 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-4 group cursor-pointer opacity-0">
+          <span className="text-[9px] text-white/20 uppercase tracking-[0.6em] group-hover:text-white/60 transition-colors">Scroll</span>
+          <div className="w-[1px] h-12 bg-lime/10 relative overflow-hidden">
+             <div className="absolute top-0 left-0 w-full h-full bg-lime animate-scroll-dash" />
+          </div>
         </div>
 
-        {/* ═══════ About Content ═══════ */}
-        <div ref={aboutContentRef} className="hero-sequence-content about-content-left" style={{ opacity: 0, pointerEvents: "none" }}>
-          {/* Side vertical label */}
-          <div className="about-side-label" style={{ opacity: 0 }}>
-            <span>Who We Are — About</span>
-          </div>
-
-          {/* Accent line */}
-          <div className="about-accent-line" />
-
-          <div className="about-label-wrap">
-            <span className="about-label">OUR PHILOSOPHY</span>
-          </div>
-
-          <h2 className="about-title" style={{ perspective: "800px" }}>
-            <span className="about-title-line">The Core of Modern</span>
-            <span className="about-title-line">
-              Digital <span className="hero-title-accent">Excellence</span>
-            </span>
+        {/* Global Cinematic About Section */}
+        <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-6 md:px-20 items-center text-center">
+          <div className="w-24 h-[1px] bg-lime/40 mb-12" />
+          <h2 className="text-5xl md:text-[7rem] font-black text-white max-w-7xl leading-[0.9] tracking-tighter uppercase select-none">
+            <span className="about-title-line block">BEYOND PIXELS.</span>
+            <span className="about-title-line block text-white/20 italic">WE BUILD SYSTEMS.</span>
           </h2>
-
-          <p className="about-description">
-            At Digital Addis, we believe that every pixel tells a story. 
-            Our multidisciplinary team combines architectural thinking with 
-            cutting-edge technology to build ecosystems that inspire, engage, and endure.
+          <p className="mt-10 text-white/40 max-w-3xl text-xl leading-relaxed font-light lowercase">
+            Multidisciplinary thinking meets cutting-edge engineering. We don't just design websites; we architect digital ecosystems that drive growth and inspire interaction.
           </p>
-
-          <div className="about-stats">
-            <div className="about-stat">
-              <span className="about-stat-number">120<span className="about-stat-plus">+</span></span>
-              <span className="about-stat-label">Global Deliveries</span>
+          <div className="mt-16 flex gap-12 md:gap-24">
+            <div className="text-center group">
+              <p className="text-5xl md:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">120+</p>
+              <p className="text-[9px] text-white/20 uppercase tracking-[0.4em] mt-4 font-bold">Solutions Delivered</p>
             </div>
-            <div className="about-stat-divider" />
-            <div className="about-stat">
-              <span className="about-stat-number">15<span className="about-stat-plus">+</span></span>
-              <span className="about-stat-label">Lead Technologists</span>
+            <div className="text-center group">
+              <p className="text-5xl md:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">15+</p>
+              <p className="text-[9px] text-white/20 uppercase tracking-[0.4em] mt-4 font-bold">Core Technologists</p>
             </div>
-            <div className="about-stat-divider" />
-            <div className="about-stat">
-              <span className="about-stat-number">5<span className="about-stat-plus">+</span></span>
-              <span className="about-stat-label">Years of Vision</span>
+            <div className="text-center group">
+              <p className="text-5xl md:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">5yr</p>
+              <p className="text-[9px] text-white/20 uppercase tracking-[0.4em] mt-4 font-bold">Innovation Legacy</p>
             </div>
-          </div>
-
-          <div className="about-cta" style={{ opacity: 0 }}>
-            <Button
-              size="lg"
-              className="hero-btn-primary"
-            >
-              Get to Know Us
-              <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
           </div>
         </div>
+
       </div>
     </div>
   );

@@ -33,7 +33,7 @@ uniform vec2 uMouse;
 
 #define PI 3.1415926538
 
-const int u_line_count = 40;
+uniform int u_line_count;
 const float u_line_width = 7.0;
 const float u_line_blur = 10.0;
 
@@ -105,7 +105,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
     vec2 uv = fragCoord / iResolution.xy;
 
     float line_strength = 1.0;
-    for (int i = 0; i < u_line_count; i++) {
+    for (int i = 0; i < 40; i++) {
+        if (i >= u_line_count) break;
         float p = float(i) / float(u_line_count);
         line_strength *= (1.0 - lineFn(
             uv,
@@ -119,10 +120,8 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         ));
     }
 
-    // Brighter output for neon effect - increased contrast and saturation
     float colorVal = 1.0 - line_strength;
     float boostedColorVal = pow(colorVal, 0.7) * 1.3;
-    // Apply glow effect for neon appearance
     float glowVal = min(boostedColorVal, 1.0);
     fragColor = vec4(uColor * glowVal, glowVal);
 }
@@ -141,22 +140,35 @@ const Threads: React.FC<ThreadsProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number>(0);
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isVisible, setIsVisible] = useState(true);
   const capabilities = useDeviceCapabilities();
 
   useEffect(() => {
     if (!containerRef.current) return;
+    
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0 }
+    );
+    
+    observer.observe(containerRef.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!containerRef.current || !isVisible) return;
     const container = containerRef.current;
 
-    // Disable WebGL on low-end devices or with reduced motion preference
-    if (capabilities.prefersReducedMotion || (capabilities.isMobile && capabilities.deviceMemory && capabilities.deviceMemory <= 2)) {
-      container.style.display = 'none';
-      return;
-    }
+    const lineCount = (capabilities.isMobile || (capabilities.deviceMemory && capabilities.deviceMemory <= 4)) ? 20 : 40;
 
-    setIsInitialized(true);
-
-    const renderer = new Renderer({ alpha: true, dpr: capabilities.isMobile ? 0.8 : 1 });
+    const renderer = new Renderer({ 
+      alpha: true, 
+      dpr: capabilities.isMobile ? 1 : Math.min(window.devicePixelRatio, 2),
+      premultipliedAlpha: false
+    });
+    
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
@@ -175,7 +187,8 @@ const Threads: React.FC<ThreadsProps> = ({
         uColor: { value: new Color(...color) },
         uAmplitude: { value: amplitude },
         uDistance: { value: distance },
-        uMouse: { value: new Float32Array([0.5, 0.5]) }
+        uMouse: { value: new Float32Array([0.5, 0.5]) },
+        u_line_count: { value: lineCount }
       }
     });
 
@@ -183,12 +196,15 @@ const Threads: React.FC<ThreadsProps> = ({
 
     function resize() {
       const { clientWidth, clientHeight } = container;
+      if (clientWidth === 0 || clientHeight === 0) return;
       renderer.setSize(clientWidth, clientHeight);
       program.uniforms.iResolution.value.r = clientWidth;
       program.uniforms.iResolution.value.g = clientHeight;
       program.uniforms.iResolution.value.b = clientWidth / clientHeight;
     }
-    window.addEventListener('resize', resize);
+    
+    const resizeObserver = new ResizeObserver(resize);
+    resizeObserver.observe(container);
     resize();
 
     let currentMouse = [0.5, 0.5];
@@ -203,22 +219,23 @@ const Threads: React.FC<ThreadsProps> = ({
     function handleMouseLeave() {
       targetMouse = [0.5, 0.5];
     }
+    
     if (enableMouseInteraction) {
-      container.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mousemove', handleMouseMove);
       container.addEventListener('mouseleave', handleMouseLeave);
     }
 
     function update(t: number) {
+      if (!isVisible) return;
+
       if (enableMouseInteraction) {
-        const smoothing = capabilities.isMobile ? 0.08 : 0.05;
+        const smoothing = capabilities.isMobile ? 0.1 : 0.05;
         currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
         currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
         program.uniforms.uMouse.value[0] = currentMouse[0];
         program.uniforms.uMouse.value[1] = currentMouse[1];
-      } else {
-        program.uniforms.uMouse.value[0] = 0.5;
-        program.uniforms.uMouse.value[1] = 0.5;
       }
+      
       program.uniforms.iTime.value = t * 0.001;
 
       renderer.render({ scene: mesh });
@@ -228,19 +245,22 @@ const Threads: React.FC<ThreadsProps> = ({
 
     return () => {
       if (animationFrameId.current) cancelAnimationFrame(animationFrameId.current);
-      window.removeEventListener('resize', resize);
+      resizeObserver.disconnect();
 
       if (enableMouseInteraction) {
-        container.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mousemove', handleMouseMove);
         container.removeEventListener('mouseleave', handleMouseLeave);
       }
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
+      
+      geometry.remove();
+      program.remove();
       const loseContext = gl.getExtension('WEBGL_lose_context');
       if (loseContext) loseContext.loseContext();
     };
-  }, [color, amplitude, distance, enableMouseInteraction, capabilities.isMobile, capabilities.prefersReducedMotion, capabilities.deviceMemory]);
+  }, [color, amplitude, distance, enableMouseInteraction, isVisible, capabilities.isMobile, capabilities.deviceMemory]);
 
-  return <div ref={containerRef} className="w-full h-full relative" {...rest} />;
+  return <div ref={containerRef} className="w-full h-full relative overflow-hidden" {...rest} />;
 };
 
 export default Threads;
