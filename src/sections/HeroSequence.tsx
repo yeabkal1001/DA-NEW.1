@@ -241,14 +241,17 @@ export function HeroSequence() {
           trigger: container,
           start: "top top",
           end: "bottom bottom",
-          scrub: 1.5,
+          scrub: 0.5,
           pin: ".hero-sequence-pinned",
           pinSpacing: true,
-          anticipatePin: 1,
+          anticipatePin: 0,
+          fastScrollEnd: true,
+          preventOverlaps: false,
         },
       });
 
-      // Frame scrub
+      // Frame scrub - optimized for smooth playback
+      let lastFrame = -1;
       scrollTl.to(
         frameIndexRef.current,
         {
@@ -256,7 +259,12 @@ export function HeroSequence() {
           ease: "none",
           duration: 1,
           onUpdate: () => {
-            drawFrame(Math.round(frameIndexRef.current.value));
+            const currentFrame = Math.round(frameIndexRef.current.value);
+            // Only redraw if frame actually changed to reduce jank
+            if (currentFrame !== lastFrame) {
+              lastFrame = currentFrame;
+              drawFrame(currentFrame);
+            }
           },
         },
         0
@@ -426,7 +434,7 @@ export function HeroSequence() {
         <canvas ref={canvasRef} className="hero-sequence-canvas" />
 
         {/* ── Threads fullscreen background effect ── */}
-        <div ref={threadsRef} className="absolute inset-0 z-[2] w-full h-full pointer-events-auto opacity-70 overflow-hidden" style={{ willChange: "opacity" }}>
+        <div ref={threadsRef} className="absolute inset-0 z-[2] w-full h-full pointer-events-auto opacity-100 overflow-hidden" style={{ willChange: "opacity" }}>
           <Threads
             color={[0.8, 1, 0]} /* Exact normalized RGB for #CCFF00 (Lime) */
             amplitude={3}
