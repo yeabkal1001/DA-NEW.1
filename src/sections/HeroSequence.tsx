@@ -21,7 +21,7 @@ const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
   const originalIndex = i * SKIP_STEP;
   const num = String(originalIndex).padStart(3, "0");
   const delay = (originalIndex % 3 === 0 || originalIndex === 0) ? "0.041s" : "0.042s";
-  return `/images/compressed-files (2)/frame_${num}_delay-${delay}_compressed.webp`;
+  return `/images/image sequence/frame_${num}_delay-${delay}_compressed.webp`;
 });
 
 export function HeroSequence() {
