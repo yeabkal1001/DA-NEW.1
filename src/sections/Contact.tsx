@@ -69,7 +69,7 @@ export function Contact() {
                 <div className="relative z-10 mt-8 md:mt-12 pt-6 md:pt-12 border-t border-black/10">
                   <div className="flex items-center gap-3 md:gap-4">
                      <div className="w-10 h-10 md:w-12 md:h-12 bg-black/5 rounded-full flex items-center justify-center font-black text-sm md:text-base">@</div>
-                     <p className="text-black font-black uppercase tracking-wider md:tracking-widest text-xs md:text-sm">hello@digitaladdis.com</p>
+                     <p className="text-black font-black uppercase tracking-wider md:tracking-widest text-xs md:text-sm">support@digital-addis.com</p>
                   </div>
                 </div>
               </div>

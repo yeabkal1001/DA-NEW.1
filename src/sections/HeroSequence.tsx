@@ -229,14 +229,14 @@ export function HeroSequence() {
           </div>
 
           <h1 className="hero-title select-none w-full" style={{ perspective: "1500px" }}>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase">ARCHITECTING</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-lime leading-[0.85] tracking-tighter uppercase">THE DIGITAL</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] italic tracking-tighter uppercase">FUTURE.</span>
+            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase">INNOVATING</span>
+            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-lime leading-[0.85] tracking-tighter uppercase">YOUR DIGITAL</span>
+            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] italic tracking-tighter uppercase">WORLD.</span>
           </h1>
 
           <div className="hero-subtitle-wrap mt-6 md:mt-10 lg:mt-12 max-w-xl md:max-w-2xl mx-auto px-2">
              <p className="hero-subtitle text-white/50 text-sm md:text-base lg:text-xl leading-relaxed tracking-tight">
-               We specialize in crafting bespoke digital experiences where advanced strategy meets human-centric design.
+               Full-service digital solutions in cloud, development, branding, and technology — built for speed, scale, and real impact.
              </p>
           </div>
 
@@ -254,11 +254,11 @@ export function HeroSequence() {
         <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-4 sm:px-6 md:px-20 items-center text-center">
           <div className="w-16 md:w-24 h-[1px] bg-lime/40 mb-8 md:mb-12" />
           <h2 className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[7rem] font-black text-white max-w-7xl leading-[0.9] tracking-tighter uppercase select-none">
-            <span className="about-title-line block">BEYOND PIXELS.</span>
-            <span className="about-title-line block text-white/20 italic">WE BUILD SYSTEMS.</span>
+            <span className="about-title-line block">ELEVATING BRANDS.</span>
+            <span className="about-title-line block text-white/20 italic">SOLVING CHALLENGES.</span>
           </h2>
           <p className="mt-6 md:mt-10 text-white/40 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase px-4">
-            Multidisciplinary thinking meets cutting-edge engineering. We architect digital ecosystems that drive growth and inspire interaction.
+            Technology should make people’s work easier, safer and more meaningful. We are a multidisciplinary team focused on solving real-world challenges through long-term partnerships and people-centric design.
           </p>
           <div className="mt-10 md:mt-14 lg:mt-16 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-24">
             <div className="text-center group">

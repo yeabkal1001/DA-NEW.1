@@ -98,14 +98,14 @@ export function Footer() {
               Location
             </h4>
             <address className="not-italic text-gray-400 space-y-1.5 md:space-y-2 text-xs md:text-sm">
-              <p>123 Innovation Drive</p>
-              <p>Addis Ababa, Bole Japan</p>
+              <p>Addis Ababa, Ethiopia</p>
+              <p>Bole, Behind Friendship Mall</p>
               <p className="pt-1 md:pt-2">
                 <a
-                  href="mailto:hello@digitaladdis.com"
+                  href="mailto:support@digital-addis.com"
                   className="text-lime hover:underline break-all"
                 >
-                  hello@digitaladdis.com
+                  support@digital-addis.com
                 </a>
               </p>
             </address>

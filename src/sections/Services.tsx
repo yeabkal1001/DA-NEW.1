@@ -9,20 +9,20 @@ gsap.registerPlugin(ScrollTrigger);
 
 const services = [
   {
-    title: "UI/UX Design",
-    description: "Crafting intuitive and immersive interfaces.",
+    title: "Mobile App Development",
+    description: "Building high-performance iOS and Android applications for the modern user.",
     image: "/images/service-1.jpg",
     bgColor: "bg-lime",
   },
   {
-    title: "Branding",
-    description: "Defining unique visual identities that resonate.",
+    title: "UI/UX & Web Design",
+    description: "Creating visually stunning and highly functional digital experiences.",
     image: "/images/service-2.jpg",
     bgColor: "bg-gray-200",
   },
   {
-    title: "Web Development",
-    description: "Building high-performance, scalable web applications.",
+    title: "Digital Marketing",
+    description: "Data-driven strategies to amplify your brand's reach and impact.",
     image: "/images/service-3.jpg",
     bgColor: "bg-gray-200",
   },
