@@ -143,15 +143,15 @@ export default function BlogPostPage() {
   useEffect(() => {
     // Only run animation if post exists and heroRef is available
     if (!post || !heroRef.current) return;
-    
+
     // Small delay to ensure DOM elements are rendered
     const timer = setTimeout(() => {
       const container = heroRef.current;
       if (!container) return;
-      
+
       const elements = container.querySelectorAll(".blog-post-reveal");
       if (!elements || elements.length === 0) return;
-      
+
       // Create animation without using gsap.context to avoid scope warnings
       const tl = gsap.timeline();
       tl.from(elements, {
@@ -161,10 +161,10 @@ export default function BlogPostPage() {
         stagger: 0.12,
         ease: "power4.out",
       });
-      
+
       return () => tl.kill();
     }, 100);
-    
+
     return () => clearTimeout(timer);
   }, [postId, post]);
 
@@ -188,29 +188,29 @@ export default function BlogPostPage() {
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[75vh] bg-black text-white flex items-end overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img 
-            src={post.image} 
+          <img
+            src={post.image}
             alt={post.title}
             className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
         </div>
-        
+
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-16 md:py-24 w-full">
           {/* Back Button */}
-          <Link 
+          <Link
             href="/blog"
             className="blog-post-reveal inline-flex items-center gap-2 text-white/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Blog
           </Link>
-          
+
           <div className="blog-post-reveal flex items-center gap-4 mb-6">
             <span className="px-4 py-2 bg-lime text-black rounded-full text-xs font-bold uppercase">
               {post.category}
@@ -220,14 +220,14 @@ export default function BlogPostPage() {
               {post.readTime} read
             </span>
           </div>
-          
+
           <h1 className="blog-post-reveal text-[2rem] sm:text-[2.5rem] md:text-[3.5rem] font-[900] leading-[1.05] tracking-tight mb-8 max-w-3xl">
             {post.title}
           </h1>
-          
+
           <div className="blog-post-reveal flex items-center gap-4">
-            <img 
-              src={post.authorImage} 
+            <img
+              src={post.authorImage}
               alt={post.author}
               className="w-14 h-14 rounded-full object-cover border-2 border-lime"
             />
@@ -283,7 +283,7 @@ export default function BlogPostPage() {
           <ScrollReveal className="mt-12 pt-8 border-t border-gray-200">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag, index) => (
-                <span 
+                <span
                   key={index}
                   className="px-4 py-2 bg-gray-100 rounded-full text-sm font-bold hover:bg-lime transition-colors cursor-pointer"
                 >
@@ -322,8 +322,8 @@ export default function BlogPostPage() {
           <ScrollReveal>
             <div className="bg-white rounded-3xl p-8 md:p-12 border border-gray-100">
               <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-                <img 
-                  src={post.authorImage} 
+                <img
+                  src={post.authorImage}
                   alt={post.author}
                   className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-lime"
                 />
@@ -346,14 +346,14 @@ export default function BlogPostPage() {
               Related <span className="text-lime italic">Articles</span>
             </h2>
           </ScrollReveal>
-          
+
           <div className="grid md:grid-cols-3 gap-6">
             {post.relatedPosts.map((related, index) => (
               <ScrollReveal key={related.id} delay={index * 0.1}>
                 <Link href={`/blog/${related.id}`} className="group block">
                   <div className="relative h-64 rounded-2xl overflow-hidden mb-4">
-                    <img 
-                      src={related.image} 
+                    <img
+                      src={related.image}
                       alt={related.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                     />

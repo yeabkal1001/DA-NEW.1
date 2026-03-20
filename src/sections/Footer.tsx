@@ -31,9 +31,9 @@ export function Footer() {
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-2 lg:col-span-1">
             <Link href="/">
-              <img 
-                src="/dalogo.webp" 
-                alt="Digital Addis Logo" 
+              <img
+                src="/dalogo.webp"
+                alt="Digital Addis Logo"
                 className="h-10 md:h-14 w-auto mb-4 md:mb-6 object-contain"
               />
             </Link>

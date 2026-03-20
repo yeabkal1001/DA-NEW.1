@@ -87,12 +87,13 @@ export const Navbar = memo(function Navbar() {
               </div>
             </Link>
 
-            {/* Desktop Navigation */}
+            {/* Desktop Navigation - Optimized with prefetch */}
             <nav className="hidden lg:flex items-center gap-10" aria-label="Main navigation">
               {navLinks.map((link) => (
                 <Link
                   key={link.name}
                   href={link.link}
+                  prefetch={true}
                   aria-label={link.ariaLabel}
                   className="relative text-white/40 text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-300 hover:text-white focus-visible:text-white"
                 >
@@ -105,6 +106,7 @@ export const Navbar = memo(function Navbar() {
             <div className="hidden md:flex items-center">
               <Link
                 href="/contact"
+                prefetch={true}
                 className="bg-lime text-black px-6 lg:px-8 py-2.5 lg:py-3 rounded-full text-[9px] lg:text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white transition-all duration-500 shadow-xl shadow-lime/10"
               >
                 Let's Talk

@@ -213,29 +213,30 @@ export default function ProjectDetailPage() {
   return (
     <main className="min-h-screen bg-white">
       <Navbar />
-      
+
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-[70vh] lg:min-h-[85vh] bg-black text-white flex items-end overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img 
-            src={project.image} 
+          <img
+            src={project.image}
             alt={project.title}
             className="w-full h-full object-cover opacity-40"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-16 md:py-24 w-full">
           {/* Back Button */}
-          <Link 
+          <Link
             href="/projects"
+            prefetch={true}
             className="project-detail-reveal inline-flex items-center gap-2 text-white/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Projects
           </Link>
-          
+
           <div className="flex flex-wrap gap-3 mb-6">
             {project.tags.map((tag, i) => (
               <span key={i} className="project-detail-reveal px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full text-xs font-bold text-white/80">
@@ -243,15 +244,15 @@ export default function ProjectDetailPage() {
               </span>
             ))}
           </div>
-          
+
           <p className="project-detail-reveal text-lime text-sm font-black uppercase tracking-widest mb-4">
             {project.category}
           </p>
-          
+
           <h1 className="project-detail-reveal text-[2.5rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 max-w-4xl">
             {project.title}
           </h1>
-          
+
           <p className="project-detail-reveal text-white/60 text-lg md:text-xl max-w-2xl leading-relaxed">
             {project.description}
           </p>
@@ -298,12 +299,12 @@ export default function ProjectDetailPage() {
                 </h2>
               </div>
             </ScrollReveal>
-            
+
             <ScrollReveal delay={0.2}>
               <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-12">
                 {project.fullDescription}
               </p>
-              
+
               <div className="space-y-8">
                 <div>
                   <h3 className="text-xl font-black uppercase tracking-tight mb-4 flex items-center gap-3">
@@ -316,7 +317,7 @@ export default function ProjectDetailPage() {
                     {project.challenge}
                   </p>
                 </div>
-                
+
                 <div>
                   <h3 className="text-xl font-black uppercase tracking-tight mb-4 flex items-center gap-3">
                     <span className="w-8 h-8 bg-lime rounded-lg flex items-center justify-center">
@@ -342,13 +343,13 @@ export default function ProjectDetailPage() {
               Project <span className="text-lime italic">Gallery</span>
             </h2>
           </ScrollReveal>
-          
+
           <div className="grid md:grid-cols-3 gap-4 md:gap-6">
             {project.gallery.map((img, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden group">
-                  <img 
-                    src={img} 
+                  <img
+                    src={img}
                     alt={`${project.title} gallery ${index + 1}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
@@ -371,7 +372,7 @@ export default function ProjectDetailPage() {
               Impact <span className="text-lime italic">& Outcomes</span>
             </h2>
           </ScrollReveal>
-          
+
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {project.results.map((result, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
@@ -411,7 +412,7 @@ export default function ProjectDetailPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between gap-6">
             {project.prevProject && (
-              <Link 
+              <Link
                 href={`/projects/${project.prevProject.id}`}
                 className="group flex items-center gap-4 hover:text-lime transition-colors"
               >
@@ -422,10 +423,11 @@ export default function ProjectDetailPage() {
                 </div>
               </Link>
             )}
-            
+
             {project.nextProject && (
-              <Link 
+              <Link
                 href={`/projects/${project.nextProject.id}`}
+                prefetch={true}
                 className="group flex items-center gap-4 text-right sm:ml-auto hover:text-lime transition-colors"
               >
                 <div>
@@ -451,7 +453,7 @@ export default function ProjectDetailPage() {
             <p className="text-gray-500 text-lg mb-10 max-w-xl mx-auto">
               Let's discuss how we can help bring your vision to life with the same dedication and expertise.
             </p>
-            <Link 
+            <Link
               href="/contact"
               className="inline-flex items-center gap-3 bg-black text-white px-10 py-5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] hover:bg-lime hover:text-black transition-all duration-500 group"
             >

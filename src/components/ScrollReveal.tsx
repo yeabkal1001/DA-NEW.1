@@ -46,9 +46,10 @@ const ScrollRevealComponent = memo(function ScrollRevealComponent({
           ease: "power3.out",
           scrollTrigger: {
             trigger: element,
-            start: "top 85%",
+            start: "top 90%", // Reveal slightly earlier for perceived speed
             toggleActions: "play none none none",
-            once: true, // Only animate once
+            once: true,
+            fastScrollEnd: true, // Performance optimization for fast scrolls
           },
         }
       );

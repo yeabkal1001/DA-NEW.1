@@ -62,21 +62,30 @@ export function HeroSequence() {
   useEffect(() => {
     let loadedCount = 0;
     let isMounted = true;
+    let rafId: number = 0;
 
     const loadImages = async () => {
-      // Load priority frames first for quick initial display
+      // Priority 1: First frame immediately
+      const firstImg = new Image();
+      firstImg.src = frameNames[0];
+      firstImg.onload = () => {
+        if (!isMounted) return;
+        imagesRef.current[0] = firstImg;
+        drawFrame(0);
+      };
+
+      // Priority 2: Priority block (10-15 frames) for initial scroll experience
       for (let i = 0; i < PRIORITY_FRAMES; i++) {
         if (!isMounted) return;
         const img = new Image();
-        img.crossOrigin = "anonymous"; // CORS for canvas drawing
-        img.decoding = "async"; // Non-blocking decode
+        img.crossOrigin = "anonymous";
+        img.decoding = "async";
         img.src = frameNames[i];
         await new Promise((resolve) => {
           img.onload = () => {
             imagesRef.current[i] = img;
             loadedCount++;
             setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            if (i === 0) drawFrame(0);
             resolve(null);
           };
           img.onerror = resolve;
@@ -85,23 +94,44 @@ export function HeroSequence() {
 
       setIsLoaded(true);
 
-      // Load remaining frames in the background
-      for (let i = PRIORITY_FRAMES; i < FRAME_COUNT; i++) {
-        if (!isMounted) return;
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.decoding = "async";
-        img.src = frameNames[i];
-        img.onload = () => {
-          imagesRef.current[i] = img;
-          loadedCount++;
-          setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+      // Priority 3: Remaining frames using requestIdleCallback to stay off the main thread
+      const loadRemaining = (startIndex: number) => {
+        if (!isMounted || startIndex >= FRAME_COUNT) return;
+
+        const task = () => {
+          const batchSize = 3;
+          const end = Math.min(startIndex + batchSize, FRAME_COUNT);
+          
+          for (let i = startIndex; i < end; i++) {
+            const img = new Image();
+            img.src = frameNames[i];
+            img.onload = () => {
+              imagesRef.current[i] = img;
+              loadedCount++;
+              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+            };
+          }
+          
+          if (end < FRAME_COUNT) {
+            if ('requestIdleCallback' in window) {
+              window.requestIdleCallback(() => loadRemaining(end));
+            } else {
+              setTimeout(() => loadRemaining(end), 100);
+            }
+          }
         };
-      }
+
+        task();
+      };
+
+      loadRemaining(PRIORITY_FRAMES);
     };
 
     loadImages();
-    return () => { isMounted = false; };
+    return () => { 
+      isMounted = false; 
+      cancelAnimationFrame(rafId);
+    };
   }, [drawFrame]);
 
   useEffect(() => {
