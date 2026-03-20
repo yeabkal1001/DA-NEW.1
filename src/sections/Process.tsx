@@ -37,59 +37,127 @@ const processSteps = [
 export function Process() {
   const containerRef = useRef<HTMLDivElement>(null);
   const pathRef = useRef<SVGPathElement>(null);
-  const arrowRef = useRef<SVGGElement>(null);
+  const arrowRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Animate the dashed path drawing
+      // Arrow follows the path on scroll
       if (pathRef.current && arrowRef.current) {
-        const length = pathRef.current.getTotalLength();
-        gsap.set(pathRef.current, { strokeDasharray: `12 12`, strokeDashoffset: 0 });
-        
-        // Arrow follows the path on scroll
-        const mainTl = gsap.timeline({
-          scrollTrigger: {
-            trigger: ".process-grid-container",
-            start: "top 30%",
-            end: "bottom 80%",
-            scrub: 1,
-          }
+        // Set initial position at start of path
+        gsap.set(arrowRef.current, { 
+          xPercent: -50, 
+          yPercent: -50,
+          opacity: 1,
+          scale: 1
         });
 
-        mainTl.to(arrowRef.current, {
+        // Animate arrow along path with scroll
+        gsap.to(arrowRef.current, {
           motionPath: {
             path: pathRef.current,
             align: pathRef.current,
             alignOrigin: [0.5, 0.5],
             autoRotate: true,
+            start: 0,
+            end: 1,
           },
           ease: "none",
-          duration: 1
-        }, 0);
+          scrollTrigger: {
+            trigger: ".process-grid-container",
+            start: "top 60%",
+            end: "bottom 40%",
+            scrub: 0.5,
+          }
+        });
+
+        // Animate path drawing (dash offset)
+        const pathLength = pathRef.current.getTotalLength();
+        gsap.set(pathRef.current, { 
+          strokeDasharray: pathLength,
+          strokeDashoffset: pathLength 
+        });
+
+        gsap.to(pathRef.current, {
+          strokeDashoffset: 0,
+          ease: "none",
+          scrollTrigger: {
+            trigger: ".process-grid-container",
+            start: "top 60%",
+            end: "bottom 40%",
+            scrub: 0.5,
+          }
+        });
       }
 
-      // Card reveal animations
-      gsap.utils.toArray<HTMLElement>(".process-card").forEach((card) => {
+      // Card reveal animations with stagger effect
+      gsap.utils.toArray<HTMLElement>(".process-card").forEach((card, i) => {
         gsap.fromTo(card, 
-          { y: 100, opacity: 0, scale: 0.9 },
+          { 
+            y: 120, 
+            opacity: 0, 
+            scale: 0.85,
+            rotateX: 15
+          },
           {
             y: 0,
             opacity: 1,
             scale: 1,
+            rotateX: 0,
             ease: "power3.out",
+            duration: 1.2,
             scrollTrigger: {
               trigger: card,
-              start: "top 90%",
-              end: "top 60%",
+              start: "top 95%",
+              end: "top 50%",
               scrub: 1,
             }
           }
         );
+
+        // Hover float animation
+        card.addEventListener('mouseenter', () => {
+          gsap.to(card, { y: -10, scale: 1.02, duration: 0.4, ease: "power2.out" });
+        });
+        card.addEventListener('mouseleave', () => {
+          gsap.to(card, { y: 0, scale: 1, duration: 0.4, ease: "power2.out" });
+        });
       });
 
       // Parallax for diagonal bands
-      gsap.to(".diagonal-band-1", { x: -100, scrollTrigger: { trigger: containerRef.current, scrub: 2 } });
-      gsap.to(".diagonal-band-2", { x: 100, scrollTrigger: { trigger: containerRef.current, scrub: 2 } });
+      gsap.to(".diagonal-band-1", { 
+        x: -150, 
+        scrollTrigger: { 
+          trigger: containerRef.current, 
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5 
+        } 
+      });
+      gsap.to(".diagonal-band-2", { 
+        x: 150, 
+        scrollTrigger: { 
+          trigger: containerRef.current, 
+          start: "top bottom",
+          end: "bottom top",
+          scrub: 1.5 
+        } 
+      });
+
+      // Header text animation
+      gsap.fromTo(".process-header-text", 
+        { y: 60, opacity: 0 },
+        {
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.15,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: ".process-header",
+            start: "top 80%",
+          }
+        }
+      );
 
     }, containerRef);
     return () => ctx.revert();
@@ -101,13 +169,13 @@ export function Process() {
       <div className="max-w-[1400px] mx-auto relative z-10">
         
         {/* Header - Matching Figma */}
-        <div className="mb-16 text-center px-4">
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] text-black tracking-tight">
+        <div className="process-header mb-16 text-center px-4">
+          <h2 className="process-header-text text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] text-black tracking-tight">
             How <span className="text-[#CCFF00] italic">We Bring Ideas</span>
             <br />
             to Life Turning Vision
           </h2>
-          <div className="mt-4 inline-block">
+          <div className="process-header-text mt-4 inline-block">
             <span className="relative inline-block">
               <span className="text-5xl md:text-7xl lg:text-8xl font-black italic text-black">Into</span>
               <span className="ml-2 inline-block bg-[#CCFF00] rounded-full px-8 py-2 text-5xl md:text-7xl lg:text-8xl font-black italic text-black -rotate-2">
@@ -116,7 +184,7 @@ export function Process() {
             </span>
           </div>
           
-          <p className="mt-12 text-black/60 text-base md:text-lg max-w-xl mx-auto">
+          <p className="process-header-text mt-12 text-black/60 text-base md:text-lg max-w-xl mx-auto">
             At Digital Addis, every project begins with understanding your vision
           </p>
         </div>
@@ -130,33 +198,56 @@ export function Process() {
             <div className="diagonal-band-2 absolute top-[75%] left-[-20%] w-[140%] h-20 bg-[#CCFF00] rotate-[8deg]" />
           </div>
 
-          {/* SVG Path and Arrow */}
+          {/* SVG Path */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 1400 2400" preserveAspectRatio="xMidYMid meet">
             {/* Dashed connecting path */}
             <path 
               ref={pathRef}
-              d="M 700 280 
-                 C 700 350, 350 400, 350 520
-                 C 350 640, 350 700, 350 780
-                 C 350 900, 700 950, 900 1100
-                 C 1050 1200, 1050 1300, 1050 1400
-                 C 1050 1550, 700 1600, 500 1750
-                 C 350 1850, 350 1950, 400 2100" 
+              id="motion-path"
+              d="M 750 280 
+                 C 600 350, 400 420, 380 550
+                 C 360 680, 400 750, 420 850
+                 C 480 1000, 750 1050, 950 1180
+                 C 1100 1280, 1080 1380, 1050 1480
+                 C 1000 1620, 700 1700, 500 1820
+                 C 350 1920, 380 2020, 420 2150" 
               fill="none" 
               stroke="black" 
-              strokeWidth="2" 
-              strokeDasharray="12 12"
-              opacity="0.4"
+              strokeWidth="2.5" 
+              strokeDasharray="14 14"
+              strokeLinecap="round"
+              opacity="0.5"
             />
-            
-            {/* Animated Arrow */}
-            <g ref={arrowRef}>
-              <polygon 
-                points="0,-12 10,0 0,12 4,0" 
-                fill="black"
-              />
-            </g>
           </svg>
+
+          {/* Animated Arrow Element - HTML/CSS for better visibility */}
+          <div 
+            ref={arrowRef}
+            className="absolute z-[15] pointer-events-none"
+            style={{ top: 0, left: 0 }}
+          >
+            <div className="relative">
+              {/* Arrow body */}
+              <svg width="40" height="40" viewBox="0 0 40 40" className="drop-shadow-lg">
+                <defs>
+                  <filter id="arrow-shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3"/>
+                  </filter>
+                </defs>
+                <polygon 
+                  points="5,8 35,20 5,32 12,20" 
+                  fill="black"
+                  filter="url(#arrow-shadow)"
+                />
+                <polygon 
+                  points="7,10 32,20 7,30 13,20" 
+                  fill="#1a1a1a"
+                />
+              </svg>
+              {/* Trailing effect */}
+              <div className="absolute top-1/2 right-full -translate-y-1/2 w-8 h-1 bg-gradient-to-l from-black/40 to-transparent rounded-full" />
+            </div>
+          </div>
 
           {/* Card 1 - Discover & Understand (Top Right) */}
           <div 
@@ -226,22 +317,22 @@ export function Process() {
 // Process Card Component - Matching Figma Design
 function ProcessCard({ step }: { step: typeof processSteps[0] }) {
   return (
-    <div className="bg-black rounded-[2rem] p-2 shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 group">
+    <div className="bg-black rounded-[2rem] p-2 shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 group cursor-pointer">
       {/* Black header with dots */}
       <div className="bg-black rounded-t-[1.5rem] px-6 py-4 flex items-center gap-3">
-        <div className="w-3 h-3 rounded-full bg-white/30" />
-        <div className="w-3 h-3 rounded-full bg-white/30" />
+        <div className="w-3 h-3 rounded-full bg-white/30 group-hover:bg-[#CCFF00] transition-colors duration-300" />
+        <div className="w-3 h-3 rounded-full bg-white/30 group-hover:bg-[#CCFF00] transition-colors duration-300 delay-75" />
       </div>
       
       {/* White content area */}
       <div className="bg-white rounded-b-[1.5rem] rounded-t-[0.5rem] p-8 pt-6 min-h-[320px] flex flex-col">
         {/* Title with lime color */}
-        <h3 className="text-4xl lg:text-5xl font-black text-[#CCFF00] leading-[0.95] tracking-tight whitespace-pre-line italic mb-6">
+        <h3 className="text-4xl lg:text-5xl font-black text-[#CCFF00] leading-[0.95] tracking-tight whitespace-pre-line italic mb-6 group-hover:scale-105 transition-transform duration-300 origin-left">
           {step.title}
         </h3>
         
         {/* Description */}
-        <p className="text-black/50 text-sm leading-relaxed flex-grow">
+        <p className="text-black/50 text-sm leading-relaxed flex-grow group-hover:text-black/70 transition-colors duration-300">
           {step.description}
         </p>
       </div>
