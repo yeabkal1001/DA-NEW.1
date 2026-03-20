@@ -1,7 +1,8 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Renderer, Program, Mesh, Triangle, Color } from 'ogl';
+import { useDeviceCapabilities } from '@/src/hooks/useDeviceCapabilities';
 
 interface ThreadsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'color'> {
   color?: [number, number, number];
@@ -136,12 +137,22 @@ const Threads: React.FC<ThreadsProps> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationFrameId = useRef<number>(0);
+  const [isInitialized, setIsInitialized] = useState(false);
+  const capabilities = useDeviceCapabilities();
 
   useEffect(() => {
     if (!containerRef.current) return;
     const container = containerRef.current;
 
-    const renderer = new Renderer({ alpha: true, dpr: 1 });
+    // Disable WebGL on low-end devices or with reduced motion preference
+    if (capabilities.prefersReducedMotion || (capabilities.isMobile && capabilities.deviceMemory && capabilities.deviceMemory <= 2)) {
+      container.style.display = 'none';
+      return;
+    }
+
+    setIsInitialized(true);
+
+    const renderer = new Renderer({ alpha: true, dpr: capabilities.isMobile ? 0.8 : 1 });
     const gl = renderer.gl;
     gl.clearColor(0, 0, 0, 0);
     gl.enable(gl.BLEND);
@@ -195,7 +206,7 @@ const Threads: React.FC<ThreadsProps> = ({
 
     function update(t: number) {
       if (enableMouseInteraction) {
-        const smoothing = 0.05;
+        const smoothing = capabilities.isMobile ? 0.08 : 0.05;
         currentMouse[0] += smoothing * (targetMouse[0] - currentMouse[0]);
         currentMouse[1] += smoothing * (targetMouse[1] - currentMouse[1]);
         program.uniforms.uMouse.value[0] = currentMouse[0];
@@ -220,9 +231,10 @@ const Threads: React.FC<ThreadsProps> = ({
         container.removeEventListener('mouseleave', handleMouseLeave);
       }
       if (container.contains(gl.canvas)) container.removeChild(gl.canvas);
-      gl.getExtension('WEBGL_lose_context')?.loseContext();
+      const loseContext = gl.getExtension('WEBGL_lose_context');
+      if (loseContext) loseContext.loseContext();
     };
-  }, [color, amplitude, distance, enableMouseInteraction]);
+  }, [color, amplitude, distance, enableMouseInteraction, capabilities.isMobile, capabilities.prefersReducedMotion, capabilities.deviceMemory]);
 
   return <div ref={containerRef} className="w-full h-full relative" {...rest} />;
 };

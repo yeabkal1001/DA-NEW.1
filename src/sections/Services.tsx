@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollReveal } from "@/src/components/ScrollReveal";
@@ -28,6 +28,37 @@ const services = [
   },
 ];
 
+const ServiceCard = memo(function ServiceCard({
+  service,
+}: {
+  service: typeof services[0];
+}) {
+  return (
+    <div
+      className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover`}
+    >
+      <div className="mb-4">
+        <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
+        <p
+          className={`text-sm ${
+            service.bgColor === "bg-lime" ? "text-black/70" : "text-gray-600"
+          }`}
+        >
+          {service.description}
+        </p>
+      </div>
+      <div className="overflow-hidden rounded-2xl">
+        <img
+          src={service.image}
+          alt={service.title}
+          className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  );
+});
+
 export function Services() {
   const cardsRef = useRef<HTMLDivElement>(null);
 
@@ -49,6 +80,7 @@ export function Services() {
             trigger: cardsRef.current,
             start: "top 80%",
             toggleActions: "play none none none",
+            once: true,
           },
         }
       );
@@ -79,30 +111,7 @@ export function Services() {
           className="grid grid-cols-1 md:grid-cols-3 gap-6"
         >
           {services.map((service, index) => (
-            <div
-              key={index}
-              className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover`}
-            >
-              <div className="mb-4">
-                <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
-                <p
-                  className={`text-sm ${
-                    service.bgColor === "bg-lime"
-                      ? "text-black/70"
-                      : "text-gray-600"
-                  }`}
-                >
-                  {service.description}
-                </p>
-              </div>
-              <div className="overflow-hidden rounded-2xl">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  className="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-              </div>
-            </div>
+            <ServiceCard key={index} service={service} />
           ))}
         </div>
       </div>

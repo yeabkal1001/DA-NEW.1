@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { cn } from "@/src/lib/utils";
@@ -15,7 +15,7 @@ interface ScrollRevealProps {
   y?: number;
 }
 
-export function ScrollReveal({
+const ScrollRevealComponent = memo(function ScrollRevealComponent({
   children,
   className,
   delay = 0,
@@ -45,6 +45,7 @@ export function ScrollReveal({
             trigger: element,
             start: "top 85%",
             toggleActions: "play none none none",
+            once: true, // Only animate once
           },
         }
       );
@@ -58,4 +59,8 @@ export function ScrollReveal({
       {children}
     </div>
   );
+});
+
+export function ScrollReveal(props: ScrollRevealProps) {
+  return <ScrollRevealComponent {...props} />;
 }

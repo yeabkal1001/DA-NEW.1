@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, memo } from "react";
 import {
   Sheet,
   SheetContent,
@@ -9,16 +9,7 @@ import {
 } from "@/components/ui/sheet";
 import { Instagram, Twitter } from "lucide-react";
 
-export function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+const NavbarContent = memo(function NavbarContent({ isScrolled }: { isScrolled: boolean }) {
 
   const navLinks = [
     { name: "Services", href: "#services" },
@@ -28,8 +19,14 @@ export function Navbar() {
   ];
 
   return (
+    <NavbarInner isScrolled={isScrolled} navLinks={navLinks} />
+  );
+});
+
+function NavbarInner({ isScrolled, navLinks }: { isScrolled: boolean; navLinks: Array<{ name: string; href: string }> }) {
+  return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${
+      className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-700 ease-&lsqb;cubic-bezier(0.16,1,0.3,1)&rsqb; ${
         isScrolled 
           ? "py-4 bg-black/80 backdrop-blur-2xl border-b border-white/10 shadow-2xl" 
           : "py-8 bg-transparent border-b border-transparent"
@@ -116,4 +113,24 @@ export function Navbar() {
       </div>
     </header>
   );
+}
+
+export function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    let scrollTimeout: NodeJS.Timeout;
+    const handleScroll = () => {
+      clearTimeout(scrollTimeout);
+      setIsScrolled(window.scrollY > 50);
+      scrollTimeout = setTimeout(() => {}, 0);
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(scrollTimeout);
+    };
+  }, []);
+
+  return <NavbarContent isScrolled={isScrolled} />;
 }
