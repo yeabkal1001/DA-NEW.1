@@ -6,6 +6,8 @@ import {
   SheetContent,
   SheetTrigger,
   SheetClose,
+  SheetTitle,
+  SheetDescription,
 } from "@/components/ui/sheet";
 import { Instagram, Twitter } from "lucide-react";
 
@@ -97,6 +99,12 @@ function NavbarInner({ isScrolled, navLinks }: { isScrolled: boolean; navLinks: 
                 side="right" 
                 className="w-full sm:max-w-2xl bg-black/98 backdrop-blur-2xl border-l border-white/10 p-0 flex flex-col z-[200]"
               >
+                {/* Visually hidden title and description for accessibility */}
+                <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+                <SheetDescription className="sr-only">
+                  Main navigation menu. Use arrow keys to navigate between sections.
+                </SheetDescription>
+                
                 <div className="flex-1 overflow-auto py-32 px-8 sm:px-16 lg:px-24 flex flex-col justify-center">
                   
                   {/* Premium Header */}
