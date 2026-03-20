@@ -146,7 +146,7 @@ export default function ServicesPage() {
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Our Services</span>
             </div>
             
-            <h1 className="services-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="services-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
               Full-Service
               <br />
               <span className="text-lime italic">Digital Solutions</span>
@@ -204,7 +204,7 @@ export default function ServicesPage() {
           <div className="space-y-4 md:space-y-6">
             {mainServices.map((service, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
-                <div className={`${service.color} rounded-[1.5rem] md:rounded-[2.5rem] p-6 md:p-12 lg:p-16 group hover:shadow-2xl transition-all duration-500`}>
+                <div className={`${service.color} rounded-[1.5rem] md:rounded-[2.5rem] lg:rounded-[3rem] p-6 md:p-12 lg:p-16 xl:p-20 group hover:shadow-2xl hover:-translate-y-1 transition-all duration-500`}>
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-10 items-center">
                     <div>
                       <div className={`w-12 md:w-16 h-12 md:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 ${service.color === 'bg-lime' ? 'bg-black' : service.color === 'bg-black' ? 'bg-lime' : 'bg-black'}`}>
@@ -213,7 +213,7 @@ export default function ServicesPage() {
                       <p className={`text-xs md:text-sm font-bold uppercase tracking-wider mb-1 md:mb-2 ${service.textColor === 'text-white' ? 'text-white/40' : 'text-black/40'}`}>
                         {service.tagline}
                       </p>
-                      <h3 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight mb-3 md:mb-4 ${service.textColor}`}>
+                      <h3 className={`text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tight mb-3 md:mb-4 ${service.textColor}`}>
                         {service.title}
                       </h3>
                       <p className={`text-base md:text-lg leading-relaxed ${service.textColor === 'text-white' ? 'text-white/60' : 'text-black/60'}`}>

@@ -75,7 +75,7 @@ export default function AboutPage() {
                 <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">About Us</span>
               </div>
               
-              <h1 className="about-hero-reveal text-[2.5rem] sm:text-[3rem] md:text-[4.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+              <h1 className="about-hero-reveal text-[2.5rem] sm:text-[3rem] md:text-[4.5rem] lg:text-[5.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
                 About
                 <br />
                 <span className="text-lime italic">DigitalAddis</span>
@@ -95,13 +95,13 @@ export default function AboutPage() {
             </div>
             
             {/* Stats Grid */}
-            <div className="about-hero-reveal grid grid-cols-2 gap-3 md:gap-4 mt-8 lg:mt-0">
+            <div className="about-hero-reveal grid grid-cols-2 gap-3 md:gap-5 lg:gap-6 mt-8 lg:mt-0">
               {stats.map((stat, index) => (
                 <div 
                   key={index}
-                  className={`p-5 md:p-8 rounded-2xl md:rounded-3xl ${index === 0 ? 'bg-lime text-black' : 'bg-white/5 border border-white/10'}`}
+                  className={`p-5 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl hover:scale-[1.02] transition-transform duration-300 ${index === 0 ? 'bg-lime text-black' : 'bg-white/5 border border-white/10'}`}
                 >
-                  <div className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black mb-1 md:mb-2 ${index === 0 ? 'text-black' : 'text-lime'}`}>
+                  <div className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-1 md:mb-2 ${index === 0 ? 'text-black' : 'text-lime'}`}>
                     {stat.number}
                   </div>
                   <div className={`text-xs md:text-sm font-bold uppercase tracking-wider ${index === 0 ? 'text-black/60' : 'text-white/40'}`}>

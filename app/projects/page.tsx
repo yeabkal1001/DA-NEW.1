@@ -145,7 +145,7 @@ export default function ProjectsPage() {
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Our Portfolio</span>
             </div>
             
-            <h1 className="projects-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="projects-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
               Showcasing
               <br />
               <span className="text-lime italic">Digital Excellence</span>
@@ -183,7 +183,7 @@ export default function ProjectsPage() {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             {featuredProjects.slice(0, 2).map((project, index) => (
               <ScrollReveal key={project.id} delay={index * 0.15}>
-                <div className="group relative bg-black rounded-[1.5rem] md:rounded-[2rem] overflow-hidden h-[350px] md:h-[500px]">
+                <div className="group relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[350px] md:h-[500px] lg:h-[550px]">
                   <img 
                     src={project.image} 
                     alt={project.title}
@@ -206,9 +206,12 @@ export default function ProjectsPage() {
                     </p>
                     <div className="flex items-center justify-between">
                       <span className="text-lime text-xs md:text-sm font-bold">{project.category}</span>
-                      <button className="w-10 md:w-12 h-10 md:h-12 bg-lime rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <Link 
+                        href={`/projects/${project.id}`}
+                        className="w-10 md:w-12 h-10 md:h-12 bg-lime rounded-full flex items-center justify-center group-hover:scale-110 transition-transform"
+                      >
                         <ArrowUpRight className="w-4 md:w-5 h-4 md:h-5 text-black" />
-                      </button>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -286,7 +289,7 @@ export default function ProjectsPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {filteredProjects.map((project, index) => (
               <ScrollReveal key={project.id} delay={index * 0.05}>
-                <div className="group bg-white rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-lime/50 hover:shadow-xl transition-all duration-300">
+                <Link href={`/projects/${project.id}`} className="group block bg-white rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-lime/50 hover:shadow-xl transition-all duration-300">
                   <div className="relative h-40 md:h-56 overflow-hidden">
                     <img 
                       src={project.image} 
@@ -311,7 +314,7 @@ export default function ProjectsPage() {
                       ))}
                     </div>
                   </div>
-                </div>
+                </Link>
               </ScrollReveal>
             ))}
           </div>

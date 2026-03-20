@@ -149,7 +149,7 @@ export default function BlogPage() {
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Blog & Insights</span>
             </div>
             
-            <h1 className="blog-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="blog-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
               Ideas, Insights
               <br />
               <span className="text-lime italic">& Innovation</span>
@@ -187,7 +187,7 @@ export default function BlogPage() {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             {featuredPosts.map((post, index) => (
               <ScrollReveal key={post.id} delay={index * 0.15}>
-                <article className="group relative bg-black rounded-[1.5rem] md:rounded-[2rem] overflow-hidden h-[320px] md:h-[450px]">
+                <Link href={`/blog/${post.id}`} className="group block relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[320px] md:h-[450px] lg:h-[500px]">
                   <img 
                     src={post.image} 
                     alt={post.title}
@@ -222,12 +222,12 @@ export default function BlogPage() {
                           <p className="text-white/40 text-[10px] md:text-xs">{post.date}</p>
                         </div>
                       </div>
-                      <button className="w-10 md:w-12 h-10 md:h-12 bg-lime rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <span className="w-10 md:w-12 h-10 md:h-12 bg-lime rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
                         <ArrowRight className="w-4 md:w-5 h-4 md:h-5 text-black" />
-                      </button>
+                      </span>
                     </div>
                   </div>
-                </article>
+                </Link>
               </ScrollReveal>
             ))}
           </div>
@@ -267,7 +267,7 @@ export default function BlogPage() {
               <div className="space-y-4 md:space-y-6">
                 {filteredPosts.filter(p => !p.featured).map((post, index) => (
                   <ScrollReveal key={post.id} delay={index * 0.05}>
-                    <article className="group bg-white rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-lime/50 hover:shadow-lg transition-all duration-300">
+                    <Link href={`/blog/${post.id}`} className="group block bg-white rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-lime/50 hover:shadow-lg transition-all duration-300">
                       <div className="grid sm:grid-cols-3 gap-0">
                         <div className="relative h-40 sm:h-auto overflow-hidden">
                           <img 
@@ -305,7 +305,7 @@ export default function BlogPage() {
                           </div>
                         </div>
                       </div>
-                    </article>
+                    </Link>
                   </ScrollReveal>
                 ))}
               </div>

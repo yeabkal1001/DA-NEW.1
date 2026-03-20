@@ -32,9 +32,7 @@ const nextConfig = {
   },
 
   // Logging configuration
-  logging: {
-    level: 'error',
-  },
+  logging: false,
 
   // Turbopack configuration for Next.js 16
   turbopack: {},

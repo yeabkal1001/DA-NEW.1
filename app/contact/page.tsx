@@ -97,7 +97,7 @@ export default function ContactPage() {
             <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Contact Us</span>
           </div>
           
-          <h1 className="contact-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+          <h1 className="contact-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
             Let's Build
             <br />
             <span className="text-lime italic">Something Great</span>
@@ -166,7 +166,7 @@ export default function ContactPage() {
             {/* Right Side - Form */}
             <div className="lg:col-span-3">
               <ScrollReveal delay={0.2}>
-                <form onSubmit={handleSubmit} className="bg-white p-5 md:p-8 lg:p-12 rounded-[1.5rem] md:rounded-[2rem] border border-black/5 shadow-sm">
+                <form onSubmit={handleSubmit} className="bg-white p-5 md:p-8 lg:p-12 xl:p-16 rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] border border-black/5 shadow-sm hover:shadow-xl transition-shadow duration-500">
                   <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                     <div className="relative group">
                       <User className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
