@@ -9,7 +9,7 @@ const features = [
     title: "Turning Ideas Into Reality",
     description: "Inspire people that you make things happen.",
     icon: Lightbulb,
-    bgColor: "bg-gray-200",
+    bgColor: "bg-secondary/50 dark:bg-gray-800 text-foreground dark:text-white",
   },
   {
     title: "Creating Impact That Lasts",
@@ -48,15 +48,15 @@ const techStack = [
 
 export function Tools() {
   return (
-    <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-5xl xl:text-6xl font-bold mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-3xl lg:text-5xl xl:text-6xl font-bold mb-4 text-foreground dark:text-white">
             The Tools Powering Our
             <br />
             <span className="text-lime">Digital</span>{" "}
-            <span className="bg-lime px-3 md:px-4 py-0.5 md:py-1 rounded-full inline-block text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl">
+            <span className="bg-lime px-3 md:px-4 py-0.5 md:py-1 rounded-full inline-block text-xl sm:text-2xl md:text-3xl lg:text-5xl xl:text-6xl text-black">
               Innovation
             </span>
           </h2>
@@ -68,13 +68,13 @@ export function Tools() {
             <ScrollReveal
               key={index}
               delay={index * 0.1}
-              className={`${feature.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6`}
+              className={`${feature.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 border border-black/5 dark:border-white/5 shadow-sm`}
             >
               <feature.icon className="h-5 w-5 md:h-6 md:w-6 mb-3 md:mb-4 opacity-70" />
               <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2">{feature.title}</h3>
               <p
                 className={`text-xs md:text-sm ${
-                  feature.bgColor.includes("black")
+                  feature.bgColor.includes("black") || feature.bgColor.includes("gray-800")
                     ? "text-white/70"
                     : "text-black/70"
                 }`}

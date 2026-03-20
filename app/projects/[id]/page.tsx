@@ -195,7 +195,7 @@ export default function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <main className="min-h-screen bg-white">
+      <main className="min-h-screen bg-background text-white">
         <Navbar />
         <div className="min-h-[80vh] flex items-center justify-center">
           <div className="text-center">
@@ -211,7 +211,7 @@ export default function ProjectDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background text-white">
       <Navbar />
 
       {/* Hero Section */}
@@ -284,13 +284,13 @@ export default function ProjectDetailPage() {
       </section>
 
       {/* Overview */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <ScrollReveal>
               <div className="lg:sticky lg:top-32">
-                <div className="inline-flex items-center p-1 px-4 mb-6 bg-black/5 rounded-full">
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em]">Overview</span>
+                <div className="inline-flex items-center p-1 px-4 mb-6 bg-white/5 rounded-full border border-white/10">
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-white/60">Overview</span>
                 </div>
                 <h2 className="text-[2.5rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase">
                   About The
@@ -301,7 +301,7 @@ export default function ProjectDetailPage() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <p className="text-gray-600 text-lg md:text-xl leading-relaxed mb-12">
+              <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-12">
                 {project.fullDescription}
               </p>
 
@@ -313,7 +313,7 @@ export default function ProjectDetailPage() {
                     </span>
                     The Challenge
                   </h3>
-                  <p className="text-gray-600 leading-relaxed pl-11">
+                  <p className="text-white/50 leading-relaxed pl-11">
                     {project.challenge}
                   </p>
                 </div>
@@ -325,7 +325,7 @@ export default function ProjectDetailPage() {
                     </span>
                     Our Solution
                   </h3>
-                  <p className="text-gray-600 leading-relaxed pl-11">
+                  <p className="text-white/50 leading-relaxed pl-11">
                     {project.solution}
                   </p>
                 </div>
@@ -336,7 +336,7 @@ export default function ProjectDetailPage() {
       </section>
 
       {/* Gallery */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-12">
             <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-center">
@@ -408,7 +408,7 @@ export default function ProjectDetailPage() {
       )}
 
       {/* Navigation */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-white border-t border-black/5">
+      <section className="py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-background border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between gap-6">
             {project.prevProject && (
@@ -442,15 +442,15 @@ export default function ProjectDetailPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50">
         <div className="max-w-4xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-[2rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6">
+            <h2 className="text-[2rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 text-white">
               Ready to Start
               <br />
               <span className="text-lime italic">Your Project?</span>
             </h2>
-            <p className="text-gray-500 text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-white/40 text-lg mb-10 max-w-xl mx-auto font-medium">
               Let's discuss how we can help bring your vision to life with the same dedication and expertise.
             </p>
             <Link

@@ -132,7 +132,7 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background text-white">
       <Navbar />
       
       {/* Hero Section */}
@@ -175,7 +175,7 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Posts */}
-      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
+      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-white">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-8 md:mb-12">
             <div className="inline-flex items-center p-1 px-3 md:px-4 mb-3 md:mb-4 bg-black/5 rounded-full">
@@ -235,7 +235,7 @@ export default function BlogPage() {
       </section>
 
       {/* All Posts with Sidebar */}
-      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8 md:gap-12">
             {/* Main Content */}
@@ -253,8 +253,8 @@ export default function BlogPage() {
                         onClick={() => setActiveCategory(category)}
                         className={`px-3 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap flex-shrink-0 ${
                           activeCategory === category
-                            ? 'bg-black text-white'
-                            : 'bg-white text-black/60 hover:bg-black/5'
+                            ? 'bg-lime text-black'
+                            : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
                         }`}
                       >
                         {category}
@@ -267,7 +267,7 @@ export default function BlogPage() {
               <div className="space-y-4 md:space-y-6">
                 {filteredPosts.filter(p => !p.featured).map((post, index) => (
                   <ScrollReveal key={post.id} delay={index * 0.05}>
-                    <Link href={`/blog/${post.id}`} className="group block bg-white rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-lime/50 hover:shadow-lg transition-all duration-300">
+                    <Link href={`/blog/${post.id}`} className="group block bg-white/5 rounded-xl md:rounded-2xl overflow-hidden border border-white/10 hover:border-lime/50 transition-all duration-300 h-full">
                       <div className="grid sm:grid-cols-3 gap-0">
                         <div className="relative h-40 sm:h-auto overflow-hidden">
                           <img 
@@ -289,7 +289,7 @@ export default function BlogPage() {
                           <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2 group-hover:text-lime transition-colors leading-snug">
                             {post.title}
                           </h3>
-                          <p className="text-gray-500 text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">
+                          <p className="text-white/40 text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">
                             {post.excerpt}
                           </p>
                           <div className="flex items-center justify-between">
@@ -299,9 +299,9 @@ export default function BlogPage() {
                                 alt={post.author}
                                 className="w-6 md:w-8 h-6 md:h-8 rounded-full object-cover"
                               />
-                              <span className="text-xs md:text-sm font-medium">{post.author}</span>
+                              <span className="text-xs md:text-sm font-medium text-white">{post.author}</span>
                             </div>
-                            <span className="text-gray-400 text-[10px] md:text-xs">{post.readTime}</span>
+                            <span className="text-white/30 text-[10px] md:text-xs">{post.readTime}</span>
                           </div>
                         </div>
                       </div>
@@ -321,8 +321,8 @@ export default function BlogPage() {
             <div className="lg:col-span-1 space-y-6 md:space-y-8">
               {/* Categories */}
               <ScrollReveal>
-                <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 border border-black/5">
-                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4">Categories</h3>
+                <div className="bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/10">
+                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4 text-white">Categories</h3>
                   <ul className="space-y-1 md:space-y-2">
                     {categories.map((category) => (
                       <li key={category}>
@@ -331,7 +331,7 @@ export default function BlogPage() {
                           className={`w-full text-left px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                             activeCategory === category
                               ? 'bg-lime text-black'
-                              : 'hover:bg-black/5'
+                              : 'text-white/60 hover:bg-white/5 hover:text-white'
                           }`}
                         >
                           {category}
@@ -344,13 +344,13 @@ export default function BlogPage() {
 
               {/* Trending Topics */}
               <ScrollReveal delay={0.1}>
-                <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-6 border border-black/5">
-                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4">Trending Topics</h3>
+                <div className="bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/10">
+                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4 text-white">Trending Topics</h3>
                   <div className="flex flex-wrap gap-2">
                     {trendingTopics.map((topic, index) => (
                       <span 
                         key={index}
-                        className="px-2 md:px-3 py-1.5 md:py-2 bg-black/5 rounded-full text-[10px] md:text-xs font-bold hover:bg-lime hover:text-black transition-colors cursor-pointer"
+                        className="px-2 md:px-3 py-1.5 md:py-2 bg-white/10 rounded-full text-[10px] md:text-xs font-bold text-white/60 hover:bg-lime hover:text-black transition-colors cursor-pointer"
                       >
                         {topic}
                       </span>

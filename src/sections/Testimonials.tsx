@@ -34,7 +34,7 @@ const testimonials = [
       "The team at Digital Addis delivered beyond our expectations. Their innovative approach and dedication to quality made all the difference in our project success.",
     image: "/images/testimonial-3.jpg",
     type: "video",
-    bgColor: "bg-gray-200",
+    bgColor: "bg-secondary/50 dark:bg-gray-800",
   },
 ];
 
@@ -68,18 +68,18 @@ export function Testimonials() {
   }, []);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-12">
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground dark:text-white">
                 What Our <span className="text-lime">Clients</span>
                 <br />
                 Say About Us
               </h2>
-              <p className="text-gray-600 text-lg max-w-2xl">
+              <p className="text-muted-foreground dark:text-white/50 text-lg max-w-2xl">
                 Our clients are at the center of everything we do. Their
                 experiences reflect our commitment to creativity, innovation, and
                 delivering high-quality digital solutions.
@@ -92,7 +92,7 @@ export function Testimonials() {
                   key={i}
                   src={t.image}
                   alt={t.name}
-                  className="w-12 h-12 rounded-full border-2 border-white object-cover"
+                  className="w-12 h-12 rounded-full border-2 border-background object-cover"
                 />
               ))}
             </div>
@@ -108,7 +108,7 @@ export function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`${testimonial.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 min-w-[280px] sm:min-w-[320px] md:min-w-[350px] max-w-[400px] flex-shrink-0 snap-start opacity-0`}
+              className={`${testimonial.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 min-w-[280px] sm:min-w-[320px] md:min-w-[350px] max-w-[400px] flex-shrink-0 snap-start opacity-0 border border-black/5 dark:border-white/5 shadow-sm text-foreground dark:text-white`}
             >
               {testimonial.type === "text" ? (
                 <>
@@ -122,9 +122,9 @@ export function Testimonials() {
                       <h4 className="font-bold">{testimonial.name}</h4>
                       <p
                         className={`text-sm ${
-                          testimonial.bgColor.includes("black")
-                            ? "text-white/70"
-                            : "text-black/60"
+                          testimonial.bgColor.includes("lime")
+                            ? "text-black/60"
+                            : "text-muted-foreground dark:text-white/70"
                         }`}
                       >
                         {testimonial.role}
@@ -133,9 +133,9 @@ export function Testimonials() {
                   </div>
                   <p
                     className={`text-sm leading-relaxed ${
-                      testimonial.bgColor.includes("black")
-                        ? "text-white/80"
-                        : "text-black/70"
+                      testimonial.bgColor.includes("lime")
+                        ? "text-black/70"
+                        : "text-muted-foreground dark:text-white/80"
                     }`}
                   >
                     {testimonial.content}
@@ -184,9 +184,9 @@ export function Testimonials() {
                   </div>
                   <p
                     className={`text-sm mt-3 leading-relaxed ${
-                      testimonial.bgColor.includes("black")
-                        ? "text-white/80"
-                        : "text-black/70"
+                      testimonial.bgColor.includes("lime")
+                        ? "text-black/70"
+                        : "text-muted-foreground dark:text-white/80"
                     }`}
                   >
                     {testimonial.content}

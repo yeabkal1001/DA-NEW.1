@@ -136,27 +136,27 @@ export function Process() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-16 md:py-32 bg-white relative overflow-hidden">
+    <section ref={containerRef} className="py-16 md:py-32 bg-background relative overflow-hidden">
       
       <div className="max-w-[1400px] mx-auto relative z-10">
         
         {/* Header - Responsive */}
         <div className="process-header mb-10 md:mb-16 text-center px-4">
-          <h2 className="process-header-text text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-black tracking-tight">
+          <h2 className="process-header-text text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-foreground dark:text-white tracking-tight">
             How <span className="text-[#CCFF00] italic">We Bring Ideas</span>
             <br />
             to Life Turning Vision
           </h2>
           <div className="process-header-text mt-3 md:mt-4 inline-block">
             <span className="relative inline-block">
-              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-black">Into</span>
+              <span className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-foreground dark:text-white">Into</span>
               <span className="ml-1 md:ml-2 inline-block bg-[#CCFF00] rounded-full px-4 md:px-6 lg:px-8 py-1 md:py-2 text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-black -rotate-2">
                 Digital Reality
               </span>
             </span>
           </div>
           
-          <p className="process-header-text mt-6 md:mt-12 text-black/60 text-sm md:text-base lg:text-lg max-w-xl mx-auto px-4">
+          <p className="process-header-text mt-6 md:mt-12 text-muted-foreground dark:text-white/50 text-sm md:text-base lg:text-lg max-w-xl mx-auto px-4">
             At Digital Addis, every project begins with understanding your vision
           </p>
         </div>
@@ -183,11 +183,11 @@ export function Process() {
                  C 1000 1620, 700 1700, 500 1820
                  C 350 1920, 380 2020, 420 2150" 
               fill="none" 
-              stroke="black" 
+              stroke="currentColor" 
+              className="text-black/10 dark:text-white/20"
               strokeWidth="2" 
               strokeDasharray="12 16"
               strokeLinecap="round"
-              opacity="0.7"
             />
           </svg>
 
@@ -206,12 +206,14 @@ export function Process() {
                 </defs>
                 <polygon 
                   points="5,8 35,20 5,32 12,20" 
-                  fill="black"
+                  fill="currentColor"
+                  className="text-black dark:text-white shadow-xl"
                   filter="url(#arrow-shadow)"
                 />
                 <polygon 
                   points="7,10 32,20 7,30 13,20" 
-                  fill="#1a1a1a"
+                  fill="currentColor"
+                  className="text-gray-200 dark:text-[#f0f0f0]"
                 />
               </svg>
               <div className="absolute top-1/2 right-full -translate-y-1/2 w-8 h-1 bg-gradient-to-l from-black/40 to-transparent rounded-full" />

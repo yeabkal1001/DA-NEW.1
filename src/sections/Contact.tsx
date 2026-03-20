@@ -30,7 +30,7 @@ export function Contact() {
   };
 
   return (
-    <section className="py-16 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white overflow-hidden">
+    <section className="py-16 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background overflow-hidden">
       <div className="max-w-[1400px] mx-auto">
         
         {/* Section header */}
@@ -39,12 +39,12 @@ export function Contact() {
              <span className="w-2 h-2 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
              <span className="text-[8px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Let's Build Together</span>
           </div>
-          <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] font-[1000] leading-[0.9] text-black uppercase tracking-tighter mb-4 md:mb-8 max-w-5xl mx-auto px-2">
+          <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] font-[1000] leading-[0.9] text-foreground dark:text-white uppercase tracking-tighter mb-4 md:mb-8 max-w-5xl mx-auto px-2">
             Ready to Bring Your
             <br />
             <span className="text-lime italic">Idea to Life?</span>
           </h2>
-          <p className="text-gray-400 text-sm md:text-lg lg:text-xl font-bold max-w-xl mx-auto leading-relaxed uppercase tracking-tight opacity-80 px-4">
+          <p className="text-muted-foreground dark:text-gray-400 text-sm md:text-lg lg:text-xl font-bold max-w-xl mx-auto leading-relaxed uppercase tracking-tight opacity-80 px-4">
             Partner with Digital Addis and let our team guide you through the digital journey.
           </p>
         </ScrollReveal>
@@ -79,13 +79,13 @@ export function Contact() {
           {/* Right side - Form */}
           <div className="lg:col-span-7">
             <ScrollReveal delay={0.2} className="h-full">
-              <form onSubmit={handleSubmit} className="bg-gray-50/50 p-6 md:p-8 lg:p-12 rounded-[2rem] md:rounded-[3.5rem] border border-black/5 h-full flex flex-col justify-center">
+              <form onSubmit={handleSubmit} className="bg-black/5 dark:bg-white/5 p-6 md:p-8 lg:p-12 rounded-[2rem] md:rounded-[3.5rem] border border-black/5 dark:border-white/5 h-full flex flex-col justify-center">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                   <div className="relative group">
                     <User className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                     <Input
                       placeholder="FULL NAME"
-                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-white border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase"
+                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-background border-black/10 dark:border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase text-foreground dark:text-white"
                       value={formData.fullName}
                       onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                     />
@@ -95,7 +95,7 @@ export function Contact() {
                     <Input
                       type="email"
                       placeholder="EMAIL ADDRESS"
-                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-white border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase"
+                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-background border-black/10 dark:border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase text-foreground dark:text-white"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     />
@@ -107,7 +107,7 @@ export function Contact() {
                     <Phone className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                     <Input
                       placeholder="PHONE NUMBER"
-                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-white border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase"
+                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-background border-black/10 dark:border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase text-foreground dark:text-white"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     />
@@ -116,7 +116,7 @@ export function Contact() {
                     <Building className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                     <Input
                       placeholder="COMPANY NAME"
-                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-white border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase"
+                      className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-background border-black/10 dark:border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase text-foreground dark:text-white"
                       value={formData.company}
                       onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                     />
@@ -128,10 +128,10 @@ export function Contact() {
                     value={formData.service}
                     onValueChange={(value) => setFormData({ ...formData, service: value })}
                   >
-                    <SelectTrigger className="py-6 md:py-8 px-4 md:px-6 rounded-[1.25rem] md:rounded-[1.5rem] bg-white border-white/10 shadow-sm font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase">
+                    <SelectTrigger className="py-6 md:py-8 px-4 md:px-6 rounded-[1.25rem] md:rounded-[1.5rem] bg-background border-black/10 dark:border-white/10 shadow-sm font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase text-foreground dark:text-white">
                       <SelectValue placeholder="SERVICE INTERESTED IN" />
                     </SelectTrigger>
-                    <SelectContent className="rounded-xl md:rounded-2xl border-none shadow-2xl p-2 bg-white">
+                    <SelectContent className="rounded-xl md:rounded-2xl border-none shadow-2xl p-2 bg-popover text-popover-foreground">
                       <SelectItem value="uiux" className="rounded-lg md:rounded-xl py-2.5 md:py-3 font-bold text-[10px] md:text-xs tracking-wider uppercase">UI/UX Design</SelectItem>
                       <SelectItem value="web" className="rounded-lg md:rounded-xl py-2.5 md:py-3 font-bold text-[10px] md:text-xs tracking-wider uppercase">Web Development</SelectItem>
                       <SelectItem value="branding" className="rounded-lg md:rounded-xl py-2.5 md:py-3 font-bold text-[10px] md:text-xs tracking-wider uppercase">Branding</SelectItem>
@@ -144,7 +144,7 @@ export function Contact() {
                   <FileText className="absolute left-4 md:left-6 top-6 md:top-8 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
                   <Textarea
                     placeholder="TELL US ABOUT YOUR PROJECT..."
-                    className="pl-12 md:pl-16 pt-6 md:pt-8 min-h-[140px] md:min-h-[180px] rounded-[1.5rem] md:rounded-[2rem] bg-white text-black border border-black/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider uppercase leading-loose"
+                    className="pl-12 md:pl-16 pt-6 md:pt-8 min-h-[140px] md:min-h-[180px] rounded-[1.5rem] md:rounded-[2rem] bg-background text-foreground dark:text-white border border-black/10 dark:border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider uppercase leading-loose"
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                   />

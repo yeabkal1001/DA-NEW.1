@@ -9,7 +9,7 @@ import { HeroSequence } from "@/src/sections/HeroSequence";
 import { Navbar } from "@/src/components/Navbar";
 
 // Skeleton component for loading states - improves CLS
-const SectionSkeleton = memo(function SectionSkeleton({ height = "h-96", bg = "bg-white" }: { height?: string; bg?: string }) {
+const SectionSkeleton = memo(function SectionSkeleton({ height = "h-96", bg = "bg-background" }: { height?: string; bg?: string }) {
   return <div className={`${height} ${bg} animate-pulse`} aria-hidden="true" />;
 });
 
@@ -67,7 +67,7 @@ const Contact = dynamic(
 
 const Footer = dynamic(
   () => import("@/src/sections/Footer").then(m => ({ default: m.Footer })),
-  { loading: () => <SectionSkeleton height="h-24" bg="bg-black" />, ssr: true }
+  { loading: () => <SectionSkeleton height="h-24" bg="bg-secondary/30" />, ssr: true }
 );
 
 // Register GSAP plugins once at module level
@@ -121,7 +121,7 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <main id="main-content" className="min-h-screen bg-white">
+      <main id="main-content" className="min-h-screen bg-background transition-colors duration-500">
         <HeroSequence />
         <LogoMarquee />
         <Services />

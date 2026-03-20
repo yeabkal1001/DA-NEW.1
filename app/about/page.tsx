@@ -57,11 +57,11 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background text-foreground transition-colors duration-500">
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[85vh] md:min-h-[90vh] bg-black text-white flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[85vh] md:min-h-[90vh] bg-black dark:bg-black text-white flex items-center overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute top-20 left-10 md:left-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lime blur-[100px] md:blur-[120px]" />
@@ -100,7 +100,7 @@ export default function AboutPage() {
               {stats.map((stat, index) => (
                 <div 
                   key={index}
-                  className={`p-5 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl hover:scale-[1.02] transition-transform duration-300 ${index === 0 ? 'bg-lime text-black' : 'bg-white/5 border border-white/10'}`}
+                  className={`p-5 md:p-8 lg:p-10 rounded-2xl md:rounded-3xl hover:scale-[1.02] transition-transform duration-300 ${index === 0 ? 'bg-lime text-black' : 'bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10'}`}
                 >
                   <div className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-1 md:mb-2 ${index === 0 ? 'text-black' : 'text-lime'}`}>
                     {stat.number}
@@ -116,15 +116,15 @@ export default function AboutPage() {
       </section>
 
       {/* Story Section */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-start">
             <ScrollReveal>
               <div className="lg:sticky lg:top-32">
-                <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
-                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Our Story</span>
+                <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
+                  <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted-foreground">Our Story</span>
                 </div>
-                <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] lg:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+                <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[2.75rem] lg:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground">
                   Technology That
                   <br />
                   <span className="text-lime">Makes Work</span>
@@ -135,7 +135,7 @@ export default function AboutPage() {
             </ScrollReveal>
             
             <ScrollReveal delay={0.2}>
-              <div className="space-y-4 md:space-y-6 text-gray-600 leading-relaxed text-base md:text-lg">
+              <div className="space-y-4 md:space-y-6 text-muted-foreground leading-relaxed text-base md:text-lg">
                 <p>
                   Digital Addis (DA) was built with a simple idea in mind: technology should make people's work easier, safer and more meaningful. For over a decade, we have been working closely with banks, government institutions, international organizations, NGOs, healthcare providers, telecom operators, manufacturers, real estate developers, hotels and logistics companies to help them solve real, everyday challenges using technology.
                 </p>
@@ -155,7 +155,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-y border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             {/* Mission */}
@@ -198,13 +198,13 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-white">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-10 md:mb-16">
-            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Our Values</span>
+            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted-foreground">Our Values</span>
             </div>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase text-foreground">
               What <span className="text-lime">Drives</span> Us
             </h2>
           </ScrollReveal>

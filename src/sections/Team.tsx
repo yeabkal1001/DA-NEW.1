@@ -27,20 +27,20 @@ export function Team() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-white overflow-hidden min-h-screen flex items-center">
+    <section ref={containerRef} className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-background overflow-hidden min-h-screen flex items-center">
       <div className="max-w-[1300px] mx-auto w-full">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 lg:items-center">
           
           {/* Left Content */}
           <div className="lg:w-[32%] flex flex-col pt-0">
-            <h2 className="team-reveal text-[2.5rem] sm:text-[3rem] md:text-[3.2rem] lg:text-[4.2rem] font-[900] leading-[0.85] tracking-tighter text-black uppercase mb-4 md:mb-6">
+            <h2 className="team-reveal text-[2.5rem] sm:text-[3rem] md:text-[3.2rem] lg:text-[4.2rem] font-[900] leading-[0.85] tracking-tighter text-foreground dark:text-white uppercase mb-4 md:mb-6">
               The <br className="hidden sm:block" />
               Minds <br className="hidden sm:block" />
               Behind <br className="hidden sm:block" />
               The <br className="hidden sm:block" />
               <span className="text-lime italic">Innovation</span>
             </h2>
-            <p className="team-reveal text-gray-400 text-sm md:text-base leading-relaxed max-w-sm font-medium">
+            <p className="team-reveal text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm font-medium">
               Our team is a diverse group of visionary designers, innovative developers, and strategic thinkers, united by a shared passion for creating bold digital experiences.
             </p>
           </div>
@@ -87,7 +87,7 @@ export function Team() {
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-3/4 h-6 md:h-8 bg-lime rounded-r-full shadow-lg shadow-lime/20" />
               </div>
 
-              <div className="team-reveal h-[240px] sm:h-auto md:h-[320px] bg-black rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 flex flex-col justify-start relative overflow-hidden group">
+              <div className="team-reveal h-[240px] sm:h-auto md:h-[320px] bg-black dark:bg-black rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 flex flex-col justify-start relative overflow-hidden group shadow-xl">
                 <div className="absolute top-6 right-[-10px] w-16 md:w-20 h-16 md:h-20 bg-white/5 rounded-full group-hover:scale-125 transition-transform duration-700" />
                 <h3 className="text-2xl md:text-3xl font-black text-white uppercase leading-[0.9] mb-4 md:mb-5">Our <br />Mission</h3>
                 <p className="text-white/40 text-xs font-bold leading-[1.1]">

@@ -51,8 +51,8 @@ const mainServices = [
     tagline: "Scalable Infrastructure for Growth",
     description: "Transform your infrastructure with our cloud solutions for maximum efficiency and cost-effectiveness.",
     features: ["Cloud Migration", "Infrastructure Management", "DevOps Services", "Cost Optimization", "Multi-cloud Strategy"],
-    color: "bg-gray-100",
-    textColor: "text-black",
+    color: "bg-gray-200/10",
+    textColor: "text-white",
   },
   {
     icon: Cpu,
@@ -78,8 +78,8 @@ const mainServices = [
     tagline: "Empowering Your Team",
     description: "Equip your team with the skills they need to succeed in the digital age.",
     features: ["Technical Training", "Certification Programs", "Workshops", "On-site Training", "E-learning Solutions"],
-    color: "bg-gray-100",
-    textColor: "text-black",
+    color: "bg-gray-200/10",
+    textColor: "text-white",
   },
 ];
 
@@ -122,11 +122,11 @@ export default function ServicesPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background text-foreground transition-colors duration-500">
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[80vh] md:min-h-[85vh] bg-black text-white flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[80vh] md:min-h-[85vh] bg-black dark:bg-black text-white flex items-center overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-lime/10 rounded-full blur-[100px] md:blur-[150px]" />
@@ -187,16 +187,16 @@ export default function ServicesPage() {
       </section>
 
       {/* Main Services Section */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-12 md:mb-20">
-            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">What We Offer</span>
+            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted-foreground">What We Offer</span>
             </div>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground">
               Core <span className="text-lime italic">Services</span>
             </h2>
-            <p className="text-gray-500 text-base md:text-lg max-w-2xl mx-auto px-4">
+            <p className="text-white/40 text-base md:text-lg max-w-2xl mx-auto px-4">
               Comprehensive digital solutions designed to help your organization grow and thrive.
             </p>
           </ScrollReveal>
@@ -244,10 +244,10 @@ export default function ServicesPage() {
       </section>
 
       {/* Additional Services Grid */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-10 md:mb-16">
-            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground">
               Additional <span className="text-lime italic">Capabilities</span>
             </h2>
           </ScrollReveal>
@@ -255,12 +255,12 @@ export default function ServicesPage() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-6">
             {additionalServices.map((service, index) => (
               <ScrollReveal key={index} delay={index * 0.05}>
-                <div className="bg-white rounded-xl md:rounded-2xl p-4 md:p-8 h-full border border-black/5 hover:border-lime/50 hover:-translate-y-1 transition-all duration-300 group">
+                <div className="bg-secondary/50 dark:bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-8 h-full border border-black/5 dark:border-white/10 hover:border-lime/50 transition-all duration-300 group">
                   <div className="w-10 md:w-12 h-10 md:h-12 bg-lime/10 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-5 group-hover:bg-lime transition-colors">
                     <service.icon className="w-5 md:w-6 h-5 md:h-6 text-black" />
                   </div>
-                  <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2">{service.title}</h3>
-                  <p className="text-gray-500 text-xs md:text-base">{service.description}</p>
+                  <h3 className="text-base md:text-xl font-bold mb-1 md:mb-2 text-foreground">{service.title}</h3>
+                  <p className="text-muted-foreground text-xs md:text-base">{service.description}</p>
                 </div>
               </ScrollReveal>
             ))}
@@ -303,10 +303,10 @@ export default function ServicesPage() {
       </section>
 
       {/* Process Section */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-10 md:mb-16">
-            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground">
               Our <span className="text-lime italic">Approach</span>
             </h2>
           </ScrollReveal>
@@ -320,10 +320,10 @@ export default function ServicesPage() {
             ].map((item, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
                 <div className="relative">
-                  <span className="text-[3rem] md:text-[6rem] font-black text-black/5 leading-none">{item.step}</span>
+                  <span className="text-[3rem] md:text-[6rem] font-black text-black/5 dark:text-white/5 leading-none">{item.step}</span>
                   <div className="-mt-6 md:-mt-10 relative z-10">
-                    <h3 className="text-lg md:text-2xl font-black uppercase mb-2 md:mb-3">{item.title}</h3>
-                    <p className="text-gray-500 text-xs md:text-base">{item.description}</p>
+                    <h3 className="text-lg md:text-2xl font-black uppercase mb-2 md:mb-3 text-foreground">{item.title}</h3>
+                    <p className="text-muted-foreground text-xs md:text-base">{item.description}</p>
                   </div>
                 </div>
               </ScrollReveal>

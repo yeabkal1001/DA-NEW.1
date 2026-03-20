@@ -127,7 +127,7 @@ export default function ProjectsPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-background">
       <Navbar />
       
       {/* Hero Section */}
@@ -169,13 +169,13 @@ export default function ProjectsPage() {
       </section>
 
       {/* Featured Projects */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-10 md:mb-16">
-            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 rounded-full">
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Featured Work</span>
+            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-white/5 rounded-full border border-white/10">
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Featured Work</span>
             </div>
-            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase">
+            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-white">
               Highlighted <span className="text-lime italic">Projects</span>
             </h2>
           </ScrollReveal>
@@ -256,15 +256,15 @@ export default function ProjectsPage() {
       </section>
 
       {/* All Projects with Filter */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-50">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-t border-white/5">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-8 md:mb-12">
             <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 md:gap-6">
               <div>
-                <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-2 md:mb-4">
+                <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-2 md:mb-4 text-white">
                   All <span className="text-lime italic">Projects</span>
                 </h2>
-                <p className="text-gray-500 text-sm md:text-base">Browse our complete portfolio</p>
+                <p className="text-white/40 text-sm md:text-base">Browse our complete portfolio</p>
               </div>
               
               {/* Category Filter - Horizontal scroll on mobile */}
@@ -275,8 +275,8 @@ export default function ProjectsPage() {
                     onClick={() => setActiveCategory(category)}
                     className={`px-3 md:px-4 py-1.5 md:py-2 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap flex-shrink-0 ${
                       activeCategory === category
-                        ? 'bg-black text-white'
-                        : 'bg-white text-black/60 hover:bg-black/5'
+                        ? 'bg-lime text-black'
+                        : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
                     }`}
                   >
                     {category}
@@ -289,7 +289,7 @@ export default function ProjectsPage() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {filteredProjects.map((project, index) => (
               <ScrollReveal key={project.id} delay={index * 0.05}>
-                <Link href={`/projects/${project.id}`} className="group block bg-white rounded-xl md:rounded-2xl overflow-hidden border border-black/5 hover:border-lime/50 hover:shadow-xl transition-all duration-300">
+                <Link href={`/projects/${project.id}`} className="group block bg-gray-200/5 rounded-xl md:rounded-2xl overflow-hidden border border-white/5 hover:border-lime/50 transition-all duration-300">
                   <div className="relative h-40 md:h-56 overflow-hidden">
                     <img 
                       src={project.image} 

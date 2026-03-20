@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 import { PageLoader } from "@/src/components/PageLoader";
+import { ThemeProvider } from "@/src/components/theme-provider";
 
 // Enhanced SEO metadata for the entire site
 export const metadata: Metadata = {
@@ -168,8 +169,15 @@ export default function RootLayout({
         />
       </head>
       <body className="antialiased">
-        <PageLoader />
-        <ErrorBoundary>{children}</ErrorBoundary>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <PageLoader />
+          <ErrorBoundary>{children}</ErrorBoundary>
+        </ThemeProvider>
       </body>
     </html>
   );

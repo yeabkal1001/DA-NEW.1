@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import { ThemeToggle } from "./ThemeToggle";
 
 // Memoize navigation links at module level
 const navLinks = [
@@ -64,7 +65,7 @@ export const Navbar = memo(function Navbar() {
         )}
       >
         <div className="w-full px-4 md:px-6 flex justify-center">
-          <div className="flex items-center justify-between gap-4 md:gap-12 border border-white/10 rounded-full bg-black/40 backdrop-blur-xl px-4 md:px-4 py-2 md:py-3 md:pl-8 shadow-2xl max-w-7xl w-full">
+          <div className="flex items-center justify-between gap-4 md:gap-12 border border-black/10 dark:border-white/10 rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-xl px-4 md:px-4 py-2 md:py-3 md:pl-8 shadow-2xl max-w-7xl w-full">
             {/* Brand Logo - Using Next.js Image for optimization */}
             <Link href="/" className="group flex items-center gap-2 md:gap-4 shrink-0" aria-label="Digital Addis - Home">
               <div className="relative h-8 md:h-10 w-8 md:w-10">
@@ -77,8 +78,8 @@ export const Navbar = memo(function Navbar() {
                   priority
                 />
               </div>
-              <div className="hidden sm:flex flex-col border-l border-white/10 pl-3 md:pl-4 py-0.5">
-                <span className="text-[8px] md:text-[10px] font-black text-white uppercase tracking-[0.3em] leading-tight">
+              <div className="hidden sm:flex flex-col border-l border-black/10 dark:border-white/10 pl-3 md:pl-4 py-0.5">
+                <span className="text-[8px] md:text-[10px] font-black text-black dark:text-white uppercase tracking-[0.3em] leading-tight">
                   Digital
                 </span>
                 <span className="text-[8px] md:text-[10px] font-black text-lime uppercase tracking-[0.3em] leading-tight">
@@ -95,15 +96,16 @@ export const Navbar = memo(function Navbar() {
                   href={link.link}
                   prefetch={true}
                   aria-label={link.ariaLabel}
-                  className="relative text-white/40 text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-300 hover:text-white focus-visible:text-white"
+                  className="relative text-black/40 dark:text-white/40 text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-300 hover:text-black dark:hover:text-white focus-visible:text-black dark:focus-visible:text-white"
                 >
                   {link.name}
                 </Link>
               ))}
             </nav>
 
-            {/* Desktop Contact Button */}
-            <div className="hidden md:flex items-center">
+            {/* Theme Toggle and Contact */}
+            <div className="hidden md:flex items-center gap-4">
+              <ThemeToggle />
               <Link
                 href="/contact"
                 prefetch={true}
@@ -114,15 +116,18 @@ export const Navbar = memo(function Navbar() {
             </div>
 
             {/* Mobile Menu Button */}
-            <button
-              onClick={toggleMobileMenu}
-              className="lg:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/10 text-white"
-              aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
-              aria-expanded={isMobileMenuOpen}
-              aria-controls="mobile-menu"
-            >
-              {isMobileMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
-            </button>
+            <div className="lg:hidden flex items-center gap-2">
+              <ThemeToggle />
+              <button
+                onClick={toggleMobileMenu}
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white"
+                aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                aria-expanded={isMobileMenuOpen}
+                aria-controls="mobile-menu"
+              >
+                {isMobileMenuOpen ? <X className="w-5 h-5" aria-hidden="true" /> : <Menu className="w-5 h-5" aria-hidden="true" />}
+              </button>
+            </div>
           </div>
         </div>
       </header>

@@ -22,16 +22,16 @@ const logos = [
 
 export function TrustedBrands() {
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-12 text-center">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-foreground dark:text-white">
             <span className="text-lime">Trusted</span> by Leading
             <br />
             Brands
           </h2>
-          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground dark:text-white/50 text-lg max-w-2xl mx-auto">
             We're proud to collaborate with companies that believe in innovation,
             creativity, and digital excellence.
           </p>

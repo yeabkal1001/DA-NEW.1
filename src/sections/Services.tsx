@@ -18,13 +18,13 @@ const services = [
     title: "UI/UX & Web Design",
     description: "Creating visually stunning and highly functional digital experiences.",
     image: "/images/service-2.jpg",
-    bgColor: "bg-gray-200",
+    bgColor: "bg-secondary/30 dark:bg-gray-800",
   },
   {
     title: "Digital Marketing",
     description: "Data-driven strategies to amplify your brand's reach and impact.",
     image: "/images/service-3.jpg",
-    bgColor: "bg-gray-200",
+    bgColor: "bg-secondary/30 dark:bg-gray-800",
   },
 ];
 
@@ -35,13 +35,13 @@ const ServiceCard = memo(function ServiceCard({
 }) {
   return (
     <div
-      className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover`}
+      className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover border border-black/5 dark:border-white/5 shadow-sm`}
     >
       <div className="mb-4">
-        <h3 className="text-2xl font-bold mb-2">{service.title}</h3>
+        <h3 className="text-2xl font-bold mb-2 text-foreground dark:text-white">{service.title}</h3>
         <p
           className={`text-sm ${
-            service.bgColor === "bg-lime" ? "text-black/70" : "text-gray-600"
+            service.bgColor.includes("bg-lime") ? "text-black/70" : "text-muted-foreground dark:text-white/60"
           }`}
         >
           {service.description}
@@ -90,16 +90,16 @@ export function Services() {
   }, []);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
+    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground dark:text-white">
             Mastering the <span className="text-lime">digital</span>
             <br />
             landscape with <span className="text-lime">precision.</span>
           </h2>
-          <p className="text-gray-600 text-lg max-w-xl">
+          <p className="text-muted-foreground dark:text-white/50 text-lg max-w-xl">
             Comprehensive services designed to scale your business and dominate
             your niche.
           </p>
