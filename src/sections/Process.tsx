@@ -41,9 +41,8 @@ export function Process() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Arrow follows the path on scroll
-      if (pathRef.current && arrowRef.current) {
-        // Set initial position at start of path
+      // Arrow follows the path on scroll - desktop only
+      if (pathRef.current && arrowRef.current && window.innerWidth >= 768) {
         gsap.set(arrowRef.current, { 
           xPercent: -50, 
           yPercent: -50,
@@ -51,7 +50,6 @@ export function Process() {
           scale: 1
         });
 
-        // Animate arrow along path with scroll
         gsap.to(arrowRef.current, {
           motionPath: {
             path: pathRef.current,
@@ -69,77 +67,66 @@ export function Process() {
             scrub: 0.5,
           }
         });
-
-        // Keep path as a visible dashed line (no draw animation to preserve dashes)
-        // The path stays visible as broken/dashed while arrow moves along it
       }
 
       // Card reveal animations with stagger effect
-      gsap.utils.toArray<HTMLElement>(".process-card").forEach((card, i) => {
+      gsap.utils.toArray<HTMLElement>(".process-card").forEach((card) => {
         gsap.fromTo(card, 
           { 
-            y: 120, 
+            y: 80, 
             opacity: 0, 
-            scale: 0.85,
-            rotateX: 15
+            scale: 0.9,
           },
           {
             y: 0,
             opacity: 1,
             scale: 1,
-            rotateX: 0,
             ease: "power3.out",
-            duration: 1.2,
+            duration: 1,
             scrollTrigger: {
               trigger: card,
               start: "top 95%",
-              end: "top 50%",
+              end: "top 60%",
               scrub: 1,
             }
           }
         );
-
-        // Hover float animation
-        card.addEventListener('mouseenter', () => {
-          gsap.to(card, { y: -10, scale: 1.02, duration: 0.4, ease: "power2.out" });
-        });
-        card.addEventListener('mouseleave', () => {
-          gsap.to(card, { y: 0, scale: 1, duration: 0.4, ease: "power2.out" });
-        });
       });
 
-      // Parallax for diagonal bands
-      gsap.to(".diagonal-band-1", { 
-        x: -150, 
-        scrollTrigger: { 
-          trigger: containerRef.current, 
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5 
-        } 
-      });
-      gsap.to(".diagonal-band-2", { 
-        x: 150, 
-        scrollTrigger: { 
-          trigger: containerRef.current, 
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.5 
-        } 
-      });
+      // Parallax for diagonal bands - desktop only
+      if (window.innerWidth >= 768) {
+        gsap.to(".diagonal-band-1", { 
+          x: -150, 
+          scrollTrigger: { 
+            trigger: containerRef.current, 
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5 
+          } 
+        });
+        gsap.to(".diagonal-band-2", { 
+          x: 150, 
+          scrollTrigger: { 
+            trigger: containerRef.current, 
+            start: "top bottom",
+            end: "bottom top",
+            scrub: 1.5 
+          } 
+        });
+      }
 
       // Header text animation
       gsap.fromTo(".process-header-text", 
-        { y: 60, opacity: 0 },
+        { y: 40, opacity: 0 },
         {
           y: 0,
           opacity: 1,
-          duration: 1,
-          stagger: 0.15,
+          duration: 0.8,
+          stagger: 0.1,
           ease: "power3.out",
           scrollTrigger: {
             trigger: ".process-header",
-            start: "top 80%",
+            start: "top 85%",
           }
         }
       );
@@ -149,27 +136,27 @@ export function Process() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-32 bg-white relative overflow-hidden">
+    <section ref={containerRef} className="py-16 md:py-32 bg-white relative overflow-hidden">
       
       <div className="max-w-[1400px] mx-auto relative z-10">
         
-        {/* Header - Matching Figma */}
-        <div className="process-header mb-16 text-center px-4">
-          <h2 className="process-header-text text-5xl md:text-7xl lg:text-8xl font-black leading-[0.9] text-black tracking-tight">
+        {/* Header - Responsive */}
+        <div className="process-header mb-10 md:mb-16 text-center px-4">
+          <h2 className="process-header-text text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-black tracking-tight">
             How <span className="text-[#CCFF00] italic">We Bring Ideas</span>
             <br />
             to Life Turning Vision
           </h2>
-          <div className="process-header-text mt-4 inline-block">
+          <div className="process-header-text mt-3 md:mt-4 inline-block">
             <span className="relative inline-block">
-              <span className="text-5xl md:text-7xl lg:text-8xl font-black italic text-black">Into</span>
-              <span className="ml-2 inline-block bg-[#CCFF00] rounded-full px-8 py-2 text-5xl md:text-7xl lg:text-8xl font-black italic text-black -rotate-2">
+              <span className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black italic text-black">Into</span>
+              <span className="ml-1 md:ml-2 inline-block bg-[#CCFF00] rounded-full px-4 md:px-8 py-1 md:py-2 text-3xl sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black italic text-black -rotate-2">
                 Digital Reality
               </span>
             </span>
           </div>
           
-          <p className="process-header-text mt-12 text-black/60 text-base md:text-lg max-w-xl mx-auto">
+          <p className="process-header-text mt-6 md:mt-12 text-black/60 text-sm md:text-base lg:text-lg max-w-xl mx-auto px-4">
             At Digital Addis, every project begins with understanding your vision
           </p>
         </div>
@@ -185,7 +172,6 @@ export function Process() {
 
           {/* SVG Path */}
           <svg className="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 1400 2400" preserveAspectRatio="xMidYMid meet">
-            {/* Dashed connecting path */}
             <path 
               ref={pathRef}
               id="motion-path"
@@ -205,14 +191,13 @@ export function Process() {
             />
           </svg>
 
-          {/* Animated Arrow Element - HTML/CSS for better visibility */}
+          {/* Animated Arrow Element */}
           <div 
             ref={arrowRef}
             className="absolute z-[15] pointer-events-none"
             style={{ top: 0, left: 0 }}
           >
             <div className="relative">
-              {/* Arrow body */}
               <svg width="40" height="40" viewBox="0 0 40 40" className="drop-shadow-lg">
                 <defs>
                   <filter id="arrow-shadow" x="-50%" y="-50%" width="200%" height="200%">
@@ -229,54 +214,35 @@ export function Process() {
                   fill="#1a1a1a"
                 />
               </svg>
-              {/* Trailing effect */}
               <div className="absolute top-1/2 right-full -translate-y-1/2 w-8 h-1 bg-gradient-to-l from-black/40 to-transparent rounded-full" />
             </div>
           </div>
 
-          {/* Card 1 - Discover & Understand (Top Right) */}
+          {/* Card 1 - Discover & Understand */}
           <div 
             className="process-card absolute z-10 w-[380px]"
             style={{ top: "180px", right: "15%", transform: `rotate(${processSteps[0].rotation}deg)` }}
           >
             <ProcessCard step={processSteps[0]} />
-            {/* Side text */}
-            <div className="absolute -right-[280px] top-1/2 -translate-y-1/2 w-60 text-left">
-              <p className="text-xs text-black/40 leading-relaxed">
-                From the first conversation to the final launch, we carefully design, develop, and refine every detail to ensure the result is not only visually engaging but also effective and impactful for your audience.
-              </p>
-            </div>
           </div>
 
-          {/* Card 2 - Plan & Strategize (Left) */}
+          {/* Card 2 - Plan & Strategize */}
           <div 
             className="process-card absolute z-10 w-[380px]"
             style={{ top: "680px", left: "8%", transform: `rotate(${processSteps[1].rotation}deg)` }}
           >
             <ProcessCard step={processSteps[1]} />
-            {/* Side text */}
-            <div className="absolute -left-[20px] -bottom-[140px] w-72 text-left">
-              <p className="text-xs text-black/40 leading-relaxed">
-                From the first conversation to the final launch, we carefully design, develop, and refine every detail to ensure the result is not only visually engaging but also effective and impactful for your audience.
-              </p>
-            </div>
           </div>
 
-          {/* Card 3 - Design & Create (Right) */}
+          {/* Card 3 - Design & Create */}
           <div 
             className="process-card absolute z-10 w-[380px]"
             style={{ top: "1280px", right: "10%", transform: `rotate(${processSteps[2].rotation}deg)` }}
           >
             <ProcessCard step={processSteps[2]} />
-            {/* Side text */}
-            <div className="absolute -left-[280px] top-1/2 -translate-y-1/2 w-60 text-right">
-              <p className="text-xs text-black/40 leading-relaxed">
-                From the first conversation to the final launch, we carefully design, develop, and refine every detail to ensure the result is not only visually engaging but also effective and impactful for your audience.
-              </p>
-            </div>
           </div>
 
-          {/* Card 4 - Build & Launch (Bottom Left) */}
+          {/* Card 4 - Build & Launch */}
           <div 
             className="process-card absolute z-10 w-[380px]"
             style={{ top: "1880px", left: "12%", transform: `rotate(${processSteps[3].rotation}deg)` }}
@@ -285,11 +251,11 @@ export function Process() {
           </div>
         </div>
 
-        {/* Mobile View */}
-        <div className="md:hidden flex flex-col gap-12 pt-8 px-4">
+        {/* Mobile View - Stacked Cards */}
+        <div className="md:hidden flex flex-col gap-6 pt-4 px-4">
           {processSteps.map((step, i) => (
             <div key={i} className="process-card">
-              <ProcessCard step={step} />
+              <ProcessCardMobile step={step} index={i} />
             </div>
           ))}
         </div>
@@ -299,25 +265,44 @@ export function Process() {
   );
 }
 
-// Process Card Component - Matching Figma Design
+// Desktop Process Card Component
 function ProcessCard({ step }: { step: typeof processSteps[0] }) {
   return (
     <div className="bg-black rounded-[2rem] p-2 shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 group cursor-pointer">
-      {/* Black header with dots */}
       <div className="bg-black rounded-t-[1.5rem] px-6 py-4 flex items-center gap-3">
         <div className="w-3 h-3 rounded-full bg-white/30 group-hover:bg-[#CCFF00] transition-colors duration-300" />
         <div className="w-3 h-3 rounded-full bg-white/30 group-hover:bg-[#CCFF00] transition-colors duration-300 delay-75" />
       </div>
       
-      {/* White content area */}
       <div className="bg-white rounded-b-[1.5rem] rounded-t-[0.5rem] p-8 pt-6 min-h-[320px] flex flex-col">
-        {/* Title with lime color */}
         <h3 className="text-4xl lg:text-5xl font-black text-[#CCFF00] leading-[0.95] tracking-tight whitespace-pre-line italic mb-6 group-hover:scale-105 transition-transform duration-300 origin-left">
           {step.title}
         </h3>
         
-        {/* Description */}
         <p className="text-black/50 text-sm leading-relaxed flex-grow group-hover:text-black/70 transition-colors duration-300">
+          {step.description}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+// Mobile Process Card Component - Optimized for touch
+function ProcessCardMobile({ step, index }: { step: typeof processSteps[0]; index: number }) {
+  return (
+    <div className="bg-black rounded-[1.5rem] p-1.5 shadow-xl">
+      <div className="bg-black rounded-t-[1.25rem] px-4 py-3 flex items-center gap-2">
+        <div className="w-2.5 h-2.5 rounded-full bg-white/30" />
+        <div className="w-2.5 h-2.5 rounded-full bg-white/30" />
+        <span className="ml-auto text-white/20 text-xs font-mono">0{index + 1}</span>
+      </div>
+      
+      <div className="bg-white rounded-b-[1.25rem] rounded-t-[0.25rem] p-5 pt-4">
+        <h3 className="text-2xl sm:text-3xl font-black text-[#CCFF00] leading-[0.95] tracking-tight whitespace-pre-line italic mb-4">
+          {step.title}
+        </h3>
+        
+        <p className="text-black/50 text-sm leading-relaxed">
           {step.description}
         </p>
       </div>
