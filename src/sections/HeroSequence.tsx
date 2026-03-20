@@ -1,15 +1,18 @@
 'use client';
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import Threads from "@/components/ui/threads";
 import { ArrowRight, ArrowDown } from "lucide-react";
+import { useDeviceCapabilities } from "@/src/hooks/useDeviceCapabilities";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const FRAME_COUNT = 240;
+const PRIORITY_FRAMES = 8; // Load these frames first
+const BATCH_SIZE = 20; // Load images in batches
 
 function getFramePath(index: number): string {
   const num = String(index).padStart(3, "0");
@@ -25,37 +28,90 @@ export function HeroSequence() {
   const progressRef = useRef<HTMLDivElement>(null);
   const progressFillRef = useRef<HTMLDivElement>(null);
   const threadsRef = useRef<HTMLDivElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>([]);
+  const imagesRef = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
   const frameIndexRef = useRef({ value: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
+  const capabilities = useDeviceCapabilities();
+  const loadedIndicesRef = useRef<Set<number>>(new Set());
 
-  // Preload all images with progress
+  // Progressive image loading with priority frames
   useEffect(() => {
-    const images: HTMLImageElement[] = [];
     let loadedCount = 0;
+    let isMounted = true;
 
-    for (let i = 1; i <= FRAME_COUNT; i++) {
-      const img = new Image();
-      img.crossOrigin = "anonymous";
-      img.src = getFramePath(i);
-      const onDone = () => {
-        loadedCount++;
-        setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-        if (loadedCount === FRAME_COUNT) {
-          imagesRef.current = images;
-          // Small delay so user sees 100% before transition
-          setTimeout(() => setIsLoaded(true), 400);
-        }
-      };
-      img.onload = onDone;
-      img.onerror = onDone;
-      images.push(img);
-    }
+    const loadImagesProgressively = async () => {
+      // Load priority frames first (for visible frames at start)
+      const priorityFrames = Array.from({ length: PRIORITY_FRAMES }, (_, i) => i + 1);
+      
+      for (const frameNum of priorityFrames) {
+        if (!isMounted) return;
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.src = getFramePath(frameNum);
+        
+        await new Promise<void>((resolve) => {
+          img.onload = () => {
+            imagesRef.current[frameNum - 1] = img;
+            loadedIndicesRef.current.add(frameNum);
+            loadedCount++;
+            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+            resolve();
+          };
+          img.onerror = () => {
+            loadedCount++;
+            resolve();
+          };
+        });
+      }
+
+      // Load remaining images in batches
+      for (let batch = 0; batch < Math.ceil(FRAME_COUNT / BATCH_SIZE); batch++) {
+        const batchStart = PRIORITY_FRAMES + batch * BATCH_SIZE + 1;
+        const batchEnd = Math.min(batchStart + BATCH_SIZE, FRAME_COUNT + 1);
+
+        const batchPromises = Array.from({ length: batchEnd - batchStart }, (_, i) => {
+          const frameNum = batchStart + i;
+          return new Promise<void>((resolve) => {
+            const img = new Image();
+            img.crossOrigin = "anonymous";
+            img.src = getFramePath(frameNum);
+            
+            img.onload = () => {
+              imagesRef.current[frameNum - 1] = img;
+              loadedIndicesRef.current.add(frameNum);
+              loadedCount++;
+              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+              resolve();
+            };
+            img.onerror = () => {
+              loadedCount++;
+              resolve();
+            };
+          });
+        });
+
+        await Promise.all(batchPromises);
+        if (!isMounted) return;
+
+        // Small delay between batches to not block main thread
+        await new Promise(resolve => setTimeout(resolve, 10));
+      }
+
+      if (isMounted && loadedCount >= PRIORITY_FRAMES) {
+        setTimeout(() => isMounted && setIsLoaded(true), 400);
+      }
+    };
+
+    loadImagesProgressively();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
-  // Draw frame on canvas
-  const drawFrame = (index: number) => {
+  // Memoized draw function with caching
+  const drawFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
@@ -80,7 +136,7 @@ export function HeroSequence() {
 
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
-  };
+  }, []);
 
   // Resize canvas
   useEffect(() => {
