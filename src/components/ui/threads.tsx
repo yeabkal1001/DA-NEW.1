@@ -119,8 +119,12 @@ void mainImage(out vec4 fragColor, in vec2 fragCoord) {
         ));
     }
 
+    // Brighter output for neon effect - increased contrast and saturation
     float colorVal = 1.0 - line_strength;
-    fragColor = vec4(uColor * colorVal, colorVal);
+    float boostedColorVal = pow(colorVal, 0.7) * 1.3;
+    // Apply glow effect for neon appearance
+    float glowVal = min(boostedColorVal, 1.0);
+    fragColor = vec4(uColor * glowVal, glowVal);
 }
 
 void main() {
