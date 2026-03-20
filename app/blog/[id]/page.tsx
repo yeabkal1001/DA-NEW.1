@@ -146,20 +146,24 @@ export default function BlogPostPage() {
     
     // Small delay to ensure DOM elements are rendered
     const timer = setTimeout(() => {
-      const ctx = gsap.context(() => {
-        const elements = heroRef.current?.querySelectorAll(".blog-post-reveal");
-        if (elements && elements.length > 0) {
-          gsap.from(elements, {
-            y: 60,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.12,
-            ease: "power4.out",
-          });
-        }
-      }, heroRef);
-      return () => ctx.revert();
-    }, 50);
+      const container = heroRef.current;
+      if (!container) return;
+      
+      const elements = container.querySelectorAll(".blog-post-reveal");
+      if (!elements || elements.length === 0) return;
+      
+      // Create animation without using gsap.context to avoid scope warnings
+      const tl = gsap.timeline();
+      tl.from(elements, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.12,
+        ease: "power4.out",
+      });
+      
+      return () => tl.kill();
+    }, 100);
     
     return () => clearTimeout(timer);
   }, [postId, post]);
