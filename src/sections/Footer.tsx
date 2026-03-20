@@ -1,17 +1,20 @@
 import { Instagram, Twitter, Youtube } from "lucide-react";
+import Link from "next/link";
 
 const navigation = [
-  { label: "Home", href: "#" },
-  { label: "Portfolio", href: "#" },
-  { label: "Services", href: "#" },
-  { label: "Process", href: "#" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Blog", href: "/blog" },
+  { label: "Contact", href: "/contact" },
 ];
 
 const services = [
-  { label: "UI/UX Design", href: "#" },
-  { label: "Web Development", href: "#" },
-  { label: "Digital Strategy", href: "#" },
-  { label: "Branding", href: "#" },
+  { label: "Custom Software", href: "/services" },
+  { label: "Cybersecurity", href: "/services" },
+  { label: "Cloud Services", href: "/services" },
+  { label: "Digital Consulting", href: "/services" },
 ];
 
 const socialLinks = [
@@ -27,11 +30,13 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
           {/* Brand column */}
           <div>
-            <img 
-              src="/dalogo.webp" 
-              alt="Digital Addis Logo" 
-              className="h-14 w-auto mb-6 object-contain"
-            />
+            <Link href="/">
+              <img 
+                src="/dalogo.webp" 
+                alt="Digital Addis Logo" 
+                className="h-14 w-auto mb-6 object-contain"
+              />
+            </Link>
             <p className="text-gray-400 text-sm mb-6">
               Creating the digital benchmarks for tomorrow's industry leaders.
             </p>
@@ -57,12 +62,12 @@ export function Footer() {
             <ul className="space-y-3">
               {navigation.map((item, index) => (
                 <li key={index}>
-                  <a
+                  <Link
                     href={item.href}
                     className="text-gray-400 hover:text-lime transition-colors"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -76,12 +81,12 @@ export function Footer() {
             <ul className="space-y-3">
               {services.map((item, index) => (
                 <li key={index}>
-                  <a
+                  <Link
                     href={item.href}
                     className="text-gray-400 hover:text-lime transition-colors"
                   >
                     {item.label}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
