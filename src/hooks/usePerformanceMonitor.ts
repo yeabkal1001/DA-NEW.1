@@ -36,9 +36,9 @@ export function usePerformanceMonitor(componentName?: string) {
   }, []);
 
   return {
-    getMetrics: () => vitalsTracker.getMetrics(),
-    isHealthy: () => vitalsTracker.isHealthy(),
-    logMetrics: () => vitalsTracker.logMetrics(),
+    getMetrics: () => vitalsTracker?.getMetrics() ?? { timestamp: Date.now() },
+    isHealthy: () => vitalsTracker?.isHealthy() ?? true,
+    logMetrics: () => vitalsTracker?.logMetrics(),
   };
 }
 
