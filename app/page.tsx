@@ -120,10 +120,6 @@ export default function Home() {
 
   return (
     <>
-      {/* Skip to content link for accessibility */}
-      <a href="#main-content" className="skip-link">
-        Skip to main content
-      </a>
       <Navbar />
       <main id="main-content" className="min-h-screen bg-white">
         <HeroSequence />

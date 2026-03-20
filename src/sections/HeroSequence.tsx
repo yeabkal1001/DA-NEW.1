@@ -11,13 +11,16 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const FRAME_COUNT = 192;
-const PRIORITY_FRAMES = 10;
+const ORIGINAL_FRAME_COUNT = 192;
+const SKIP_STEP = 4;
+const FRAME_COUNT = Math.ceil(ORIGINAL_FRAME_COUNT / SKIP_STEP);
+const PRIORITY_FRAMES = 5;
 
 // Pre-compute frame names at module level for performance
 const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
-  const num = String(i).padStart(3, "0");
-  const delay = (i % 3 === 0 || i === 0) ? "0.041s" : "0.042s";
+  const originalIndex = i * SKIP_STEP;
+  const num = String(originalIndex).padStart(3, "0");
+  const delay = (originalIndex % 3 === 0 || originalIndex === 0) ? "0.041s" : "0.042s";
   return `/images/compressed-files (2)/frame_${num}_delay-${delay}_compressed.webp`;
 });
 
