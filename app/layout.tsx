@@ -182,7 +182,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={cn("antialiased", sans.variable, moonWalk.variable)}>
+      <body className={cn("antialiased", sans.variable, moonWalk.variable)} suppressHydrationWarning={true}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -65,6 +65,7 @@ export const Navbar = memo(function Navbar() {
           "fixed top-4 md:top-6 left-0 right-0 z-[100] transition-all duration-700 pointer-events-none",
           isScrolled ? "py-1 opacity-95 scale-[0.98] md:scale-95" : "opacity-100 translate-y-0"
         )}
+        suppressHydrationWarning={true}
       >
         <div className="w-full px-4 md:px-8 flex justify-center pointer-events-auto">
           <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-black/5 dark:border-white/10 rounded-full bg-white/70 dark:bg-black/60 backdrop-blur-xl px-2 py-2 shadow-2xl transition-colors duration-500">
@@ -151,6 +152,7 @@ export const Navbar = memo(function Navbar() {
           "fixed inset-0 z-[99] bg-white/95 dark:bg-black/95 backdrop-blur-xl transition-all duration-500 lg:hidden",
           isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
+        suppressHydrationWarning={true}
       >
         <div className="flex flex-col items-center justify-center h-full gap-6 px-6">
           {navLinks.map((link, index) => (

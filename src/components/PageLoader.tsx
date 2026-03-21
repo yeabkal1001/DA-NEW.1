@@ -58,7 +58,7 @@ export function PageLoader() {
   if (!isLoading) return null;
 
   return (
-    <div className="loader-container fixed inset-0 z-[9999] flex items-center justify-center pointer-events-auto">
+    <div className="loader-container fixed inset-0 z-[9999] flex items-center justify-center pointer-events-auto" suppressHydrationWarning={true}>
       {/* Background layer */}
       <div className="loader-bg absolute inset-0 bg-black" />
       
