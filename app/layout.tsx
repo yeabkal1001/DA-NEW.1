@@ -1,15 +1,15 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Outfit } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import localFont from "next/font/local";
 import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 import { PageLoader } from "@/src/components/PageLoader";
 import { ThemeProvider } from "@/src/components/theme-provider";
 import { cn } from "@/src/lib/utils";
 
-const outfit = Outfit({ 
+const sans = Plus_Jakarta_Sans({ 
   subsets: ["latin"], 
-  variable: "--font-outfit",
+  variable: "--font-sans",
   display: "swap"
 });
 
@@ -182,7 +182,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={cn("antialiased", outfit.variable, moonWalk.variable)}>
+      <body className={cn("antialiased", sans.variable, moonWalk.variable)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

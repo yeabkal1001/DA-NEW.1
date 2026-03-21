@@ -12,12 +12,16 @@ export default {
   theme: {
     extend: {
       colors: {
+        black: "#212121",
+        white: "#e6e6e6",
+        transparent: "transparent",
+        current: "currentColor",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
-        lime: "#CCFF00",
+        lime: "#a7e000",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",

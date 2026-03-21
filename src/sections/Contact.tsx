@@ -178,7 +178,7 @@ export function Contact() {
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-lime text-black hover:bg-black hover:text-white rounded-full py-7 md:py-10 text-[10px] md:text-[12px] font-[1000] uppercase tracking-[0.4em] md:tracking-[0.5em] transition-all duration-500 shadow-xl shadow-lime/20 border-none disabled:opacity-70"
+                  className="w-full bg-lime text-black hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black rounded-full py-7 md:py-10 text-[10px] md:text-[12px] font-[1000] uppercase tracking-[0.4em] md:tracking-[0.5em] transition-all duration-500 shadow-xl shadow-lime/20 border-none disabled:opacity-70"
                 >
                   {isSubmitting ? "Sending Request..." : "Get Started Now"}
                 </Button>

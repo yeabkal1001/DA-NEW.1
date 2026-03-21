@@ -197,7 +197,7 @@ export function HeroSequence() {
 
   return (
     <div ref={containerRef} className="hero-sequence-container" style={{ height: "500vh" }}>
-      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-[#0A100D]">
+      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-black">
         
         {/* Right Side Video (Split Layout) */}
         <div className="absolute inset-y-0 right-0 w-full md:w-[55%] h-full z-0 overflow-hidden md:rounded-l-[3rem] shadow-[-20px_0_50px_rgba(0,0,0,0.5)]">
@@ -251,7 +251,7 @@ export function HeroSequence() {
         <div className="absolute bottom-0 left-0 w-full z-30 flex gap-6 px-6 sm:px-12 md:px-16 lg:px-24 py-6 md:py-8 items-center bg-gradient-to-t from-black/80 to-transparent border-t border-white/5 backdrop-blur-sm">
           <div className="flex items-center gap-4 cursor-pointer group shrink-0">
              <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white transition-colors">
-                <svg className="w-4 h-4 text-white group-hover:text-[#0A100D] translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                <svg className="w-4 h-4 text-white group-hover:text-black translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
              </div>
              <span className="text-[10px] font-bold tracking-widest text-white uppercase hidden sm:block">Play Trailer</span>
           </div>
@@ -272,9 +272,9 @@ export function HeroSequence() {
           </div>
 
           <div className="flex items-center gap-3 sm:gap-4 ml-auto shrink-0 relative z-50">
-             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-[#0A100D] transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">in</span></a>
-             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-[#0A100D] transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">ig</span></a>
-             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-[#0A100D] transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">x</span></a>
+             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">in</span></a>
+             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">ig</span></a>
+             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-black transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">x</span></a>
           </div>
         </div>
 

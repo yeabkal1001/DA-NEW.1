@@ -56,13 +56,13 @@ export function Hero() {
     >
       {/* Decorative curved line */}
       <svg
-        className="absolute top-20 right-0 w-96 h-96 opacity-20 pointer-events-none"
+        className="absolute top-20 right-0 w-96 h-96 opacity-20 pointer-events-none text-lime"
         viewBox="0 0 400 400"
         fill="none"
       >
         <path
           d="M400 0C400 110.457 356.228 216.448 278.284 294.392C200.34 372.336 94.3487 416.108 -16.1084 416.108"
-          stroke="#CCFF00"
+          stroke="currentColor"
           strokeWidth="2"
           strokeDasharray="8 8"
         />

@@ -143,15 +143,15 @@ export function Process() {
         {/* Header - Responsive */}
         <div className="process-header mb-10 md:mb-16 text-center px-4">
           <h2 className="process-header-text text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-foreground dark:text-white tracking-tight">
-            How <span className="text-[#CCFF00] italic">We Bring Ideas</span>
+            How <span className="text-lime italic">We Bring Ideas</span>
             <br />
             to Life Turning Vision
           </h2>
           <div className="process-header-text mt-3 md:mt-4 inline-block">
             <span className="relative inline-block">
               <span className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-foreground dark:text-white">Into</span>
-              <span className="ml-1 md:ml-2 inline-block bg-[#CCFF00] rounded-full px-4 md:px-6 lg:px-8 py-1 md:py-2 text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-black -rotate-2">
-                Digital Reality
+              <span className="ml-1 md:ml-2 inline-block bg-lime rounded-full px-4 md:px-6 lg:px-8 py-1 md:py-2 text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-black -rotate-2">
+                To Life
               </span>
             </span>
           </div>
@@ -166,8 +166,8 @@ export function Process() {
           
           {/* Diagonal Lime Bands */}
           <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <div className="diagonal-band-1 absolute top-[15%] left-[-20%] w-[140%] h-20 bg-[#CCFF00] -rotate-[8deg]" />
-            <div className="diagonal-band-2 absolute top-[75%] left-[-20%] w-[140%] h-20 bg-[#CCFF00] rotate-[8deg]" />
+            <div className="diagonal-band-1 absolute top-[15%] left-[-20%] w-[140%] h-20 bg-lime -rotate-[8deg]" />
+            <div className="diagonal-band-2 absolute top-[75%] left-[-20%] w-[140%] h-20 bg-lime rotate-[8deg]" />
           </div>
 
           {/* SVG Path */}
@@ -213,7 +213,7 @@ export function Process() {
                 <polygon 
                   points="7,10 32,20 7,30 13,20" 
                   fill="currentColor"
-                  className="text-gray-200 dark:text-[#f0f0f0]"
+                  className="text-gray-200 dark:text-white"
                 />
               </svg>
               <div className="absolute top-1/2 right-full -translate-y-1/2 w-8 h-1 bg-gradient-to-l from-black/40 to-transparent rounded-full" />
@@ -270,18 +270,18 @@ export function Process() {
 // Desktop Process Card Component
 function ProcessCard({ step }: { step: typeof processSteps[0] }) {
   return (
-    <div className="bg-black rounded-[2rem] p-2 shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 group cursor-pointer">
-      <div className="bg-black rounded-t-[1.5rem] px-6 py-4 flex items-center gap-3">
-        <div className="w-3 h-3 rounded-full bg-white/30 group-hover:bg-[#CCFF00] transition-colors duration-300" />
-        <div className="w-3 h-3 rounded-full bg-white/30 group-hover:bg-[#CCFF00] transition-colors duration-300 delay-75" />
+    <div className="bg-black dark:bg-white/5 rounded-[2rem] p-2 shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 group cursor-pointer border dark:border-white/10">
+      <div className="bg-black dark:bg-transparent rounded-t-[1.5rem] px-6 py-4 flex items-center gap-3">
+        <div className="w-3 h-3 rounded-full bg-white/30 dark:bg-white/20 group-hover:bg-lime transition-colors duration-300" />
+        <div className="w-3 h-3 rounded-full bg-white/30 dark:bg-white/20 group-hover:bg-lime transition-colors duration-300 delay-75" />
       </div>
       
-      <div className="bg-white rounded-b-[1.5rem] rounded-t-[0.5rem] p-8 pt-6 min-h-[320px] flex flex-col">
-        <h3 className="text-4xl lg:text-5xl font-black text-[#CCFF00] leading-[0.95] tracking-tight whitespace-pre-line italic mb-6 group-hover:scale-105 transition-transform duration-300 origin-left">
+      <div className="bg-white dark:bg-black rounded-b-[1.5rem] rounded-t-[0.5rem] p-8 pt-6 min-h-[320px] flex flex-col">
+        <h3 className="text-4xl lg:text-5xl font-black text-lime leading-[0.95] tracking-tight whitespace-pre-line italic mb-6 group-hover:scale-105 transition-transform duration-300 origin-left">
           {step.title}
         </h3>
         
-        <p className="text-black/50 text-sm leading-relaxed flex-grow group-hover:text-black/70 transition-colors duration-300">
+        <p className="text-black/60 dark:text-white/60 text-sm leading-relaxed flex-grow group-hover:text-black/90 dark:group-hover:text-white/90 transition-colors duration-300">
           {step.description}
         </p>
       </div>
@@ -292,19 +292,19 @@ function ProcessCard({ step }: { step: typeof processSteps[0] }) {
 // Mobile Process Card Component - Optimized for touch
 function ProcessCardMobile({ step, index }: { step: typeof processSteps[0]; index: number }) {
   return (
-    <div className="bg-black rounded-[1.5rem] p-1.5 shadow-xl">
-      <div className="bg-black rounded-t-[1.25rem] px-4 py-3 flex items-center gap-2">
-        <div className="w-2.5 h-2.5 rounded-full bg-white/30" />
-        <div className="w-2.5 h-2.5 rounded-full bg-white/30" />
-        <span className="ml-auto text-white/20 text-xs font-mono">0{index + 1}</span>
+    <div className="bg-black dark:bg-white/5 rounded-[1.5rem] p-1.5 shadow-xl border dark:border-white/10">
+      <div className="bg-black dark:bg-transparent rounded-t-[1.25rem] px-4 py-3 flex items-center gap-2">
+        <div className="w-2.5 h-2.5 rounded-full bg-white/30 dark:bg-white/20" />
+        <div className="w-2.5 h-2.5 rounded-full bg-white/30 dark:bg-white/20" />
+        <span className="ml-auto text-white/40 dark:text-white/30 text-xs font-mono">0{index + 1}</span>
       </div>
       
-      <div className="bg-white rounded-b-[1.25rem] rounded-t-[0.25rem] p-5 pt-4">
-        <h3 className="text-2xl sm:text-3xl font-black text-[#CCFF00] leading-[0.95] tracking-tight whitespace-pre-line italic mb-4">
+      <div className="bg-white dark:bg-black rounded-b-[1.25rem] rounded-t-[0.25rem] p-5 pt-4">
+        <h3 className="text-2xl sm:text-3xl font-black text-lime leading-[0.95] tracking-tight whitespace-pre-line italic mb-4">
           {step.title}
         </h3>
         
-        <p className="text-black/50 text-sm leading-relaxed">
+        <p className="text-black/60 dark:text-white/60 text-sm leading-relaxed">
           {step.description}
         </p>
       </div>

@@ -50,7 +50,7 @@ export function Team() {
             
             {/* Column 1: Large Vertical Team Member + Green Vision */}
             <div className="sm:col-span-1 md:col-span-4 flex flex-col gap-3 md:gap-4">
-              <div className="team-reveal flex-1 bg-gray-100 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[200px] md:min-h-[300px]">
+              <div className="team-reveal flex-1 bg-black/5 dark:bg-white/5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[200px] md:min-h-[300px]">
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80" alt="Team" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-3/4 h-6 md:h-8 bg-lime rounded-r-full shadow-lg shadow-lime/20" />
               </div>
@@ -74,7 +74,7 @@ export function Team() {
                 </p>
               </div>
               
-              <div className="team-reveal flex-1 bg-gray-100 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[180px] md:min-h-[250px]">
+              <div className="team-reveal flex-1 bg-black/5 dark:bg-white/5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[180px] md:min-h-[250px]">
                 <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80" alt="Team" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-3/4 h-6 md:h-8 bg-lime rounded-r-full shadow-lg shadow-lime/20" />
               </div>
@@ -82,15 +82,15 @@ export function Team() {
 
             {/* Column 3: Third Team Member + Black Mission */}
             <div className="sm:col-span-2 md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3 md:gap-4">
-              <div className="team-reveal flex-1 bg-gray-100 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[180px] md:min-h-[250px]">
+              <div className="team-reveal flex-1 bg-black/5 dark:bg-white/5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[180px] md:min-h-[250px]">
                 <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80" alt="Team" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-3/4 h-6 md:h-8 bg-lime rounded-r-full shadow-lg shadow-lime/20" />
               </div>
 
-              <div className="team-reveal h-[240px] sm:h-auto md:h-[320px] bg-black dark:bg-black rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 flex flex-col justify-start relative overflow-hidden group shadow-xl">
-                <div className="absolute top-6 right-[-10px] w-16 md:w-20 h-16 md:h-20 bg-white/5 rounded-full group-hover:scale-125 transition-transform duration-700" />
-                <h3 className="text-2xl md:text-3xl font-black text-white uppercase leading-[0.9] mb-4 md:mb-5">Our <br />Mission</h3>
-                <p className="text-white/40 text-xs font-bold leading-[1.1]">
+              <div className="team-reveal h-[240px] sm:h-auto md:h-[320px] bg-black dark:bg-white rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 flex flex-col justify-start relative overflow-hidden group shadow-xl">
+                <div className="absolute top-6 right-[-10px] w-16 md:w-20 h-16 md:h-20 bg-white/5 dark:bg-black/5 rounded-full group-hover:scale-125 transition-transform duration-700" />
+                <h3 className="text-2xl md:text-3xl font-black text-white dark:text-black uppercase leading-[0.9] mb-4 md:mb-5">Our <br />Mission</h3>
+                <p className="text-white/50 dark:text-black/60 text-xs font-bold leading-[1.1]">
                   To transform bold ideas into digital products that empower brands, engage users, and shape the future of online experiences.
                 </p>
               </div>

@@ -31,7 +31,7 @@ export function Stats() {
             <ScrollReveal
               key={index}
               delay={index * 0.1}
-              className="bg-lime rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8"
+              className="bg-lime text-black rounded-2xl md:rounded-3xl p-4 sm:p-6 md:p-8"
             >
               <div className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-2 md:mb-4">
                 <CountUp end={stat.value} suffix={stat.suffix} />

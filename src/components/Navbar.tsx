@@ -67,7 +67,7 @@ export const Navbar = memo(function Navbar() {
         )}
       >
         <div className="w-full px-4 md:px-8 flex justify-center pointer-events-auto">
-          <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-white/10 rounded-full bg-[#0d1410]/60 backdrop-blur-xl px-2 py-2 shadow-2xl">
+          <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-white/10 rounded-full bg-black/60 backdrop-blur-xl px-2 py-2 shadow-2xl">
             
             {/* Desktop Navigation Group (Left) */}
             <div className="hidden lg:flex items-center gap-1 pl-1">
@@ -82,7 +82,7 @@ export const Navbar = memo(function Navbar() {
                     className={cn(
                       "relative text-[10px] md:text-xs font-semibold tracking-widest uppercase transition-all duration-500 px-6 py-3 rounded-full flex items-center gap-3",
                       isActive 
-                        ? "bg-white text-[#0A100D] shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
+                        ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
                         : "text-white/60 hover:text-white hover:bg-white/5"
                     )}
                   >
@@ -114,7 +114,7 @@ export const Navbar = memo(function Navbar() {
               <Link
                 href="/contact"
                 prefetch={true}
-                className="group flex items-center gap-3 bg-white/5 border border-white/10 text-white/90 px-6 py-3 rounded-full text-[10px] md:text-xs tracking-widest uppercase hover:bg-white hover:text-[#0A100D] hover:border-white transition-all duration-500 shadow-lg"
+                className="group flex items-center gap-3 bg-white/5 border border-white/10 text-white/90 px-6 py-3 rounded-full text-[10px] md:text-xs tracking-widest uppercase hover:bg-white hover:text-black hover:border-white transition-all duration-500 shadow-lg"
               >
                 Let's Talk
                 <span className="flex gap-[3px] ml-1">

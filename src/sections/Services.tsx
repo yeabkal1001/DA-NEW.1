@@ -18,13 +18,13 @@ const services = [
     title: "UI/UX & Web Design",
     description: "Creating visually stunning and highly functional digital experiences.",
     image: "/images/service-2.jpg",
-    bgColor: "bg-secondary/30 dark:bg-gray-800",
+    bgColor: "bg-black",
   },
   {
     title: "Digital Marketing",
     description: "Data-driven strategies to amplify your brand's reach and impact.",
     image: "/images/service-3.jpg",
-    bgColor: "bg-secondary/30 dark:bg-gray-800",
+    bgColor: "bg-black",
   },
 ];
 
@@ -35,15 +35,14 @@ const ServiceCard = memo(function ServiceCard({
 }) {
   return (
     <div
-      className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-card-hover border border-black/5 dark:border-white/5 shadow-sm`}
+      className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border ${service.bgColor.includes("bg-lime") ? "border-transparent" : "border-white/10 shadow-lg"} relative overflow-hidden`}
     >
-      <div className="mb-4">
-        <h3 className="text-2xl font-bold mb-2 text-foreground dark:text-white">{service.title}</h3>
-        <p
-          className={`text-sm ${
-            service.bgColor.includes("bg-lime") ? "text-black/70" : "text-muted-foreground dark:text-white/60"
-          }`}
-        >
+      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="mb-4 relative z-10">
+        <h3 className={`text-2xl font-bold mb-2 ${service.bgColor.includes("bg-lime") ? "text-black" : "text-white"}`}>
+          {service.title}
+        </h3>
+        <p className={`text-sm ${service.bgColor.includes("bg-lime") ? "text-black/80 font-medium" : "text-white/60 font-light"}`}>
           {service.description}
         </p>
       </div>

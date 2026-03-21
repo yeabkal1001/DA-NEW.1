@@ -16,7 +16,10 @@ const testimonials = [
       "Working with this team was an incredible experience from start to finish. Their creativity, attention to detail, and deep technical expertise truly set them apart. They took the time to understand our vision, goals, and challenges, and transformed our ideas into a powerful digital platform that not only met our expectations but exceeded them in every way.",
     image: "/images/testimonial-1.jpg",
     type: "text",
-    bgColor: "bg-lime",
+    bgColor: "bg-lime text-black",
+    nameColor: "text-black",
+    roleColor: "text-black/60",
+    contentColor: "text-black/80",
   },
   {
     name: "Daniel Carter",
@@ -25,7 +28,10 @@ const testimonials = [
       "They demonstrated professionalism, clear communication, and a deep understanding of our vision and goals. The final result was not only visually impressive but also highly functional and user-friendly. Their ability to combine...",
     image: "/images/testimonial-2.jpg",
     type: "video",
-    bgColor: "bg-black text-white",
+    bgColor: "bg-black dark:bg-white text-white dark:text-black",
+    nameColor: "text-white dark:text-black",
+    roleColor: "text-white/60 dark:text-black/60",
+    contentColor: "text-white/80 dark:text-black/80",
   },
   {
     name: "Emily Rodriguez",
@@ -34,7 +40,10 @@ const testimonials = [
       "The team at Digital Addis delivered beyond our expectations. Their innovative approach and dedication to quality made all the difference in our project success.",
     image: "/images/testimonial-3.jpg",
     type: "video",
-    bgColor: "bg-secondary/50 dark:bg-gray-800",
+    bgColor: "bg-white dark:bg-black text-black dark:text-white",
+    nameColor: "text-black dark:text-white",
+    roleColor: "text-black/60 dark:text-white/60",
+    contentColor: "text-black/80 dark:text-white/80",
   },
 ];
 
@@ -119,25 +128,11 @@ export function Testimonials() {
                       className="w-12 h-12 rounded-full object-cover"
                     />
                     <div>
-                      <h4 className="font-bold">{testimonial.name}</h4>
-                      <p
-                        className={`text-sm ${
-                          testimonial.bgColor.includes("lime")
-                            ? "text-black/60"
-                            : "text-muted-foreground dark:text-white/70"
-                        }`}
-                      >
-                        {testimonial.role}
-                      </p>
+                      <h4 className={`font-bold ${testimonial.nameColor}`}>{testimonial.name}</h4>
+                      <p className={`text-sm ${testimonial.roleColor}`}>{testimonial.role}</p>
                     </div>
                   </div>
-                  <p
-                    className={`text-sm leading-relaxed ${
-                      testimonial.bgColor.includes("lime")
-                        ? "text-black/70"
-                        : "text-muted-foreground dark:text-white/80"
-                    }`}
-                  >
+                  <p className={`text-sm leading-relaxed ${testimonial.contentColor}`}>
                     {testimonial.content}
                   </p>
                 </>
@@ -162,33 +157,11 @@ export function Testimonials() {
                       className="w-10 h-10 rounded-full object-cover"
                     />
                     <div>
-                      <h4
-                        className={`font-bold ${
-                          testimonial.bgColor.includes("black")
-                            ? "text-white"
-                            : "text-black"
-                        }`}
-                      >
-                        {testimonial.name}
-                      </h4>
-                      <p
-                        className={`text-xs ${
-                          testimonial.bgColor.includes("black")
-                            ? "text-white/70"
-                            : "text-black/60"
-                        }`}
-                      >
-                        {testimonial.role}
-                      </p>
+                      <h4 className={`font-bold ${testimonial.nameColor}`}>{testimonial.name}</h4>
+                      <p className={`text-xs ${testimonial.roleColor}`}>{testimonial.role}</p>
                     </div>
                   </div>
-                  <p
-                    className={`text-sm mt-3 leading-relaxed ${
-                      testimonial.bgColor.includes("lime")
-                        ? "text-black/70"
-                        : "text-muted-foreground dark:text-white/80"
-                    }`}
-                  >
+                  <p className={`text-sm mt-3 leading-relaxed ${testimonial.contentColor}`}>
                     {testimonial.content}
                   </p>
                 </div>
