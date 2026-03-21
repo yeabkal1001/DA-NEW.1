@@ -91,9 +91,13 @@
   }
   body {
     @apply bg-background text-foreground antialiased transition-colors duration-500;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-family: var(--font-inter), 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     overflow-x: hidden;
     width: 100%;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-space-grotesk), var(--font-inter), sans-serif;
   }
 }
 
@@ -129,11 +133,25 @@
 }
 
 .animate-marquee {
-  animation: marquee 35s linear infinite;
+  animation: marquee 25s linear infinite;
 }
 
 .animate-marquee-reverse {
-  animation: marquee-reverse 30s linear infinite;
+  animation: marquee-reverse 25s linear infinite;
+}
+
+/* Enhanced marquee for hero skills */
+@keyframes marquee-smooth {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-25%);
+  }
+}
+
+.animate-marquee-smooth {
+  animation: marquee-smooth 20s linear infinite;
 }
 
 /* Pause marquee on hover */
@@ -564,6 +582,80 @@
 
 .about-cta {
   margin-top: 0.5rem;
+}
+
+/* ═══════════════════════
+   Hero Name Letter Animation
+   ═══════════════════════ */
+
+.hero-name-letter {
+  display: inline-block;
+  transform-style: preserve-3d;
+  transition: all 0.3s ease;
+}
+
+.hero-name-letter:hover {
+  color: #CCFF00;
+  transform: translateY(-4px) scale(1.05);
+}
+
+/* Enhanced Skills Marquee */
+.hero-marquee-wrap {
+  mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+}
+
+/* Floating animation for decorative elements */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-10px) rotate(2deg);
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+/* Glow pulse for lime accent */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(204, 255, 0, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 40px rgba(204, 255, 0, 0.4);
+  }
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Image hover effect */
+.hero-image-container:hover img {
+  transform: scale(1.02);
+  transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Social link hover effects */
+.hero-social-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-social-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(204, 255, 0, 0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.hero-social-link:hover::before {
+  opacity: 1;
 }
 
 /* ═══════════════════════
