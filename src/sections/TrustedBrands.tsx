@@ -26,12 +26,12 @@ export function TrustedBrands() {
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-12 text-center">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-foreground dark:text-white">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-foreground">
             <span className="text-lime">Trusted</span> by Leading
             <br />
             Brands
           </h2>
-          <p className="text-muted-foreground dark:text-white/50 text-lg max-w-2xl mx-auto">
+          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
             We're proud to collaborate with companies that believe in innovation,
             creativity, and digital excellence.
           </p>

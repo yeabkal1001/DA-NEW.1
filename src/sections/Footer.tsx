@@ -25,7 +25,7 @@ const socialLinks = [
 
 export function Footer() {
   return (
-    <footer className="bg-secondary/30 dark:bg-black text-foreground dark:text-white py-10 md:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-t border-border mt-20">
+    <footer className="bg-foreground/[0.03] text-foreground py-10 md:py-16 px-4 sm:px-6 lg:px-8 relative overflow-hidden border-t border-border mt-20">
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-10 mb-10 md:mb-16">
           {/* Brand column */}
@@ -46,7 +46,7 @@ export function Footer() {
                   key={index}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-black/10 dark:border-white/10 flex items-center justify-center hover:border-lime hover:text-lime transition-colors"
+                  className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-foreground/10 flex items-center justify-center hover:border-lime hover:text-lime transition-colors"
                 >
                   <social.icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                 </a>
@@ -120,7 +120,7 @@ export function Footer() {
 
       {/* Large watermark text */}
       <div className="absolute bottom-0 left-0 right-0 text-center pointer-events-none overflow-hidden">
-        <span className="text-[12vw] md:text-[15vw] font-bold text-black/[0.03] dark:text-white/[0.03] leading-none whitespace-nowrap">
+        <span className="text-[12vw] md:text-[15vw] font-bold text-foreground/[0.03] leading-none whitespace-nowrap">
           Digital Addis
         </span>
       </div>

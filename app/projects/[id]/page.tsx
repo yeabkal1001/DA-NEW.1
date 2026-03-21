@@ -195,7 +195,7 @@ export default function ProjectDetailPage() {
 
   if (!project) {
     return (
-      <main className="min-h-screen bg-background text-white">
+      <main className="min-h-screen bg-background text-foreground">
         <Navbar />
         <div className="min-h-[80vh] flex items-center justify-center">
           <div className="text-center">
@@ -231,7 +231,7 @@ export default function ProjectDetailPage() {
           <Link
             href="/projects"
             prefetch={true}
-            className="project-detail-reveal inline-flex items-center gap-2 text-foreground/60 dark:text-white/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
+            className="project-detail-reveal inline-flex items-center gap-2 text-foreground/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Projects
@@ -239,7 +239,7 @@ export default function ProjectDetailPage() {
 
           <div className="flex flex-wrap gap-3 mb-6">
             {project.tags.map((tag, i) => (
-              <span key={i} className="project-detail-reveal px-4 py-2 bg-black/10 dark:bg-white/10 backdrop-blur-sm rounded-full text-xs font-bold text-foreground/80 dark:text-white/80">
+              <span key={i} className="project-detail-reveal px-4 py-2 bg-foreground/10 backdrop-blur-sm rounded-full text-xs font-bold text-foreground/80">
                 {tag}
               </span>
             ))}
@@ -249,11 +249,11 @@ export default function ProjectDetailPage() {
             {project.category}
           </p>
 
-          <h1 className="project-detail-reveal text-[2.5rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 max-w-4xl text-foreground dark:text-white">
+          <h1 className="project-detail-reveal text-[2.5rem] sm:text-[3rem] md:text-[4rem] lg:text-[5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 max-w-4xl text-foreground">
             {project.title}
           </h1>
 
-          <p className="project-detail-reveal text-foreground/60 dark:text-white/60 text-lg md:text-xl max-w-2xl leading-relaxed">
+          <p className="project-detail-reveal text-foreground/60 text-lg md:text-xl max-w-2xl leading-relaxed">
             {project.description}
           </p>
         </div>
@@ -289,10 +289,10 @@ export default function ProjectDetailPage() {
           <div className="grid lg:grid-cols-2 gap-16 items-start">
             <ScrollReveal>
               <div className="lg:sticky lg:top-32">
-                <div className="inline-flex items-center p-1 px-4 mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
-                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground/60 dark:text-white/60">Overview</span>
+                <div className="inline-flex items-center p-1 px-4 mb-6 bg-foreground/5 rounded-full border border-foreground/10">
+                  <span className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground/60">Overview</span>
                 </div>
-                <h2 className="text-[2.5rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase text-foreground dark:text-white">
+                <h2 className="text-[2.5rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase text-foreground">
                   About The
                   <br />
                   <span className="text-lime italic">Project</span>
@@ -301,31 +301,31 @@ export default function ProjectDetailPage() {
             </ScrollReveal>
 
             <ScrollReveal delay={0.2}>
-              <p className="text-foreground/60 dark:text-white/60 text-lg md:text-xl leading-relaxed mb-12">
+              <p className="text-foreground/60 text-lg md:text-xl leading-relaxed mb-12">
                 {project.fullDescription}
               </p>
 
               <div className="space-y-8">
                 <div>
-                  <h3 className="text-xl font-black uppercase tracking-tight mb-4 flex items-center gap-3 text-foreground dark:text-white">
-                    <span className="w-8 h-8 bg-black dark:bg-white/10 rounded-lg flex items-center justify-center">
+                  <h3 className="text-xl font-black uppercase tracking-tight mb-4 flex items-center gap-3 text-foreground">
+                    <span className="w-8 h-8 bg-foreground/10 rounded-lg flex items-center justify-center">
                       <Zap className="w-4 h-4 text-lime" />
                     </span>
                     The Challenge
                   </h3>
-                  <p className="text-foreground/50 dark:text-white/50 leading-relaxed pl-11">
+                  <p className="text-foreground/50 leading-relaxed pl-11">
                     {project.challenge}
                   </p>
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-black uppercase tracking-tight mb-4 flex items-center gap-3 text-foreground dark:text-white">
+                  <h3 className="text-xl font-black uppercase tracking-tight mb-4 flex items-center gap-3 text-foreground">
                     <span className="w-8 h-8 bg-lime rounded-lg flex items-center justify-center">
                       <Users className="w-4 h-4 text-black" />
                     </span>
                     Our Solution
                   </h3>
-                  <p className="text-foreground/50 dark:text-white/50 leading-relaxed pl-11">
+                  <p className="text-foreground/50 leading-relaxed pl-11">
                     {project.solution}
                   </p>
                 </div>
@@ -336,10 +336,10 @@ export default function ProjectDetailPage() {
       </section>
 
       {/* Gallery */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03] border-y border-black/5 dark:border-white/5">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-foreground/[0.03] border-y border-foreground/5">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-12">
-            <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-center text-foreground dark:text-white">
+            <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-center text-foreground">
               Project <span className="text-lime italic">Gallery</span>
             </h2>
           </ScrollReveal>
@@ -353,7 +353,7 @@ export default function ProjectDetailPage() {
                     alt={`${project.title} gallery ${index + 1}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors" />
+                  <div className="absolute inset-0 bg-transparent group-hover:bg-foreground/20 transition-colors" />
                 </div>
               </ScrollReveal>
             ))}
@@ -365,10 +365,10 @@ export default function ProjectDetailPage() {
       <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-foreground">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-16">
-            <div className="inline-flex items-center p-1 px-4 mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
-              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground/60 dark:text-white/60">Results</span>
+            <div className="inline-flex items-center p-1 px-4 mb-6 bg-foreground/5 rounded-full border border-foreground/10">
+              <span className="text-[10px] font-black uppercase tracking-[0.4em] text-foreground/60">Results</span>
             </div>
-            <h2 className="text-[2.5rem] md:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase text-foreground dark:text-white">
+            <h2 className="text-[2.5rem] md:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase text-foreground">
               Impact <span className="text-lime italic">& Outcomes</span>
             </h2>
           </ScrollReveal>
@@ -376,11 +376,11 @@ export default function ProjectDetailPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
             {project.results.map((result, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
-                <div className="text-center p-8 bg-black/5 dark:bg-white/5 rounded-3xl border border-black/10 dark:border-white/10">
+                <div className="text-center p-8 bg-foreground/5 rounded-3xl border border-foreground/10">
                   <div className="text-4xl md:text-5xl lg:text-6xl font-black text-lime mb-2">
                     {result.value}
                   </div>
-                  <p className="text-foreground/50 dark:text-white/50 text-sm font-bold uppercase tracking-wider">
+                  <p className="text-foreground/50 text-sm font-bold uppercase tracking-wider">
                     {result.metric}
                   </p>
                 </div>
@@ -408,17 +408,17 @@ export default function ProjectDetailPage() {
       )}
 
       {/* Navigation */}
-      <section className="py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-background border-t border-black/5 dark:border-white/5">
+      <section className="py-12 md:py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-background border-t border-foreground/5">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col sm:flex-row justify-between gap-6">
             {project.prevProject && (
               <Link
                 href={`/projects/${project.prevProject.id}`}
-                className="group flex items-center gap-4 text-foreground dark:text-white hover:text-lime transition-colors"
+                className="group flex items-center gap-4 text-foreground hover:text-lime transition-colors"
               >
                 <ArrowLeft className="w-6 h-6 group-hover:-translate-x-2 transition-transform" />
                 <div>
-                  <p className="text-xs text-foreground/40 dark:text-white/40 uppercase tracking-wider mb-1">Previous Project</p>
+                  <p className="text-xs text-foreground/40 uppercase tracking-wider mb-1">Previous Project</p>
                   <p className="font-bold">{project.prevProject.title}</p>
                 </div>
               </Link>
@@ -428,10 +428,10 @@ export default function ProjectDetailPage() {
               <Link
                 href={`/projects/${project.nextProject.id}`}
                 prefetch={true}
-                className="group flex items-center gap-4 text-right sm:ml-auto text-foreground dark:text-white hover:text-lime transition-colors"
+                className="group flex items-center gap-4 text-right sm:ml-auto text-foreground hover:text-lime transition-colors"
               >
                 <div>
-                  <p className="text-xs text-foreground/40 dark:text-white/40 uppercase tracking-wider mb-1">Next Project</p>
+                  <p className="text-xs text-foreground/40 uppercase tracking-wider mb-1">Next Project</p>
                   <p className="font-bold">{project.nextProject.title}</p>
                 </div>
                 <ArrowRight className="w-6 h-6 group-hover:translate-x-2 transition-transform" />
@@ -442,20 +442,20 @@ export default function ProjectDetailPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03]">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-foreground/[0.03]">
         <div className="max-w-4xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-[2rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 text-foreground dark:text-white">
+            <h2 className="text-[2rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 text-foreground">
               Ready to Start
               <br />
               <span className="text-lime italic">Your Project?</span>
             </h2>
-            <p className="text-foreground/40 dark:text-white/40 text-lg mb-10 max-w-xl mx-auto font-medium">
+            <p className="text-foreground/40 text-lg mb-10 max-w-xl mx-auto font-medium">
               Let's discuss how we can help bring your vision to life with the same dedication and expertise.
             </p>
             <Link
               href="/contact"
-              className="inline-flex items-center gap-3 bg-black text-white dark:bg-white dark:text-black px-10 py-5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] hover:bg-lime hover:text-black transition-all duration-500 group"
+              className="inline-flex items-center gap-3 bg-foreground text-background px-10 py-5 rounded-full text-[11px] font-black uppercase tracking-[0.2em] hover:bg-lime hover:text-black transition-all duration-500 group"
             >
               Get in Touch
               <ArrowUpRight className="w-4 h-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />

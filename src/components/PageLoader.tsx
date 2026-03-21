@@ -60,7 +60,7 @@ export function PageLoader() {
   return (
     <div className="loader-container fixed inset-0 z-[9999] flex items-center justify-center pointer-events-auto" suppressHydrationWarning={true}>
       {/* Background layer */}
-      <div className="loader-bg absolute inset-0 bg-black" />
+      <div className="loader-bg absolute inset-0 bg-background" />
       
       {/* Content wrapper */}
       <div className="loader-content relative z-10 text-center opacity-0 translate-y-10">
@@ -68,18 +68,18 @@ export function PageLoader() {
           <img 
             src="/dalogo.webp" 
             alt="Digital Addis" 
-            className="h-16 md:h-24 mx-auto object-contain brightness-0 invert" 
+            className="h-16 md:h-24 mx-auto object-contain brightness-0 dark:invert" 
           />
         </div>
         
         <div className="relative overflow-hidden mb-4">
-          <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tighter">
+          <h2 className="text-4xl md:text-6xl font-black text-foreground uppercase tracking-tighter">
             Digital <span className="text-lime italic">Addis</span>
           </h2>
         </div>
         
         {/* Progress bar */}
-        <div className="w-48 h-[2px] bg-white/10 mx-auto relative overflow-hidden">
+        <div className="w-48 h-[2px] bg-foreground/10 mx-auto relative overflow-hidden">
           <div 
             className="absolute inset-y-0 left-0 bg-lime transition-all duration-100 ease-out"
             style={{ width: `${progress}%` }}

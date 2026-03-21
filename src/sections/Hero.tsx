@@ -52,7 +52,7 @@ export function Hero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white px-4 sm:px-6 lg:px-8"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-background px-4 sm:px-6 lg:px-8"
     >
       {/* Decorative curved line */}
       <svg
@@ -119,7 +119,7 @@ export function Hero() {
           <Button
             size="lg"
             variant="outline"
-            className="border-2 border-black text-black hover:bg-black hover:text-white rounded-full px-8 py-6 text-base font-semibold transition-all"
+            className="border-2 border-foreground text-foreground hover:bg-foreground hover:text-background rounded-full px-8 py-6 text-base font-semibold transition-all"
           >
             Learn More
           </Button>

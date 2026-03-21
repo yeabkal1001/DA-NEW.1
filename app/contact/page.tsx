@@ -97,18 +97,18 @@ export default function ContactPage() {
         }} />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40 text-center">
-          <div className="contact-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
+          <div className="contact-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-foreground/5 rounded-full border border-foreground/10">
             <span className="w-2 h-2 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
-            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60 dark:text-white/60">Contact Us</span>
+            <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60">Contact Us</span>
           </div>
           
-          <h1 className="contact-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8 text-foreground dark:text-white">
+          <h1 className="contact-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8 text-foreground">
             Let's Build
             <br />
             <span className="text-lime italic">Something Great</span>
           </h1>
           
-          <p className="contact-hero-reveal text-foreground/50 dark:text-white/50 text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto px-4">
+          <p className="contact-hero-reveal text-foreground/50 text-base md:text-lg lg:text-xl leading-relaxed max-w-2xl mx-auto px-4">
             Ready to transform your digital presence? Get in touch and let's bring your vision to life.
           </p>
         </div>
@@ -120,7 +120,7 @@ export default function ContactPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
             {contactInfo.map((info, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
-                <div className="bg-black/[0.03] dark:bg-white/[0.05] rounded-xl md:rounded-2xl p-4 md:p-6 border border-black/5 dark:border-white/5 hover:border-lime/50 transition-all duration-300 h-full">
+                <div className="bg-foreground/[0.03] rounded-xl md:rounded-2xl p-4 md:p-6 border border-foreground/5 hover:border-lime/50 transition-all duration-300 h-full">
                   <div className="w-10 md:w-12 h-10 md:h-12 bg-lime/10 rounded-lg md:rounded-xl flex items-center justify-center mb-3 md:mb-4">
                     <info.icon className="w-5 md:w-6 h-5 md:h-6 text-lime" />
                   </div>
@@ -143,7 +143,7 @@ export default function ContactPage() {
             <div className="lg:col-span-2">
               <ScrollReveal>
                 <div className="lg:sticky lg:top-32">
-                  <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
+                  <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-foreground/5 rounded-full border border-foreground/10">
                     <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted-foreground">Get In Touch</span>
                   </div>
                   <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[2.5rem] lg:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground">
@@ -160,7 +160,7 @@ export default function ContactPage() {
                     <p className="text-black/70 text-xs md:text-sm mb-4 md:mb-6 leading-relaxed">
                       Schedule a free 30-minute consultation call with our team.
                     </p>
-                    <button className="w-full bg-black text-white py-3 md:py-4 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-black/80 dark:hover:bg-white dark:hover:text-black group-hover:shadow-xl transition-all">
+                    <button className="w-full bg-black text-white py-3 md:py-4 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-black/80 transition-all">
                       Book a Call
                     </button>
                   </div>
@@ -171,25 +171,25 @@ export default function ContactPage() {
             {/* Right Side - Form */}
             <div className="lg:col-span-3">
               <ScrollReveal delay={0.2}>
-                <form onSubmit={handleSubmit} className="bg-black/5 dark:bg-white/5 p-5 md:p-8 lg:p-12 xl:p-16 rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] border border-black/10 dark:border-white/10">
+                <form onSubmit={handleSubmit} className="bg-foreground/5 p-5 md:p-8 lg:p-12 xl:p-16 rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] border border-foreground/10">
                   <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                     <div className="relative group">
-                      <User className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 dark:text-white/40 group-focus-within:text-lime transition-colors" />
+                      <User className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 group-focus-within:text-lime transition-colors" />
                       <Input
                         placeholder="Full Name"
                         required
-                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-black/10 dark:border-white/10 text-foreground focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-foreground/10 text-foreground focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
                         value={formData.fullName}
                         onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                       />
                     </div>
                     <div className="relative group">
-                      <Mail className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 dark:text-white/40 group-focus-within:text-lime transition-colors" />
+                      <Mail className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 group-focus-within:text-lime transition-colors" />
                       <Input
                         type="email"
                         placeholder="Email Address"
                         required
-                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-black/10 dark:border-white/10 text-foreground dark:text-white focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-foreground/10 text-foreground focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
                         value={formData.email}
                         onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       />
@@ -198,19 +198,19 @@ export default function ContactPage() {
 
                   <div className="grid sm:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                     <div className="relative group">
-                      <Phone className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 dark:text-white/40 group-focus-within:text-lime transition-colors" />
+                      <Phone className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 group-focus-within:text-lime transition-colors" />
                       <Input
                         placeholder="Phone Number"
-                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-black/10 dark:border-white/10 text-foreground dark:text-white focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-foreground/10 text-foreground focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
                         value={formData.phone}
                         onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                       />
                     </div>
                     <div className="relative group">
-                      <Building className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 dark:text-white/40 group-focus-within:text-lime transition-colors" />
+                      <Building className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 h-4 md:h-5 w-4 md:w-5 text-foreground/40 group-focus-within:text-lime transition-colors" />
                       <Input
                         placeholder="Company Name"
-                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-black/10 dark:border-white/10 text-foreground dark:text-white focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
+                        className="pl-10 md:pl-12 py-5 md:py-6 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-foreground/10 text-foreground focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all"
                         value={formData.company}
                         onChange={(e) => setFormData({ ...formData, company: e.target.value })}
                       />
@@ -222,7 +222,7 @@ export default function ContactPage() {
                       value={formData.service}
                       onValueChange={(value) => setFormData({ ...formData, service: value })}
                     >
-                      <SelectTrigger className="py-5 md:py-6 px-3 md:px-4 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-black/10 dark:border-white/10 text-foreground">
+                      <SelectTrigger className="py-5 md:py-6 px-3 md:px-4 text-sm md:text-base rounded-lg md:rounded-xl bg-background border border-foreground/10 text-foreground">
                         <SelectValue placeholder="Select a Service" />
                       </SelectTrigger>
                       <SelectContent className="rounded-xl border-border bg-popover text-popover-foreground shadow-2xl">
@@ -238,11 +238,11 @@ export default function ContactPage() {
                   </div>
 
                   <div className="relative group mb-6 md:mb-8">
-                    <FileText className="absolute left-3 md:left-4 top-5 md:top-6 h-4 md:h-5 w-4 md:w-5 text-foreground/40 dark:text-white/40 group-focus-within:text-lime transition-colors" />
+                    <FileText className="absolute left-3 md:left-4 top-5 md:top-6 h-4 md:h-5 w-4 md:w-5 text-foreground/40 group-focus-within:text-lime transition-colors" />
                     <Textarea
                       placeholder="Tell us about your project..."
                       required
-                      className="pl-10 md:pl-12 pt-5 md:pt-6 text-sm md:text-base min-h-[140px] md:min-h-[180px] rounded-lg md:rounded-xl bg-background border border-black/10 dark:border-white/10 text-foreground focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all resize-none"
+                      className="pl-10 md:pl-12 pt-5 md:pt-6 text-sm md:text-base min-h-[140px] md:min-h-[180px] rounded-lg md:rounded-xl bg-background border border-foreground/10 text-foreground focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all resize-none"
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                     />
@@ -251,7 +251,7 @@ export default function ContactPage() {
                   <Button
                     type="submit"
                     disabled={isSubmitting}
-                    className="w-full bg-lime text-black hover:bg-white rounded-full py-6 md:py-7 text-xs md:text-sm font-black uppercase tracking-wider transition-all duration-500 disabled:opacity-50"
+                    className="w-full bg-lime text-black hover:bg-foreground hover:text-background rounded-full py-6 md:py-7 text-xs md:text-sm font-black uppercase tracking-wider transition-all duration-500 disabled:opacity-50"
                   >
                     {isSubmitting ? (
                       <span className="flex items-center justify-center gap-2">
@@ -273,7 +273,7 @@ export default function ContactPage() {
       </section>
 
       {/* Map Section Placeholder */}
-      <section className="h-[250px] md:h-[400px] lg:h-[500px] bg-[#212121] dark:bg-black relative overflow-hidden group">
+      <section className="h-[250px] md:h-[400px] lg:h-[500px] bg-foreground relative overflow-hidden group">
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-lime rounded-full blur-[100px]" />
         </div>
@@ -282,9 +282,9 @@ export default function ContactPage() {
             <div className="w-16 md:w-20 h-16 md:h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-4 md:mb-6 group-hover:scale-110 transition-transform">
               <MapPin className="w-8 md:w-10 h-8 md:h-10 text-black" />
             </div>
-            <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-white mb-2 md:mb-3 uppercase tracking-tight">Visit Our Office</h3>
-            <p className="text-white/70 font-medium text-sm md:text-base mb-1">Addis Ababa, Ethiopia</p>
-            <p className="text-white/50 text-xs md:text-sm">Bole Japan, 123 Innovation Drive</p>
+            <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-background mb-2 md:mb-3 uppercase tracking-tight">Visit Our Office</h3>
+            <p className="text-background/70 font-medium text-sm md:text-base mb-1">Addis Ababa, Ethiopia</p>
+            <p className="text-background/50 text-xs md:text-sm">Bole Japan, 123 Innovation Drive</p>
             <button className="mt-6 md:mt-8 px-6 md:px-8 py-3 md:py-4 bg-lime text-black rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:scale-105 transition-transform">
               Get Directions
             </button>

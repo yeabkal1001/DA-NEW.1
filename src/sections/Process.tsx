@@ -255,7 +255,7 @@ function NotebookCard({ step }: { step: typeof processSteps[0] }) {
   return (
     <div className="relative group cursor-pointer select-none">
       {/* Dark outer shell — always dark, slightly lighter in dark mode */}
-      <div className="bg-[#212121] dark:bg-[#2d2d2d] rounded-[23px] shadow-[0px_3px_6px_5px_rgba(0,0,0,0.25)] relative overflow-hidden"
+      <div className="bg-foreground rounded-[23px] shadow-[0px_3px_6px_5px_rgba(0,0,0,0.15)] relative overflow-hidden"
         style={{ padding: "0" }}
       >
         {/* Black header area */}
@@ -266,11 +266,11 @@ function NotebookCard({ step }: { step: typeof processSteps[0] }) {
           <div className="absolute top-8 left-7 w-[10px] h-[10px] rounded-full bg-lime shadow-inner" />
         </div>
 
-        {/* Large binding dot — solid dark circle, positioned higher up */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-[50px] z-20 w-[42px] h-[42px] rounded-full bg-[#333] dark:bg-[#444] shadow-[0_2px_8px_rgba(0,0,0,0.5)]" />
+        {/* Large binding dot — solid circle */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-[50px] z-20 w-[42px] h-[42px] rounded-full bg-background shadow-[0_2px_8px_rgba(0,0,0,0.3)]" />
 
         {/* White inner content area */}
-        <div className="bg-background rounded-[20px] mx-3 mb-3 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.15)] overflow-hidden">
+        <div className="bg-background rounded-[20px] mx-3 mb-3 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.05)] overflow-hidden">
           <div className="p-7 pt-8 pb-8 min-h-[280px] flex flex-col">
             <h3 className="text-[48px] lg:text-[58px] font-extrabold text-lime leading-[0.88] tracking-tight whitespace-pre-line mb-5 group-hover:scale-[1.02] transition-transform duration-300 origin-left">
               {step.title}
@@ -292,15 +292,15 @@ function NotebookCard({ step }: { step: typeof processSteps[0] }) {
 function NotebookCardMobile({ step }: { step: typeof processSteps[0] }) {
   return (
     <div className="relative select-none">
-      <div className="bg-[#212121] dark:bg-[#2d2d2d] rounded-[18px] shadow-lg relative overflow-hidden">
+      <div className="bg-foreground rounded-[18px] shadow-lg relative overflow-hidden">
         {/* Black header */}
         <div className="relative h-[70px]">
           <div className="absolute top-4 right-5 w-2 h-2 rounded-full bg-lime shadow-inner" />
           <div className="absolute top-6 left-5 w-2 h-2 rounded-full bg-lime shadow-inner" />
         </div>
 
-        {/* Center dot — solid dark circle, positioned higher up */}
-        <div className="absolute left-1/2 -translate-x-1/2 top-[30px] z-20 w-7 h-7 rounded-full bg-[#333] dark:bg-[#444] shadow-[0_2px_6px_rgba(0,0,0,0.5)]" />
+        {/* Center dot — solid circle */}
+        <div className="absolute left-1/2 -translate-x-1/2 top-[30px] z-20 w-7 h-7 rounded-full bg-background shadow-[0_2px_6px_rgba(0,0,0,0.3)]" />
 
         {/* White inner */}
         <div className="bg-background rounded-[14px] mx-2.5 mb-2.5 shadow overflow-hidden">

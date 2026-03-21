@@ -170,7 +170,7 @@ export default function BlogPostPage() {
 
   if (!post) {
     return (
-      <main className="min-h-screen bg-background text-white">
+      <main className="min-h-screen bg-background text-foreground">
         <Navbar />
         <div className="min-h-[80vh] flex items-center justify-center">
           <div className="text-center">
@@ -196,7 +196,7 @@ export default function BlogPostPage() {
           <img
             src={post.image}
             alt={post.title}
-            className="w-full h-full object-cover opacity-50 dark:opacity-60"
+            className="w-full h-full object-cover opacity-50"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
         </div>
@@ -205,7 +205,7 @@ export default function BlogPostPage() {
           {/* Back Button */}
           <Link
             href="/blog"
-            className="blog-post-reveal inline-flex items-center gap-2 text-foreground/60 dark:text-white/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
+            className="blog-post-reveal inline-flex items-center gap-2 text-foreground/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Blog
@@ -215,7 +215,7 @@ export default function BlogPostPage() {
             <span className="px-4 py-2 bg-lime text-black rounded-full text-xs font-bold uppercase">
               {post.category}
             </span>
-            <span className="text-foreground/60 dark:text-white/60 text-sm flex items-center gap-2">
+            <span className="text-foreground/60 text-sm flex items-center gap-2">
               <Clock className="w-4 h-4" />
               {post.readTime} read
             </span>
@@ -232,8 +232,8 @@ export default function BlogPostPage() {
               className="w-14 h-14 rounded-full object-cover border-2 border-lime"
             />
             <div>
-              <p className="text-foreground dark:text-white font-bold text-lg">{post.author}</p>
-              <p className="text-foreground/50 dark:text-white/50 text-sm flex items-center gap-2">
+              <p className="text-foreground font-bold text-lg">{post.author}</p>
+              <p className="text-foreground/50 text-sm flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 {post.date}
               </p>
@@ -263,15 +263,15 @@ export default function BlogPostPage() {
                 const content = parts[1];
                 return (
                   <ScrollReveal key={index} delay={index * 0.02}>
-                    <p className="text-foreground/70 dark:text-white/60 text-lg md:text-xl leading-relaxed mb-6 font-medium">
-                      <strong className="text-foreground dark:text-white font-black">{title}:</strong>{content}
+                    <p className="text-foreground/70 text-lg md:text-xl leading-relaxed mb-6 font-medium">
+                      <strong className="text-foreground font-black">{title}:</strong>{content}
                     </p>
                   </ScrollReveal>
                 );
               }
               return (
                 <ScrollReveal key={index} delay={index * 0.02}>
-                  <p className="text-foreground/70 dark:text-white/60 text-lg md:text-xl leading-relaxed mb-6 font-medium">
+                  <p className="text-foreground/70 text-lg md:text-xl leading-relaxed mb-6 font-medium">
                     {paragraph}
                   </p>
                 </ScrollReveal>
@@ -280,12 +280,12 @@ export default function BlogPostPage() {
           </div>
 
           {/* Tags */}
-          <ScrollReveal className="mt-12 pt-8 border-t border-black/10 dark:border-white/10">
+          <ScrollReveal className="mt-12 pt-8 border-t border-foreground/10">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-foreground/70 dark:text-white/60 rounded-full text-sm font-bold hover:bg-lime hover:text-black hover:border-lime transition-all cursor-pointer"
+                  className="px-4 py-2 bg-foreground/5 border border-foreground/10 text-foreground/70 rounded-full text-sm font-bold hover:bg-lime hover:text-black hover:border-lime transition-all cursor-pointer"
                 >
                   {tag}
                 </span>
@@ -294,21 +294,21 @@ export default function BlogPostPage() {
           </ScrollReveal>
 
           {/* Share */}
-          <ScrollReveal className="mt-8 pt-8 border-t border-black/10 dark:border-white/10">
+          <ScrollReveal className="mt-8 pt-8 border-t border-foreground/10">
             <div className="flex items-center justify-between flex-wrap gap-4">
-              <p className="font-bold uppercase tracking-wider text-sm text-foreground/40 dark:text-white/40">Share this article</p>
+              <p className="font-bold uppercase tracking-wider text-sm text-foreground/40">Share this article</p>
               <div className="flex gap-3">
-                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Twitter className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-foreground/5 border border-foreground/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Twitter className="w-5 h-5 text-foreground/40 group-hover:text-black" />
                 </button>
-                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Facebook className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-foreground/5 border border-foreground/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Facebook className="w-5 h-5 text-foreground/40 group-hover:text-black" />
                 </button>
-                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Linkedin className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-foreground/5 border border-foreground/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Linkedin className="w-5 h-5 text-foreground/40 group-hover:text-black" />
                 </button>
-                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Share2 className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-foreground/5 border border-foreground/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Share2 className="w-5 h-5 text-foreground/40 group-hover:text-black" />
                 </button>
               </div>
             </div>
@@ -317,10 +317,10 @@ export default function BlogPostPage() {
       </section>
 
       {/* Author Bio */}
-      <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03] border-y border-black/5 dark:border-white/5">
+      <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-foreground/[0.03] border-y border-foreground/5">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
-            <div className="bg-black/5 dark:bg-white/5 rounded-3xl p-8 md:p-12 border border-black/10 dark:border-white/10">
+            <div className="bg-foreground/5 rounded-3xl p-8 md:p-12 border border-foreground/10">
               <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
                 <img
                   src={post.authorImage}
@@ -328,9 +328,9 @@ export default function BlogPostPage() {
                   className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-lime"
                 />
                 <div className="text-center md:text-left">
-                  <p className="text-xs text-foreground/40 dark:text-white/40 uppercase tracking-wider mb-2">Written by</p>
-                  <h3 className="text-2xl font-black mb-3 text-foreground dark:text-white">{post.author}</h3>
-                  <p className="text-foreground/70 dark:text-white/60 leading-relaxed font-medium">{post.authorBio}</p>
+                  <p className="text-xs text-foreground/40 uppercase tracking-wider mb-2">Written by</p>
+                  <h3 className="text-2xl font-black mb-3 text-foreground">{post.author}</h3>
+                  <p className="text-foreground/70 leading-relaxed font-medium">{post.authorBio}</p>
                 </div>
               </div>
             </div>
@@ -342,7 +342,7 @@ export default function BlogPostPage() {
       <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-foreground transition-all duration-500">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-12">
-            <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-center text-foreground dark:text-white">
+            <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-center text-foreground">
               Related <span className="text-lime italic">Articles</span>
             </h2>
           </ScrollReveal>
@@ -374,22 +374,22 @@ export default function BlogPostPage() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black text-white">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-foreground text-background">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
             <h2 className="text-[2rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6">
               Stay <span className="text-lime italic">Updated</span>
             </h2>
-            <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-background/50 text-lg mb-10 max-w-xl mx-auto">
               Subscribe to our newsletter for the latest insights on technology, design, and digital transformation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 bg-white/10 border border-white/10 rounded-full py-4 px-6 text-white placeholder:text-white/30 focus:outline-none focus:border-lime/50 transition-colors"
+                className="flex-1 bg-background/10 border border-background/10 rounded-full py-4 px-6 text-background placeholder:text-background/30 focus:outline-none focus:border-lime/50 transition-colors"
               />
-              <button className="bg-lime text-black px-8 py-4 rounded-full text-sm font-black uppercase tracking-wider hover:bg-white transition-colors">
+              <button className="bg-lime text-black px-8 py-4 rounded-full text-sm font-black uppercase tracking-wider hover:bg-background hover:text-foreground transition-colors">
                 Subscribe
               </button>
             </div>

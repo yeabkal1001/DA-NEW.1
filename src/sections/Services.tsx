@@ -18,13 +18,13 @@ const services = [
     title: "UI/UX & Web Design",
     description: "Creating visually stunning and highly functional digital experiences.",
     image: "/images/service-2.jpg",
-    bgColor: "bg-black",
+    bgColor: "bg-foreground",
   },
   {
     title: "Digital Marketing",
     description: "Data-driven strategies to amplify your brand's reach and impact.",
     image: "/images/service-3.jpg",
-    bgColor: "bg-black",
+    bgColor: "bg-foreground",
   },
 ];
 
@@ -35,14 +35,14 @@ const ServiceCard = memo(function ServiceCard({
 }) {
   return (
     <div
-      className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border ${service.bgColor.includes("bg-lime") ? "border-transparent" : "border-white/10 shadow-lg"} relative overflow-hidden`}
+      className={`${service.bgColor} rounded-3xl p-6 group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl border ${service.bgColor.includes("bg-lime") ? "border-transparent" : "border-background/10 shadow-lg"} relative overflow-hidden`}
     >
-      <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+      <div className="absolute inset-0 bg-background/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       <div className="mb-4 relative z-10">
-        <h3 className={`text-2xl font-bold mb-2 ${service.bgColor.includes("bg-lime") ? "text-black" : "text-white"}`}>
+        <h3 className={`text-2xl font-bold mb-2 ${service.bgColor.includes("bg-lime") ? "text-black" : "text-background"}`}>
           {service.title}
         </h3>
-        <p className={`text-sm ${service.bgColor.includes("bg-lime") ? "text-black/80 font-medium" : "text-white/60 font-light"}`}>
+        <p className={`text-sm ${service.bgColor.includes("bg-lime") ? "text-black/80 font-medium" : "text-background/60 font-light"}`}>
           {service.description}
         </p>
       </div>
@@ -93,12 +93,12 @@ export function Services() {
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground dark:text-white">
+          <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">
             Mastering the <span className="text-lime">digital</span>
             <br />
             landscape with <span className="text-lime">precision.</span>
           </h2>
-          <p className="text-muted-foreground dark:text-white/50 text-lg max-w-xl">
+          <p className="text-muted-foreground text-lg max-w-xl">
             Comprehensive services designed to scale your business and dominate
             your niche.
           </p>

@@ -68,14 +68,14 @@ export const Navbar = memo(function Navbar() {
         suppressHydrationWarning={true}
       >
         <div className="w-full px-4 md:px-8 flex justify-center pointer-events-auto">
-          <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-black/5 dark:border-white/10 rounded-full bg-white/70 dark:bg-black/60 backdrop-blur-xl px-2 py-2 shadow-2xl transition-colors duration-500">
+          <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-foreground/10 rounded-full bg-background/70 backdrop-blur-xl px-2 py-2 shadow-2xl transition-colors duration-500">
             
             {/* Desktop Branding (Left) */}
             <Link href="/" className="hidden lg:flex items-center gap-4 shrink-0 px-4 py-2" aria-label="Digital Addis - Home">
               <div className="relative h-10 w-10">
-                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="40px" className="object-contain brightness-0 dark:brightness-100" priority/>
+                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="40px" className="object-contain brightness-0 dark:invert" priority/>
               </div>
-              <span className="text-xs font-bold text-black dark:text-white uppercase tracking-widest shrink-0">Digital Addis</span>
+              <span className="text-xs font-bold text-foreground uppercase tracking-widest shrink-0">Digital Addis</span>
             </Link>
 
             {/* Desktop Navigation Group (Center) */}
@@ -91,8 +91,8 @@ export const Navbar = memo(function Navbar() {
                     className={cn(
                       "relative text-[10px] md:text-xs font-semibold tracking-widest uppercase transition-all duration-500 px-6 py-3 rounded-full flex items-center gap-3",
                       isActive 
-                        ? "bg-black text-white dark:bg-white dark:text-black shadow-lg" 
-                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
+                        ? "bg-foreground text-background shadow-lg" 
+                        : "text-foreground/60 hover:text-foreground hover:bg-foreground/5"
                     )}
                   >
                     {link.name}
@@ -104,20 +104,20 @@ export const Navbar = memo(function Navbar() {
             {/* Mobile Branding (only visible on small screens) */}
             <Link href="/" className="lg:hidden flex items-center gap-3 shrink-0 pl-4 py-2" aria-label="Digital Addis - Home">
               <div className="relative h-10 w-10">
-                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="40px" className="object-contain brightness-0 dark:brightness-100" priority/>
+                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="40px" className="object-contain brightness-0 dark:invert" priority/>
               </div>
-              <span className="text-[11px] font-bold text-black dark:text-white uppercase tracking-widest shrink-0">Digital Addis</span>
+              <span className="text-[11px] font-bold text-foreground uppercase tracking-widest shrink-0">Digital Addis</span>
             </Link>
 
             {/* Right Side Tools */}
             <div className="hidden md:flex items-center gap-2 pr-1">
-              <div className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-full px-1 py-1 mr-2">
+              <div className="bg-foreground/5 border border-foreground/5 rounded-full px-1 py-1 mr-2">
                  <ThemeToggle />
               </div>
               <Link
                 href="/contact"
                 prefetch={true}
-                className="group flex items-center gap-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-black/90 dark:text-white/90 px-6 py-3 rounded-full text-[10px] md:text-xs tracking-widest uppercase hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 shadow-lg"
+                className="group flex items-center gap-3 bg-foreground/5 border border-foreground/10 text-foreground/90 px-6 py-3 rounded-full text-[10px] md:text-xs tracking-widest uppercase hover:bg-foreground hover:text-background transition-all duration-500 shadow-lg"
               >
                 Let's Talk
                 <span className="flex gap-[3px] ml-1">
@@ -132,7 +132,7 @@ export const Navbar = memo(function Navbar() {
               <ThemeToggle />
               <button
                 onClick={toggleMobileMenu}
-                className="flex items-center justify-center w-10 h-10 rounded-full bg-black/5 dark:bg-white/10 text-black dark:text-white"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-foreground/5 text-foreground"
                 aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                 aria-expanded={isMobileMenuOpen}
                 aria-controls="mobile-menu"
@@ -149,7 +149,7 @@ export const Navbar = memo(function Navbar() {
         id="mobile-menu"
         aria-label="Mobile navigation"
         className={cn(
-          "fixed inset-0 z-[99] bg-white/95 dark:bg-black/95 backdrop-blur-xl transition-all duration-500 lg:hidden",
+          "fixed inset-0 z-[99] bg-background/95 backdrop-blur-xl transition-all duration-500 lg:hidden",
           isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
         suppressHydrationWarning={true}
@@ -162,7 +162,7 @@ export const Navbar = memo(function Navbar() {
               onClick={closeMobileMenu}
               aria-label={link.ariaLabel}
               className={cn(
-                "text-black dark:text-white text-2xl font-black uppercase tracking-[0.2em] transition-all duration-300 hover:text-lime focus-visible:text-lime",
+                "text-foreground text-2xl font-black uppercase tracking-[0.2em] transition-all duration-300 hover:text-lime focus-visible:text-lime",
                 isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
               )}
               style={{ transitionDelay: `${index * 75}ms` }}

@@ -28,10 +28,10 @@ const testimonials = [
     content:
       "They demonstrated professionalism, clear communication, and a deep understanding of our vision and goals. The final result was not only visually impressive but also highly functional and user-friendly.",
     image: "/images/testimonial-2.jpg",
-    bgColor: "bg-black dark:bg-white text-white dark:text-black",
-    nameColor: "text-white dark:text-black",
-    roleColor: "text-white/60 dark:text-black/60",
-    contentColor: "text-white/80 dark:text-black/80",
+    bgColor: "bg-foreground text-background",
+    nameColor: "text-background",
+    roleColor: "text-background/60",
+    contentColor: "text-background/80",
     playBtnColor: "bg-lime",
     playIconColor: "text-black",
   },
@@ -41,10 +41,10 @@ const testimonials = [
     content:
       "The team at Digital Addis delivered beyond our expectations. Their innovative approach and dedication to quality made all the difference in our project success.",
     image: "/images/testimonial-3.jpg",
-    bgColor: "bg-white dark:bg-black/80 border border-black/10 dark:border-white/10 text-black dark:text-white",
-    nameColor: "text-black dark:text-white",
-    roleColor: "text-black/60 dark:text-white/60",
-    contentColor: "text-black/80 dark:text-white/80",
+    bgColor: "bg-background border border-foreground/10 text-foreground",
+    nameColor: "text-foreground",
+    roleColor: "text-foreground/60",
+    contentColor: "text-foreground/80",
     playBtnColor: "bg-lime",
     playIconColor: "text-black",
   },
@@ -86,12 +86,12 @@ export function Testimonials() {
         <ScrollReveal className="mb-12">
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground dark:text-white">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground">
                 What Our <span className="text-lime">Clients</span>
                 <br />
                 Say About Us
               </h2>
-              <p className="text-muted-foreground dark:text-white/50 text-lg max-w-2xl">
+              <p className="text-muted-foreground text-lg max-w-2xl">
                 Our clients are at the center of everything we do. Their
                 experiences reflect our commitment to creativity, innovation, and
                 delivering high-quality digital solutions.

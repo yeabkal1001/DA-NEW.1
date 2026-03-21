@@ -14,12 +14,12 @@ export function Stats() {
       <div className="max-w-7xl mx-auto">
         {/* Section header */}
         <ScrollReveal className="mb-8 md:mb-12">
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 text-foreground dark:text-white">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 md:mb-4 text-foreground">
             Our
             <br />
             Impact in <span className="text-lime">Numbers.</span>
           </h2>
-          <p className="text-muted-foreground dark:text-white/50 text-sm md:text-base lg:text-lg max-w-2xl">
+          <p className="text-muted-foreground text-sm md:text-base lg:text-lg max-w-2xl">
             A snapshot of the milestones, projects, and partnerships that define
             our journey and commitment to digital excellence.
           </p>
