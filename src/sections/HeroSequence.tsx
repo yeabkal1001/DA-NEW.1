@@ -41,13 +41,15 @@ export function HeroSequence() {
     const img = imagesRef.current[index];
     if (!ctx || !img || !img.complete) return;
 
-    // Clear previous frame (essential for transparent PNGs)
+    // Clear previous frame
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    // Draw perfectly into the internal resolution. 
-    // CSS object-cover will handle all responsive stretching and scaling safely.
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-  }, []);
+    // Flip the image horizontally and draw it
+    ctx.save();
+    ctx.scale(-1, 1);
+    ctx.drawImage(img, -canvas.width, 0, canvas.width, canvas.height);
+    ctx.restore();
+  }, [imagesRef]);
 
   useEffect(() => {
     let loadedCount = 0;
@@ -165,6 +167,14 @@ export function HeroSequence() {
 
       scrollTl.to(progressFillRef.current, { scaleY: 1, ease: "none" }, 0);
       scrollTl.to(heroContentRef.current, { opacity: 0, y: -100, duration: 0.2 }, 0.2);
+      
+      // Move 3D model from right to left - slower, stretched transition
+      scrollTl.to(canvasRef.current, {
+        x: "-38vw",
+        duration: 0.8,
+        ease: "power1.inOut"
+      }, 0.1);
+
       scrollTl.fromTo(aboutContentRef.current, 
         { opacity: 0, y: 100 },
         { opacity: 1, y: 0, duration: 0.3 }, 
@@ -180,9 +190,9 @@ export function HeroSequence() {
     <div ref={containerRef} className="hero-sequence-container" style={{ height: "500vh" }}>
       <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-background">
         
-        {/* Right Side Video (Split Layout) */}
-        <div className="absolute inset-y-0 right-0 w-full md:w-[55%] h-full z-0 overflow-hidden bg-white dark:bg-black">
-          <canvas ref={canvasRef} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 max-w-none w-auto h-auto object-none pointer-events-none" />
+        {/* Background & Canvas (Merged Layout) */}
+        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-white dark:bg-black">
+          <canvas ref={canvasRef} className="absolute top-1/2 left-1/2 md:left-[68%] -translate-x-1/2 -translate-y-1/2 max-w-none w-auto h-auto object-none pointer-events-none scale-[0.8] md:scale-100" />
           <div className="hero-sequence-overlay absolute inset-0 z-[1] pointer-events-none bg-transparent" />
         </div>
 
@@ -201,18 +211,20 @@ export function HeroSequence() {
           </div>
         )}
 
-        {/* Hero Copy (Split Layout) */}
-        <div ref={heroContentRef} className="absolute inset-y-0 left-0 w-full md:w-[45%] z-20 flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-left pb-20 md:pb-0">
-          <h1 className="hero-title select-none w-full" style={{ perspective: "1500px" }}>
-            <span className="font-moonwalk block text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7.5rem] xl:text-[9rem] text-foreground dark:text-white leading-[0.85] tracking-[0.05em] drop-shadow-2xl hero-line">
-              Digital<br/>Addis
-            </span>
-          </h1>
+        {/* Hero Copy (Overlay Layout) */}
+        <div ref={heroContentRef} className="absolute inset-0 z-20 flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-left pb-20 md:pb-0 pointer-events-none">
+          <div className="max-w-sm sm:max-w-md md:max-w-xl lg:max-w-2xl pointer-events-auto">
+            <h1 className="hero-title select-none w-full" style={{ perspective: "1500px" }}>
+              <span className="font-moonwalk block text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7.5rem] xl:text-[9rem] text-foreground dark:text-white leading-[0.85] tracking-[0.05em] drop-shadow-2xl hero-line">
+                Digital<br/>Addis
+              </span>
+            </h1>
 
-          <div className="hero-subtitle-wrap mt-6 md:mt-8 max-w-sm lg:max-w-md pr-4">
-             <p className="hero-subtitle text-[#212121]/70 dark:text-white/70 text-sm lg:text-base leading-relaxed tracking-wide font-light">
-               We Innovate. We Secure. We Transform. Step into the future with our cutting-edge digital solutions and creative branding.
-             </p>
+            <div className="hero-subtitle-wrap mt-6 md:mt-8 pr-4 text-foreground/70 dark:text-white/70">
+               <p className="hero-subtitle text-sm lg:text-base leading-relaxed tracking-wide font-medium md:font-light">
+                 We Innovate. We Secure. We Transform. Step into the future with our cutting-edge digital solutions and creative branding.
+               </p>
+            </div>
           </div>
 
           <div className="hero-cta mt-8 md:mt-10 flex flex-col sm:flex-row items-center justify-start gap-4">
@@ -259,26 +271,26 @@ export function HeroSequence() {
           </div>
         </div>
 
-        {/* About Section */}
-        <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-4 sm:px-6 md:px-20 items-center text-center">
+        {/* About Section (Right Alignment with Image on Left) */}
+        <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-right items-end">
           <div className="w-16 md:w-24 h-[1px] bg-lime/40 mb-8 md:mb-12" />
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-light text-black dark:text-white max-w-5xl mx-auto leading-[1.1] tracking-tight select-none mb-4 md:mb-6">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-light text-black dark:text-white max-w-5xl leading-[1.1] tracking-tight select-none mb-4 md:mb-6">
             <span className="about-title-line block">Elevating Brands.</span>
             <span className="about-title-line block text-black/40 dark:text-white/40">Solving Challenges.</span>
           </h2>
-          <p className="mt-6 md:mt-10 text-black/60 dark:text-white/50 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase px-4">
+          <p className="mt-6 md:mt-10 text-black/60 dark:text-white/50 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase pl-4 about-description">
             Technology should make people’s work easier, safer and more meaningful. We are a multidisciplinary team focused on solving real-world challenges through long-term partnerships and people-centric design.
           </p>
-          <div className="mt-10 md:mt-14 lg:mt-16 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-24">
-            <div className="text-center group">
+          <div className="mt-10 md:mt-14 lg:mt-16 flex flex-wrap justify-end gap-10 sm:gap-12 md:gap-16 lg:gap-24">
+            <div className="text-right group">
               <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">120+</p>
               <p className="text-[8px] md:text-[9px] text-black/50 dark:text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Solutions Delivered</p>
             </div>
-            <div className="text-center group">
+            <div className="text-right group">
               <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">15+</p>
               <p className="text-[8px] md:text-[9px] text-black/50 dark:text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Core Technologists</p>
             </div>
-            <div className="text-center group">
+            <div className="text-right group">
               <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">10+yr</p>
               <p className="text-[8px] md:text-[9px] text-black/50 dark:text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Innovation Legacy</p>
             </div>

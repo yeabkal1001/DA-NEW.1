@@ -92,10 +92,10 @@ export const viewport: Viewport = {
   maximumScale: 5,
   userScalable: true,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FFFFFF" },
-    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+    { media: "(prefers-color-scheme: light)", color: "#e6e6e6" },
+    { media: "(prefers-color-scheme: dark)", color: "#212121" },
   ],
-  colorScheme: "light",
+  colorScheme: "dark",
 };
 
 // JSON-LD Structured Data

@@ -278,7 +278,7 @@
 .hero-sequence-content {
   position: absolute;
   z-index: 10;
-  color: #fff;
+  color: var(--foreground);
 }
 
 .hero-content-left {
@@ -310,7 +310,7 @@
   font-size: 0.65rem;
   text-transform: uppercase;
   letter-spacing: 0.2em;
-  color: rgba(255, 255, 255, 0.25);
+  color: hsl(var(--foreground) / 0.25);
   pointer-events: none;
 }
 
@@ -385,11 +385,10 @@
   transform-origin: left;
 }
 
-/* ─── Hero Subtitle ─── */
 .hero-subtitle {
   font-size: clamp(0.9rem, 1.1vw, 1.1rem);
   line-height: 1.8;
-  color: rgba(255, 255, 255, 0.55);
+  color: hsl(var(--foreground) / 0.7);
   max-width: 440px;
   margin-bottom: 2rem;
 }
@@ -412,8 +411,8 @@
 }
 
 .hero-btn-outline {
-  border: 1.5px solid rgba(255, 255, 255, 0.2) !important;
-  color: #fff !important;
+  border: 1.5px solid hsl(var(--foreground) / 0.2) !important;
+  color: var(--foreground) !important;
   border-radius: 999px !important;
   padding: 0.75rem 2rem !important;
   font-size: 0.9rem !important;
@@ -425,8 +424,8 @@
 }
 
 .hero-btn-outline:hover {
-  border-color: rgba(255, 255, 255, 0.5) !important;
-  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: hsl(var(--foreground) / 0.5) !important;
+  background: hsl(var(--foreground) / 0.08) !important;
 }
 
 /* ─── Hero CTA ─── */
@@ -521,7 +520,7 @@
 .about-description {
   font-size: clamp(0.875rem, 1vw, 1rem);
   line-height: 1.85;
-  color: rgba(255, 255, 255, 0.5);
+  color: hsl(var(--foreground) / 0.6);
   margin-bottom: 2.5rem;
 }
 

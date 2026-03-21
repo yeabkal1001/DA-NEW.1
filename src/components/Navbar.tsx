@@ -67,7 +67,7 @@ export const Navbar = memo(function Navbar() {
         )}
       >
         <div className="w-full px-4 md:px-8 flex justify-center pointer-events-auto">
-          <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-white/10 rounded-full bg-black/60 backdrop-blur-xl px-2 py-2 shadow-2xl">
+          <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-black/5 dark:border-white/10 rounded-full bg-white/70 dark:bg-black/60 backdrop-blur-xl px-2 py-2 shadow-2xl transition-colors duration-500">
             
             {/* Desktop Navigation Group (Left) */}
             <div className="hidden lg:flex items-center gap-1 pl-1">
@@ -82,14 +82,14 @@ export const Navbar = memo(function Navbar() {
                     className={cn(
                       "relative text-[10px] md:text-xs font-semibold tracking-widest uppercase transition-all duration-500 px-6 py-3 rounded-full flex items-center gap-3",
                       isActive 
-                        ? "bg-white text-black shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
-                        : "text-white/60 hover:text-white hover:bg-white/5"
+                        ? "bg-black text-white dark:bg-white dark:text-black shadow-lg" 
+                        : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                     )}
                   >
                     {/* Inject Logo inside the Home pill dynamically */}
                     {link.name === "Home" && isActive && (
                       <div className="relative w-4 h-4 shrink-0 -ml-1">
-                        <Image src="/dalogo.webp" alt="Logo" fill sizes="16px" className="object-contain brightness-0" />
+                        <Image src="/dalogo.webp" alt="Logo" fill sizes="16px" className="object-contain invert dark:brightness-0" />
                       </div>
                     )}
                     {link.name}
@@ -101,20 +101,20 @@ export const Navbar = memo(function Navbar() {
             {/* Mobile Branding (only visible on small screens) */}
             <Link href="/" className="lg:hidden flex items-center gap-3 shrink-0 pl-4 py-2" aria-label="Digital Addis - Home">
               <div className="relative h-6 w-6">
-                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="24px" className="object-contain invert" priority/>
+                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="24px" className="object-contain dark:invert" priority/>
               </div>
-              <span className="text-[10px] font-bold text-white uppercase tracking-widest shrink-0">Home</span>
+              <span className="text-[10px] font-bold text-black dark:text-white uppercase tracking-widest shrink-0">Home</span>
             </Link>
 
             {/* Right Side Tools */}
             <div className="hidden md:flex items-center gap-2 pr-1">
-              <div className="bg-white/5 border border-white/5 rounded-full px-1 py-1 mr-2">
+              <div className="bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/5 rounded-full px-1 py-1 mr-2">
                  <ThemeToggle />
               </div>
               <Link
                 href="/contact"
                 prefetch={true}
-                className="group flex items-center gap-3 bg-white/5 border border-white/10 text-white/90 px-6 py-3 rounded-full text-[10px] md:text-xs tracking-widest uppercase hover:bg-white hover:text-black hover:border-white transition-all duration-500 shadow-lg"
+                className="group flex items-center gap-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-black/90 dark:text-white/90 px-6 py-3 rounded-full text-[10px] md:text-xs tracking-widest uppercase hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 shadow-lg"
               >
                 Let's Talk
                 <span className="flex gap-[3px] ml-1">
@@ -146,7 +146,7 @@ export const Navbar = memo(function Navbar() {
         id="mobile-menu"
         aria-label="Mobile navigation"
         className={cn(
-          "fixed inset-0 z-[99] bg-black/95 backdrop-blur-xl transition-all duration-500 lg:hidden",
+          "fixed inset-0 z-[99] bg-white/95 dark:bg-black/95 backdrop-blur-xl transition-all duration-500 lg:hidden",
           isMobileMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
       >
@@ -158,7 +158,7 @@ export const Navbar = memo(function Navbar() {
               onClick={closeMobileMenu}
               aria-label={link.ariaLabel}
               className={cn(
-                "text-white text-2xl font-black uppercase tracking-[0.2em] transition-all duration-300 hover:text-lime focus-visible:text-lime",
+                "text-black dark:text-white text-2xl font-black uppercase tracking-[0.2em] transition-all duration-300 hover:text-lime focus-visible:text-lime",
                 isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
               )}
               style={{ transitionDelay: `${index * 75}ms` }}
@@ -171,7 +171,7 @@ export const Navbar = memo(function Navbar() {
             onClick={closeMobileMenu}
             aria-label="Contact us - Let's talk about your project"
             className={cn(
-              "mt-6 bg-lime text-black px-10 py-4 rounded-full text-sm font-black uppercase tracking-[0.2em] transition-all duration-300 hover:bg-white focus-visible:bg-white",
+              "mt-6 bg-lime text-black px-10 py-4 rounded-full text-sm font-black uppercase tracking-[0.2em] transition-all duration-300 hover:bg-white dark:hover:bg-white focus-visible:bg-white",
               isMobileMenuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
             )}
             style={{ transitionDelay: `${navLinks.length * 75}ms` }}
