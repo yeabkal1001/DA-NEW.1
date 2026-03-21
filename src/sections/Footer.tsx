@@ -34,7 +34,7 @@ export function Footer() {
               <img
                 src="/dalogo.webp"
                 alt="Digital Addis Logo"
-                className="h-10 md:h-14 w-auto mb-4 md:mb-6 object-contain"
+                className="h-16 md:h-24 w-auto mb-4 md:mb-6 object-contain brightness-0 dark:brightness-100"
               />
             </Link>
             <p className="text-muted-foreground text-xs md:text-sm mb-4 md:mb-6 max-w-[280px]">

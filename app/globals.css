@@ -4,15 +4,16 @@
 
 /* Performance: Content-visibility for off-screen content */
 @layer base {
+
   /* GPU acceleration hints for animated elements */
   .will-change-transform {
     will-change: transform;
   }
-  
+
   .will-change-opacity {
     will-change: opacity;
   }
-  
+
   /* Content visibility optimization for below-fold sections */
   .section-optimized {
     content-visibility: auto;
@@ -20,71 +21,75 @@
   }
 
   :root {
-    --background: 0 0% 90%; /* #e6e6e6 */
-    --foreground: 0 0% 13%; /* #212121 */
-    
+    --background: 0 0% 90%;
+    /* #e6e6e6 */
+    --foreground: 0 0% 13%;
+    /* #212121 */
+
     --card: 0 0% 90%;
     --card-foreground: 0 0% 13%;
-    
+
     --popover: 0 0% 90%;
     --popover-foreground: 0 0% 13%;
-    
-    --primary: 72 100% 50%; /* #cbfe00 */
+
+    --primary: 72 75% 45%;
+    /* Adjusted Lime for Light Mode */
     --primary-foreground: 0 0% 13%;
-    
-    --secondary: 0 0% 85%; /* Slight variation of #e6e6e6 */
+
+    --secondary: 0 0% 85%;
+    /* Slight variation of #e6e6e6 */
     --secondary-foreground: 0 0% 13%;
-    
+
     --muted: 0 0% 85%;
     --muted-foreground: 0 0% 40%;
-    
-    --accent: 72 100% 50%;
+
+    --accent: 72 75% 45%;
     --accent-foreground: 0 0% 13%;
-    
+
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    
+
     --border: 0 0% 80%;
     --input: 0 0% 80%;
-    --ring: 72 100% 50%;
+    --ring: 72 75% 45%;
     --radius: 0.625rem;
-    
-    --lime: #cbfe00;
+
     --black: #212121;
     --white: #e6e6e6;
   }
 
   .dark {
-    --background: 0 0% 13%; /* #212121 */
-    --foreground: 0 0% 90%; /* #e6e6e6 */
-    
+    --background: 0 0% 13%;
+    /* #212121 */
+    --foreground: 0 0% 90%;
+    /* #e6e6e6 */
+
     --card: 0 0% 13%;
     --card-foreground: 0 0% 90%;
-    
+
     --popover: 0 0% 13%;
     --popover-foreground: 0 0% 90%;
-    
+
     --primary: 72 100% 50%;
     --primary-foreground: 0 0% 13%;
-    
+
     --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 90%;
-    
+
     --muted: 0 0% 18%;
     --muted-foreground: 0 0% 60%;
-    
+
     --accent: 72 100% 50%;
     --accent-foreground: 0 0% 13%;
-    
+
     --destructive: 0 100% 50%;
     --destructive-foreground: 0 0% 100%;
-    
+
     --border: 0 0% 20%;
     --input: 0 0% 20%;
     --ring: 72 100% 50%;
     --radius: 0.625rem;
-    
-    --lime: #cbfe00;
+
     --black: #212121;
     --white: #e6e6e6;
   }
@@ -94,11 +99,13 @@
   * {
     @apply border-border;
   }
+
   html {
     scroll-behavior: smooth;
     overflow-x: hidden;
     width: 100%;
   }
+
   body {
     @apply bg-background text-foreground antialiased transition-colors duration-500;
     font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
@@ -106,24 +113,21 @@
     width: 100%;
   }
 
-  h1, h2, h3, h4, h5, h6,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
   .font-moonwalk,
-  .hero-line, 
+  .hero-line,
   .about-title-line {
     font-family: var(--font-moonwalk), sans-serif;
   }
 }
 
 @layer utilities {
-  .text-lime {
-    color: var(--lime);
-  }
-  .bg-lime {
-    background-color: var(--lime);
-  }
-  .border-lime {
-    border-color: var(--lime);
-  }
+  /* Dynamic lime will now follow var(--primary) due to tailwind.config update */
 }
 
 /* Marquee Animation */
@@ -131,6 +135,7 @@
   0% {
     transform: translateX(0);
   }
+
   100% {
     transform: translateX(-50%);
   }
@@ -140,6 +145,7 @@
   0% {
     transform: translateX(-50%);
   }
+
   100% {
     transform: translateX(0);
   }
@@ -212,13 +218,12 @@
   background: none;
   pointer-events: none;
 }
+
 .dark .hero-sequence-overlay {
   background:
-    linear-gradient(
-      105deg,
+    linear-gradient(105deg,
       rgba(33, 33, 33, 0.9) 0%,
-      rgba(33, 33, 33, 0.1) 60%
-    );
+      rgba(33, 33, 33, 0.1) 60%);
 }
 
 /* Cinematic vignette */
@@ -341,13 +346,20 @@
   height: 6px;
   border-radius: 50%;
   background: #CCFF00;
-  box-shadow: 0 0 10px rgba(204, 255, 0, 0.5);
+  box-shadow: 0 0 10px rgba(187, 233, 2, 0.841);
   animation: dotPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes dotPulse {
-  0%, 100% { box-shadow: 0 0 6px rgba(204, 255, 0, 0.4); }
-  50% { box-shadow: 0 0 14px rgba(204, 255, 0, 0.7); }
+
+  0%,
+  100% {
+    box-shadow: 0 0 6px rgba(204, 255, 0, 0.84);
+  }
+
+  50% {
+    box-shadow: 0 0 14px rgba(204, 255, 0, 0.7);
+  }
 }
 
 /* ─── Hero Title ─── */
@@ -470,8 +482,17 @@
 }
 
 @keyframes scrollBounce {
-  0%, 100% { transform: translateY(0); opacity: 1; }
-  50% { transform: translateY(5px); opacity: 0.6; }
+
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateY(5px);
+    opacity: 0.6;
+  }
 }
 
 /* ═══════════════════════
@@ -628,6 +649,7 @@
    ═══════════════════════ */
 
 @media (max-width: 768px) {
+
   .hero-content-left,
   .about-content-left {
     left: 1.5rem;
@@ -646,13 +668,11 @@
 
   .hero-sequence-overlay {
     background:
-      linear-gradient(
-        180deg,
+      linear-gradient(180deg,
         rgba(0, 0, 0, 0.35) 0%,
         rgba(0, 0, 0, 0.15) 30%,
         rgba(0, 0, 0, 0.15) 50%,
-        rgba(0, 0, 0, 0.65) 100%
-      );
+        rgba(0, 0, 0, 0.65) 100%);
   }
 
   .hero-cta {
@@ -678,6 +698,7 @@
 
 /* Reduced motion - Accessibility */
 @media (prefers-reduced-motion: reduce) {
+
   *,
   *::before,
   *::after {
@@ -685,12 +706,12 @@
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
   }
-  
+
   .animate-marquee,
   .animate-marquee-reverse {
     animation: none;
   }
-  
+
   html {
     scroll-behavior: auto;
   }
@@ -733,7 +754,7 @@
   .no-print {
     display: none !important;
   }
-  
+
   body {
     background: white !important;
     color: black !important;

@@ -86,10 +86,15 @@ export default function ContactPage() {
       
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-[55vh] md:min-h-[60vh] bg-background text-foreground flex items-center overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-lime/10 rounded-full blur-[120px] md:blur-[180px]" />
         </div>
+
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.03] hidden md:block" style={{
+          backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40 text-center">
           <div className="contact-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">

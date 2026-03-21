@@ -141,6 +141,12 @@ export default function BlogPage() {
         <div className="absolute inset-0">
           <div className="absolute top-1/3 left-1/3 w-[350px] md:w-[500px] h-[350px] md:h-[500px] bg-lime/10 rounded-full blur-[120px] md:blur-[150px]" />
         </div>
+
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.03] hidden md:block" style={{
+          backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40">
           <div className="max-w-3xl">

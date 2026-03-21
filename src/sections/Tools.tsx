@@ -67,17 +67,17 @@ export function Tools() {
           </h2>
         </ScrollReveal>
 
-        {/* Feature cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6">
+        {/* Feature cards - equal height row */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 md:gap-4 mb-4 md:mb-6 items-stretch">
           {features.map((feature, index) => (
             <ScrollReveal
               key={index}
               delay={index * 0.1}
-              className={`${feature.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 border border-black/5 dark:border-white/5 shadow-sm`}
+              className={`${feature.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 border border-black/5 dark:border-white/5 shadow-sm flex flex-col`}
             >
-              <feature.icon className="h-5 w-5 md:h-6 md:w-6 mb-3 md:mb-4 opacity-70" />
+              <feature.icon className="h-5 w-5 md:h-6 md:w-6 mb-3 md:mb-4 opacity-70 flex-shrink-0" />
               <h3 className="text-lg md:text-xl font-bold mb-1 md:mb-2">{feature.title}</h3>
-              <p className={`text-xs md:text-sm font-medium ${feature.descColor}`}>
+              <p className={`text-xs md:text-sm font-medium ${feature.descColor} mt-auto`}>
                 {feature.description}
               </p>
             </ScrollReveal>
@@ -110,8 +110,12 @@ export function Tools() {
             >
               #tools we use
             </p>
-            {/* Desktop: FallingText with physics */}
-            <div className="hidden md:block w-full h-full min-h-[300px] mt-2 relative">
+            {/* Desktop: FallingText with physics - wrapped to prevent scroll capture */}
+            <div
+              className="hidden md:block w-full h-full min-h-[300px] mt-2 relative"
+              style={{ touchAction: 'none' }}
+              onWheel={(e) => { e.stopPropagation(); window.scrollBy(0, e.deltaY); }}
+            >
               <FallingText 
                 text={techStack} 
                 highlightWords={["Next.js", "React", "Tailwind CSS", "TypeScript"]} 

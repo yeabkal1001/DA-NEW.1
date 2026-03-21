@@ -135,9 +135,9 @@ export default function ServicesPage() {
           <div className="absolute bottom-1/4 right-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-lime/5 rounded-full blur-[80px] md:blur-[120px]" />
         </div>
 
-        {/* Grid Pattern - Hidden on mobile for performance */}
-        <div className="absolute inset-0 opacity-[0.03] hidden md:block" style={{
-          backgroundImage: `linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)`,
+        {/* Grid Pattern - Theme Aware */}
+        <div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.03] hidden md:block" style={{
+          backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
         }} />
         
@@ -335,15 +335,15 @@ export default function ServicesPage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-lime">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-lime dark:bg-black/40 border-t border-black/5 dark:border-white/10">
         <div className="max-w-5xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-black dark:text-white">
               Ready to Transform
               <br />
               Your <span className="italic">Digital Presence?</span>
             </h2>
-            <p className="text-black/60 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed px-4">
+            <p className="text-black/60 dark:text-white/60 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed px-4">
               Let's discuss how our services can help your organization achieve its goals.
             </p>
             <Link 

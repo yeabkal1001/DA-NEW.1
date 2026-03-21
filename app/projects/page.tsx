@@ -132,11 +132,16 @@ export default function ProjectsPage() {
       
       {/* Hero Section */}
       <section ref={heroRef} className="relative min-h-[75vh] md:min-h-[80vh] bg-background text-foreground flex items-center overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0">
           <div className="absolute top-0 right-0 w-[400px] md:w-[600px] h-[400px] md:h-[600px] bg-lime/10 rounded-full blur-[120px] md:blur-[180px]" />
           <div className="absolute bottom-0 left-0 w-[300px] md:w-[400px] h-[300px] md:h-[400px] bg-lime/5 rounded-full blur-[100px] md:blur-[120px]" />
         </div>
+
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.03] hidden md:block" style={{
+          backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40">
           <div className="max-w-4xl">
@@ -221,23 +226,23 @@ export default function ProjectsPage() {
 
           {/* Third Featured - Full Width */}
           <ScrollReveal delay={0.3} className="mt-4 md:mt-6">
-            <div className="group relative bg-lime rounded-[1.5rem] md:rounded-[2rem] overflow-hidden">
+            <div className="group relative bg-lime dark:bg-black/40 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden border border-black/5 dark:border-white/10 shadow-sm transition-colors duration-500">
               <div className="grid lg:grid-cols-2 gap-0">
                 <div className="p-6 md:p-10 lg:p-14 flex flex-col justify-center">
                   <div className="flex flex-wrap gap-2 mb-3 md:mb-4">
                     {featuredProjects[2]?.tags.map((tag, i) => (
-                      <span key={i} className="px-2 md:px-3 py-1 bg-black/10 rounded-full text-[10px] md:text-xs font-bold">
+                      <span key={i} className="px-2 md:px-3 py-1 bg-black/10 dark:bg-white/10 rounded-full text-[10px] md:text-xs font-bold text-black/80 dark:text-white/80">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight mb-3 md:mb-4">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-black uppercase tracking-tight mb-3 md:mb-4 text-black dark:text-white">
                     {featuredProjects[2]?.title}
                   </h3>
-                  <p className="text-black/60 leading-relaxed text-sm md:text-base mb-4 md:mb-6">
+                  <p className="text-black/60 dark:text-white/60 leading-relaxed text-sm md:text-base mb-4 md:mb-6">
                     {featuredProjects[2]?.description}
                   </p>
-                  <button className="inline-flex items-center gap-2 text-xs md:text-sm font-black uppercase tracking-wider group/btn">
+                  <button className="inline-flex items-center gap-2 text-xs md:text-sm font-black uppercase tracking-wider group/btn text-black dark:text-white">
                     View Case Study
                     <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                   </button>

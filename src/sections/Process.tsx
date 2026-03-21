@@ -270,13 +270,14 @@ export function Process() {
 // Desktop Process Card Component
 function ProcessCard({ step }: { step: typeof processSteps[0] }) {
   return (
-    <div className="bg-black dark:bg-white/5 rounded-[2rem] p-2 shadow-2xl hover:shadow-[0_30px_60px_-15px_rgba(0,0,0,0.5)] transition-all duration-500 group cursor-pointer border dark:border-white/10">
-      <div className="bg-black dark:bg-transparent rounded-t-[1.5rem] px-6 py-4 flex items-center gap-3">
-        <div className="w-3 h-3 rounded-full bg-white/30 dark:bg-white/20 group-hover:bg-lime transition-colors duration-300" />
-        <div className="w-3 h-3 rounded-full bg-white/30 dark:bg-white/20 group-hover:bg-lime transition-colors duration-300 delay-75" />
+    <div className="bg-background border border-black/10 dark:border-white/10 rounded-[2rem] p-2 shadow-xl hover:shadow-2xl transition-all duration-500 group cursor-pointer">
+      <div className="bg-black/5 dark:bg-white/5 rounded-t-[1.5rem] px-6 py-4 flex items-center gap-3">
+        <div className="w-3 h-3 rounded-full bg-black/20 dark:bg-white/20 group-hover:bg-lime transition-colors duration-300" />
+        <div className="w-3 h-3 rounded-full bg-black/20 dark:bg-white/20 group-hover:bg-lime transition-colors duration-300 delay-75" />
+        <span className="ml-auto text-black/30 dark:text-white/30 text-xs font-mono">{step.id}</span>
       </div>
       
-      <div className="bg-white dark:bg-black rounded-b-[1.5rem] rounded-t-[0.5rem] p-8 pt-6 min-h-[320px] flex flex-col">
+      <div className="bg-white dark:bg-black rounded-b-[1.5rem] rounded-t-[0.5rem] p-8 pt-6 min-h-[320px] flex flex-col border-t border-black/5 dark:border-white/5">
         <h3 className="text-4xl lg:text-5xl font-black text-lime leading-[0.95] tracking-tight whitespace-pre-line italic mb-6 group-hover:scale-105 transition-transform duration-300 origin-left">
           {step.title}
         </h3>
@@ -292,14 +293,14 @@ function ProcessCard({ step }: { step: typeof processSteps[0] }) {
 // Mobile Process Card Component - Optimized for touch
 function ProcessCardMobile({ step, index }: { step: typeof processSteps[0]; index: number }) {
   return (
-    <div className="bg-black dark:bg-white/5 rounded-[1.5rem] p-1.5 shadow-xl border dark:border-white/10">
-      <div className="bg-black dark:bg-transparent rounded-t-[1.25rem] px-4 py-3 flex items-center gap-2">
-        <div className="w-2.5 h-2.5 rounded-full bg-white/30 dark:bg-white/20" />
-        <div className="w-2.5 h-2.5 rounded-full bg-white/30 dark:bg-white/20" />
-        <span className="ml-auto text-white/40 dark:text-white/30 text-xs font-mono">0{index + 1}</span>
+    <div className="bg-background border border-black/10 dark:border-white/10 rounded-[1.5rem] p-1.5 shadow-lg">
+      <div className="bg-black/5 dark:bg-white/5 rounded-t-[1.25rem] px-4 py-3 flex items-center gap-2">
+        <div className="w-2.5 h-2.5 rounded-full bg-black/20 dark:bg-white/20" />
+        <div className="w-2.5 h-2.5 rounded-full bg-black/20 dark:bg-white/20" />
+        <span className="ml-auto text-black/40 dark:text-white/30 text-xs font-mono">0{index + 1}</span>
       </div>
       
-      <div className="bg-white dark:bg-black rounded-b-[1.25rem] rounded-t-[0.25rem] p-5 pt-4">
+      <div className="bg-white dark:bg-black rounded-b-[1.25rem] rounded-t-[0.25rem] p-5 pt-4 border-t border-black/5 dark:border-white/5">
         <h3 className="text-2xl sm:text-3xl font-black text-lime leading-[0.95] tracking-tight whitespace-pre-line italic mb-4">
           {step.title}
         </h3>

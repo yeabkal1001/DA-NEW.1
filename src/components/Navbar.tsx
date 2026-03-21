@@ -69,8 +69,16 @@ export const Navbar = memo(function Navbar() {
         <div className="w-full px-4 md:px-8 flex justify-center pointer-events-auto">
           <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-black/5 dark:border-white/10 rounded-full bg-white/70 dark:bg-black/60 backdrop-blur-xl px-2 py-2 shadow-2xl transition-colors duration-500">
             
-            {/* Desktop Navigation Group (Left) */}
-            <div className="hidden lg:flex items-center gap-1 pl-1">
+            {/* Desktop Branding (Left) */}
+            <Link href="/" className="hidden lg:flex items-center gap-4 shrink-0 px-4 py-2" aria-label="Digital Addis - Home">
+              <div className="relative h-10 w-10">
+                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="40px" className="object-contain brightness-0 dark:brightness-100" priority/>
+              </div>
+              <span className="text-xs font-bold text-black dark:text-white uppercase tracking-widest shrink-0">Digital Addis</span>
+            </Link>
+
+            {/* Desktop Navigation Group (Center) */}
+            <div className="hidden lg:flex items-center gap-1">
               {navLinks.map((link) => {
                 const isActive = pathname === link.link;
                 return (
@@ -86,12 +94,6 @@ export const Navbar = memo(function Navbar() {
                         : "text-black/60 dark:text-white/60 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/5"
                     )}
                   >
-                    {/* Inject Logo inside the Home pill dynamically */}
-                    {link.name === "Home" && isActive && (
-                      <div className="relative w-4 h-4 shrink-0 -ml-1">
-                        <Image src="/dalogo.webp" alt="Logo" fill sizes="16px" className="object-contain invert dark:brightness-0" />
-                      </div>
-                    )}
                     {link.name}
                   </Link>
                 );
@@ -100,10 +102,10 @@ export const Navbar = memo(function Navbar() {
 
             {/* Mobile Branding (only visible on small screens) */}
             <Link href="/" className="lg:hidden flex items-center gap-3 shrink-0 pl-4 py-2" aria-label="Digital Addis - Home">
-              <div className="relative h-6 w-6">
-                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="24px" className="object-contain dark:invert" priority/>
+              <div className="relative h-10 w-10">
+                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="40px" className="object-contain brightness-0 dark:brightness-100" priority/>
               </div>
-              <span className="text-[10px] font-bold text-black dark:text-white uppercase tracking-widest shrink-0">Home</span>
+              <span className="text-[11px] font-bold text-black dark:text-white uppercase tracking-widest shrink-0">Digital Addis</span>
             </Link>
 
             {/* Right Side Tools */}

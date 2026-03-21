@@ -13,25 +13,27 @@ const testimonials = [
     name: "Sarah Johnson",
     role: "Marketing Director, BrightWave Agency",
     content:
-      "Working with this team was an incredible experience from start to finish. Their creativity, attention to detail, and deep technical expertise truly set them apart. They took the time to understand our vision, goals, and challenges, and transformed our ideas into a powerful digital platform that not only met our expectations but exceeded them in every way.",
+      "Working with this team was an incredible experience from start to finish. Their creativity, attention to detail, and deep technical expertise truly set them apart. They transformed our ideas into a powerful platform that exceeded every expectation.",
     image: "/images/testimonial-1.jpg",
-    type: "text",
     bgColor: "bg-lime text-black",
     nameColor: "text-black",
     roleColor: "text-black/60",
     contentColor: "text-black/80",
+    playBtnColor: "bg-black",
+    playIconColor: "text-lime",
   },
   {
     name: "Daniel Carter",
     role: "CEO, Nexa Digital Solutions",
     content:
-      "They demonstrated professionalism, clear communication, and a deep understanding of our vision and goals. The final result was not only visually impressive but also highly functional and user-friendly. Their ability to combine...",
+      "They demonstrated professionalism, clear communication, and a deep understanding of our vision and goals. The final result was not only visually impressive but also highly functional and user-friendly.",
     image: "/images/testimonial-2.jpg",
-    type: "video",
     bgColor: "bg-black dark:bg-white text-white dark:text-black",
     nameColor: "text-white dark:text-black",
     roleColor: "text-white/60 dark:text-black/60",
     contentColor: "text-white/80 dark:text-black/80",
+    playBtnColor: "bg-lime",
+    playIconColor: "text-black",
   },
   {
     name: "Emily Rodriguez",
@@ -39,11 +41,12 @@ const testimonials = [
     content:
       "The team at Digital Addis delivered beyond our expectations. Their innovative approach and dedication to quality made all the difference in our project success.",
     image: "/images/testimonial-3.jpg",
-    type: "video",
-    bgColor: "bg-white dark:bg-black text-black dark:text-white",
+    bgColor: "bg-white dark:bg-black/80 border border-black/10 dark:border-white/10 text-black dark:text-white",
     nameColor: "text-black dark:text-white",
     roleColor: "text-black/60 dark:text-white/60",
     contentColor: "text-black/80 dark:text-white/80",
+    playBtnColor: "bg-lime",
+    playIconColor: "text-black",
   },
 ];
 
@@ -108,7 +111,7 @@ export function Testimonials() {
           </div>
         </ScrollReveal>
 
-        {/* Testimonial cards */}
+        {/* Testimonial cards - uniform layout */}
         <div
           ref={cardsRef}
           className="flex gap-4 md:gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide"
@@ -117,55 +120,41 @@ export function Testimonials() {
           {testimonials.map((testimonial, index) => (
             <div
               key={index}
-              className={`${testimonial.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 min-w-[280px] sm:min-w-[320px] md:min-w-[350px] max-w-[400px] flex-shrink-0 snap-start opacity-0 border border-black/5 dark:border-white/5 shadow-sm text-foreground dark:text-white`}
+              className={`${testimonial.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[420px] flex-shrink-0 snap-start opacity-0 shadow-sm flex flex-col gap-4`}
             >
-              {testimonial.type === "text" ? (
-                <>
-                  <div className="flex items-center gap-3 mb-4">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-12 h-12 rounded-full object-cover"
-                    />
-                    <div>
-                      <h4 className={`font-bold ${testimonial.nameColor}`}>{testimonial.name}</h4>
-                      <p className={`text-sm ${testimonial.roleColor}`}>{testimonial.role}</p>
-                    </div>
-                  </div>
-                  <p className={`text-sm leading-relaxed ${testimonial.contentColor}`}>
-                    {testimonial.content}
-                  </p>
-                </>
-              ) : (
-                <div className="relative">
-                  <div className="relative rounded-2xl overflow-hidden mb-4">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                      <button className="w-14 h-14 bg-lime rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                        <Play className="h-6 w-6 text-black ml-1" fill="black" />
-                      </button>
-                    </div>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <img
-                      src={testimonial.image}
-                      alt={testimonial.name}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                    <div>
-                      <h4 className={`font-bold ${testimonial.nameColor}`}>{testimonial.name}</h4>
-                      <p className={`text-xs ${testimonial.roleColor}`}>{testimonial.role}</p>
-                    </div>
-                  </div>
-                  <p className={`text-sm mt-3 leading-relaxed ${testimonial.contentColor}`}>
-                    {testimonial.content}
-                  </p>
+              {/* Video thumbnail */}
+              <div className="relative rounded-xl overflow-hidden flex-shrink-0">
+                <img
+                  src={testimonial.image}
+                  alt={testimonial.name}
+                  className="w-full h-44 object-cover"
+                />
+                <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+                  <button
+                    className={`w-12 h-12 ${testimonial.playBtnColor} rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-lg`}
+                    aria-label="Play video testimonial"
+                  >
+                    <Play className={`h-5 w-5 ${testimonial.playIconColor} ml-0.5`} fill="currentColor" />
+                  </button>
                 </div>
-              )}
+              </div>
+              {/* Text content */}
+              <div>
+                <p className={`text-sm leading-relaxed mb-4 ${testimonial.contentColor}`}>
+                  {testimonial.content}
+                </p>
+                <div className="flex items-center gap-3">
+                  <img
+                    src={testimonial.image}
+                    alt={testimonial.name}
+                    className="w-9 h-9 rounded-full object-cover flex-shrink-0"
+                  />
+                  <div>
+                    <h4 className={`font-bold text-sm ${testimonial.nameColor}`}>{testimonial.name}</h4>
+                    <p className={`text-xs ${testimonial.roleColor}`}>{testimonial.role}</p>
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
