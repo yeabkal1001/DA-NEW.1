@@ -263,15 +263,15 @@ export default function BlogPostPage() {
                 const content = parts[1];
                 return (
                   <ScrollReveal key={index} delay={index * 0.02}>
-                    <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-6 font-medium">
-                      <strong className="text-white font-black">{title}:</strong>{content}
+                    <p className="text-foreground/70 dark:text-white/60 text-lg md:text-xl leading-relaxed mb-6 font-medium">
+                      <strong className="text-foreground dark:text-white font-black">{title}:</strong>{content}
                     </p>
                   </ScrollReveal>
                 );
               }
               return (
                 <ScrollReveal key={index} delay={index * 0.02}>
-                  <p className="text-white/60 text-lg md:text-xl leading-relaxed mb-6 font-medium">
+                  <p className="text-foreground/70 dark:text-white/60 text-lg md:text-xl leading-relaxed mb-6 font-medium">
                     {paragraph}
                   </p>
                 </ScrollReveal>
@@ -280,12 +280,12 @@ export default function BlogPostPage() {
           </div>
 
           {/* Tags */}
-          <ScrollReveal className="mt-12 pt-8 border-t border-white/10">
+          <ScrollReveal className="mt-12 pt-8 border-t border-black/10 dark:border-white/10">
             <div className="flex flex-wrap gap-2">
               {post.tags.map((tag, index) => (
                 <span
                   key={index}
-                  className="px-4 py-2 bg-white/5 border border-white/10 text-white/60 rounded-full text-sm font-bold hover:bg-lime hover:text-black hover:border-lime transition-all cursor-pointer"
+                  className="px-4 py-2 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-foreground/70 dark:text-white/60 rounded-full text-sm font-bold hover:bg-lime hover:text-black hover:border-lime transition-all cursor-pointer"
                 >
                   {tag}
                 </span>
@@ -320,7 +320,7 @@ export default function BlogPostPage() {
       <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03] border-y border-black/5 dark:border-white/5">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
-            <div className="bg-white/5 rounded-3xl p-8 md:p-12 border border-white/10">
+            <div className="bg-black/5 dark:bg-white/5 rounded-3xl p-8 md:p-12 border border-black/10 dark:border-white/10">
               <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
                 <img
                   src={post.authorImage}
@@ -328,9 +328,9 @@ export default function BlogPostPage() {
                   className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-lime"
                 />
                 <div className="text-center md:text-left">
-                  <p className="text-xs text-white/40 uppercase tracking-wider mb-2">Written by</p>
-                  <h3 className="text-2xl font-black mb-3 text-white">{post.author}</h3>
-                  <p className="text-white/60 leading-relaxed font-medium">{post.authorBio}</p>
+                  <p className="text-xs text-foreground/40 dark:text-white/40 uppercase tracking-wider mb-2">Written by</p>
+                  <h3 className="text-2xl font-black mb-3 text-foreground dark:text-white">{post.author}</h3>
+                  <p className="text-foreground/70 dark:text-white/60 leading-relaxed font-medium">{post.authorBio}</p>
                 </div>
               </div>
             </div>
@@ -339,10 +339,10 @@ export default function BlogPostPage() {
       </section>
 
       {/* Related Posts */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-white">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-foreground transition-all duration-500">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-12">
-            <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-center text-white">
+            <h2 className="text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase text-center text-foreground dark:text-white">
               Related <span className="text-lime italic">Articles</span>
             </h2>
           </ScrollReveal>
