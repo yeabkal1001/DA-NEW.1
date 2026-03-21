@@ -153,7 +153,7 @@ export default function ServicesPage() {
               <br />
               <span className="text-lime italic">Digital Solutions</span>
               <br />
-              <span className="text-foreground/40 dark:text-white/40">Built for Impact</span>
+              <span className="text-lime">Built for Impact</span>
             </h1>
             
             <p className="services-hero-reveal text-foreground/50 dark:text-white/50 text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-10 max-w-2xl">
