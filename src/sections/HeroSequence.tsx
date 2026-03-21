@@ -1,12 +1,10 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback, memo } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
-// Register GSAP plugin once at module level
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
@@ -16,7 +14,6 @@ const SKIP_STEP = 4;
 const FRAME_COUNT = Math.ceil(ORIGINAL_FRAME_COUNT / SKIP_STEP);
 const PRIORITY_FRAMES = 5;
 
-// Pre-compute frame names at module level for performance
 const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
   const originalIndex = i * SKIP_STEP;
   const num = String(originalIndex).padStart(3, "0");
@@ -25,254 +22,426 @@ const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
 });
 
 export function HeroSequence() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const heroContentRef = useRef<HTMLDivElement>(null);
+  const containerRef    = useRef<HTMLDivElement>(null);
+  const canvasRef       = useRef<HTMLCanvasElement>(null);
+  const heroContentRef  = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const progressFillRef = useRef<HTMLDivElement>(null);
-  
-  const imagesRef = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
-  const [isLoaded, setIsLoaded] = useState(false);
+  const imagesRef       = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
+
+  const [isLoaded,     setIsLoaded]     = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
 
+  /* ─────────────────────── drawFrame ─────────────────────── */
   const drawFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d", { alpha: false });
     const img = imagesRef.current[index];
-    if (!ctx || !img || !img.complete) return;
+    if (!ctx || !img?.complete) return;
 
-    const canvasRatio = canvas.width / canvas.height;
-    const imgRatio = img.naturalWidth / img.naturalHeight;
+    const cr = canvas.width / canvas.height;
+    const ir = img.naturalWidth / img.naturalHeight;
+    let dw: number, dh: number, dx: number, dy: number;
 
-    let drawWidth, drawHeight, drawX, drawY;
-
-    if (imgRatio > canvasRatio) {
-      drawHeight = canvas.height;
-      drawWidth = drawHeight * imgRatio;
-      drawX = (canvas.width - drawWidth) / 2;
-      drawY = 0;
+    if (ir > cr) {
+      dh = canvas.height; dw = dh * ir;
+      dx = (canvas.width - dw) / 2; dy = 0;
     } else {
-      drawWidth = canvas.width;
-      drawHeight = drawWidth / imgRatio;
-      drawX = 0;
-      drawY = (canvas.height - drawHeight) / 2;
+      dw = canvas.width; dh = dw / ir;
+      dx = 0; dy = (canvas.height - dh) / 2;
     }
-
-    ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+    ctx.drawImage(img, dx, dy, dw, dh);
   }, []);
 
+  /* ─────────────────────── image loading ─────────────────── */
   useEffect(() => {
-    let loadedCount = 0;
-    let isMounted = true;
-    let rafId: number = 0;
+    let loaded = 0, mounted = true;
 
-    const loadImages = async () => {
-      // Priority 1: First frame immediately
-      const firstImg = new Image();
-      firstImg.src = frameNames[0];
-      firstImg.onload = () => {
-        if (!isMounted) return;
-        imagesRef.current[0] = firstImg;
-        drawFrame(0);
-      };
+    const run = async () => {
+      // Immediate first frame
+      const f0 = new Image();
+      f0.src = frameNames[0];
+      f0.onload = () => { if (!mounted) return; imagesRef.current[0] = f0; drawFrame(0); };
 
-      // Priority 2: Priority block (10-15 frames) for initial scroll experience
+      // Priority batch
       for (let i = 0; i < PRIORITY_FRAMES; i++) {
-        if (!isMounted) return;
+        if (!mounted) return;
         const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.decoding = "async";
-        img.src = frameNames[i];
-        await new Promise((resolve) => {
-          img.onload = () => {
-            imagesRef.current[i] = img;
-            loadedCount++;
-            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            resolve(null);
-          };
-          img.onerror = resolve;
+        img.crossOrigin = "anonymous"; img.decoding = "async"; img.src = frameNames[i];
+        await new Promise(res => {
+          img.onload = () => { imagesRef.current[i] = img; loaded++; setLoadProgress(Math.round(loaded / FRAME_COUNT * 100)); res(null); };
+          img.onerror = res;
         });
       }
-
       setIsLoaded(true);
 
-      // Priority 3: Remaining frames using requestIdleCallback to stay off the main thread
-      const loadRemaining = (startIndex: number) => {
-        if (!isMounted || startIndex >= FRAME_COUNT) return;
-
-        const task = () => {
-          const batchSize = 3;
-          const end = Math.min(startIndex + batchSize, FRAME_COUNT);
-          
-          for (let i = startIndex; i < end; i++) {
-            const img = new Image();
-            img.src = frameNames[i];
-            img.onload = () => {
-              imagesRef.current[i] = img;
-              loadedCount++;
-              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            };
-          }
-          
-          if (end < FRAME_COUNT) {
-            if ('requestIdleCallback' in window) {
-              window.requestIdleCallback(() => loadRemaining(end));
-            } else {
-              setTimeout(() => loadRemaining(end), 100);
-            }
-          }
-        };
-
-        task();
+      // Idle-batch remainder
+      const batch = (start: number) => {
+        if (!mounted || start >= FRAME_COUNT) return;
+        const end = Math.min(start + 3, FRAME_COUNT);
+        for (let i = start; i < end; i++) {
+          const img = new Image(); img.src = frameNames[i];
+          img.onload = () => { imagesRef.current[i] = img; loaded++; setLoadProgress(Math.round(loaded / FRAME_COUNT * 100)); };
+        }
+        if (end < FRAME_COUNT) {
+          'requestIdleCallback' in window
+            ? window.requestIdleCallback(() => batch(end))
+            : setTimeout(() => batch(end), 100);
+        }
       };
-
-      loadRemaining(PRIORITY_FRAMES);
+      batch(PRIORITY_FRAMES);
     };
 
-    loadImages();
-    return () => { 
-      isMounted = false; 
-      cancelAnimationFrame(rafId);
-    };
+    run();
+    return () => { mounted = false; };
   }, [drawFrame]);
 
+  /* ─────────────────────── resize ────────────────────────── */
   useEffect(() => {
-    const handleResize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        drawFrame(0);
-      }
+    const onResize = () => {
+      if (!canvasRef.current) return;
+      canvasRef.current.width  = window.innerWidth;
+      canvasRef.current.height = window.innerHeight;
+      drawFrame(0);
     };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    onResize();
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
   }, [drawFrame]);
 
+  /* ─────────────────────── GSAP ───────────────────────────── */
   useEffect(() => {
     if (!isLoaded || !containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(".hero-line", {
-        opacity: 0,
-        y: 60,
-        duration: 1,
-        stagger: 0.12,
-        ease: "power4.out",
-        delay: 0.5
+
+      /* ENTRANCE TIMELINE */
+      const tl = gsap.timeline({ delay: 0.15 });
+
+      // 1. Top meta bar sweeps in
+      tl.fromTo(".hs-meta",
+        { opacity: 0 },
+        { opacity: 1, duration: 0.9, ease: "power2.out" });
+
+      // 2. Full-width rule draws left → right
+      tl.fromTo(".hs-rule",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1.1, ease: "expo.out", transformOrigin: "left center" },
+        "-=0.4");
+
+      // 3. "DIGITAL" clips up (overflow:hidden parent holds the clip)
+      tl.fromTo(".hs-d .hs-text",
+        { y: "108%", skewY: 3 },
+        { y: "0%",   skewY: 0, duration: 1.1, ease: "expo.out" },
+        "-=0.7");
+
+      // 4. "ADDIS" clips up 70ms after
+      tl.fromTo(".hs-a .hs-text",
+        { y: "108%", skewY: 3 },
+        { y: "0%",   skewY: 0, duration: 1.1, ease: "expo.out" },
+        "-=0.85");
+
+      // 5. Bottom rule
+      tl.fromTo(".hs-rule-bottom",
+        { scaleX: 0 },
+        { scaleX: 1, duration: 1, ease: "expo.out", transformOrigin: "left center" },
+        "-=0.6");
+
+      // 6. Descriptor + CTA
+      tl.fromTo([".hs-desc", ".hs-cta"],
+        { opacity: 0, y: 16 },
+        { opacity: 1, y: 0, duration: 0.9, stagger: 0.1, ease: "power3.out" },
+        "-=0.55");
+
+      // 7. Side decorations
+      tl.fromTo([".hs-scroll-indicator", ".hs-side-count"],
+        { opacity: 0 },
+        { opacity: 1, duration: 1.2, ease: "power2.out" },
+        "-=0.5");
+
+      // Scroll-down breathing pulse on indicator
+      gsap.to(".hs-scroll-dot", {
+        y: 8,
+        duration: 1.2,
+        ease: "power1.inOut",
+        repeat: -1,
+        yoyo: true,
+        delay: 2
       });
 
+      /* SCROLL SEQUENCE */
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
-          end: "bottom bottom",
-          scrub: 0.5,
-          pin: ".hero-sequence-pinned",
+          end:   "bottom bottom",
+          scrub: 0.55,
+          pin:   ".hero-sequence-pinned",
         }
       });
 
-      const frameObj = { frame: 0 };
-      scrollTl.to(frameObj, {
+      const obj = { frame: 0 };
+      scrollTl.to(obj, {
         frame: FRAME_COUNT - 1,
         snap: "frame",
         ease: "none",
         duration: 1,
-        onUpdate: () => drawFrame(Math.round(frameObj.frame))
+        onUpdate: () => drawFrame(Math.round(obj.frame))
       }, 0);
 
       scrollTl.to(progressFillRef.current, { scaleY: 1, ease: "none" }, 0);
-      scrollTl.to(heroContentRef.current, { opacity: 0, y: -100, duration: 0.2 }, 0.2);
-      scrollTl.fromTo(aboutContentRef.current, 
-        { opacity: 0, y: 100 },
-        { opacity: 1, y: 0, duration: 0.3 }, 
-        0.4
-      );
+
+      // Hero dissolve out
+      scrollTl.to(heroContentRef.current, {
+        opacity: 0,
+        y: -50,
+        filter: "blur(8px)",
+        duration: 0.25,
+        ease: "power2.in"
+      }, 0.06);
+
+      // About curtain up
+      scrollTl.fromTo(aboutContentRef.current,
+        { opacity: 0, y: 90, filter: "blur(14px)" },
+        { opacity: 1, y: 0, filter: "blur(0px)", duration: 0.55, ease: "power3.out" },
+        0.38);
 
     }, containerRef);
 
     return () => ctx.revert();
   }, [isLoaded, drawFrame]);
 
+  /* ─────────────────────── render ─────────────────────────── */
   return (
     <div ref={containerRef} className="hero-sequence-container" style={{ height: "500vh" }}>
       <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-black">
-        
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover z-0" />
 
-        <div className="hero-sequence-overlay absolute inset-0 z-[1] bg-black/50 pointer-events-none" />
-        <div className="hero-sequence-vignette absolute inset-0 z-[3] shadow-[inset_0_0_150px_60px_rgba(0,0,0,0.8)] pointer-events-none" />
-        <div className="hero-sequence-grain absolute inset-0 z-[4] opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+        {/* Canvas */}
+        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full z-0" />
 
-        {/* Progress bar - hidden on mobile */}
-        <div className="hero-progress-track hidden md:block absolute right-8 top-1/2 -translate-y-1/2 w-[1px] h-32 bg-white/5 z-50">
-          <div ref={progressFillRef} className="hero-progress-fill w-full h-full bg-lime origin-top scale-y-0 shadow-[0_0_15px_rgba(204,255,0,0.4)]" />
+        {/* Layered overlays */}
+        {/* Left-heavy gradient so text on left stays legible, image on right stays vivid */}
+        <div className="absolute inset-0 z-[1] pointer-events-none" style={{
+          background: [
+            "linear-gradient(95deg, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.40) 35%, rgba(0,0,0,0.08) 60%, rgba(0,0,0,0.0) 100%)",
+            "linear-gradient(to top, rgba(0,0,0,0.80) 0%, rgba(0,0,0,0.30) 25%, rgba(0,0,0,0.0) 50%)",
+            "linear-gradient(to bottom, rgba(0,0,0,0.60) 0%, rgba(0,0,0,0.15) 15%, rgba(0,0,0,0.0) 30%)",
+          ].join(", ")
+        }} />
+
+        {/* Film grain */}
+        <div className="absolute inset-0 z-[2] opacity-[0.028] pointer-events-none" style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`
+        }} />
+
+        {/* Lime top accent hairline */}
+        <div className="absolute top-0 left-0 right-0 h-px z-[6]" style={{
+          background: "linear-gradient(90deg, #CCFF00 0%, rgba(204,255,0,0.3) 40%, transparent 100%)"
+        }} />
+
+        {/* Scroll progress bar (right edge) */}
+        <div className="hidden lg:block absolute right-5 top-1/2 -translate-y-1/2 w-px h-16 bg-white/8 z-50 overflow-hidden">
+          <div ref={progressFillRef} className="w-full h-full bg-lime origin-top scale-y-0" />
         </div>
 
-        {/* Loader */}
+        {/* ── LOADER ──────────────────────────────────────────── */}
         {!isLoaded && (
-          <div className="absolute inset-0 z-[100] bg-black flex items-center justify-center">
-            <p className="text-lime font-mono text-[9px] tracking-[0.4em]">{loadProgress}% CACHING ASSETS</p>
+          <div className="absolute inset-0 z-[100] bg-black flex flex-col items-center justify-center gap-6">
+            <div className="flex items-end gap-2">
+              <span className="text-white font-black tracking-[-0.04em] text-lg">DIGITAL</span>
+              <span className="text-lime font-black italic tracking-[-0.04em] text-lg">ADDIS</span>
+            </div>
+            <div className="w-36 h-px bg-white/8 relative overflow-hidden">
+              <div className="absolute inset-y-0 left-0 bg-lime transition-all duration-200"
+                style={{ width: `${loadProgress}%`, boxShadow: "0 0 8px rgba(204,255,0,0.7)" }} />
+            </div>
+            <span className="text-[8px] text-white/20 font-mono tracking-[0.7em] uppercase">{loadProgress}%</span>
           </div>
         )}
 
-        {/* Hero Copy */}
-        <div ref={heroContentRef} className="absolute inset-x-0 top-[25%] sm:top-[22%] md:top-[18%] z-20 flex flex-col items-center justify-center px-4 sm:px-6 md:px-20 text-center mx-auto max-w-7xl">
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-6 md:mb-10 overflow-hidden">
-            <div className="hero-badge border border-white/10 bg-black/40 backdrop-blur-xl px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] text-white/70 uppercase">
-              Est. 2018
+        {/* ══════════════════════════════════════════════════════
+            HERO CONTENT
+        ══════════════════════════════════════════════════════ */}
+        <div
+          ref={heroContentRef}
+          className="absolute inset-0 z-20 flex flex-col pointer-events-none"
+        >
+          {/* ── Top meta strip ─────────────────────────────────── */}
+          <div className="hs-meta flex items-center justify-between px-8 md:px-14 pt-[5.5rem] md:pt-[6.5rem]">
+            <div className="flex items-center gap-3">
+              <span className="w-6 h-px bg-lime/40 block" />
+              <span className="text-[9px] text-white/30 font-black uppercase tracking-[0.55em]">Creative Studio</span>
             </div>
-            <div className="hero-badge border border-lime/30 bg-lime/10 backdrop-blur-xl px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] text-lime uppercase font-black">
-              Innovation First
-            </div>
+            <span className="text-[9px] text-white/20 font-black uppercase tracking-[0.45em] hidden md:block">
+              Est. 2018 · Addis Ababa, ET
+            </span>
           </div>
 
-          <h1 className="hero-title select-none w-full" style={{ perspective: "1500px" }}>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase">INNOVATING</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-lime leading-[0.85] tracking-tighter uppercase">YOUR DIGITAL</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] italic tracking-tighter uppercase">WORLD.</span>
-          </h1>
+          {/* ── Spacer ─────────────────────────────────────────── */}
+          <div className="flex-1" />
 
-          <div className="hero-subtitle-wrap mt-6 md:mt-10 lg:mt-12 max-w-xl md:max-w-2xl mx-auto px-2">
-             <p className="hero-subtitle text-white/50 text-sm md:text-base lg:text-xl leading-relaxed tracking-tight">
-               Full-service digital solutions in cloud, development, branding, and technology — built for speed, scale, and real impact.
-             </p>
-          </div>
+          {/* ── Main content block — bottom of screen ──────────── */}
+          <div className="px-8 md:px-14 pb-10 md:pb-14">
 
-          <div className="hero-cta mt-8 md:mt-12 lg:mt-14 flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 w-full sm:w-auto px-4">
-            <Button className="bg-lime text-black hover:bg-white rounded-full px-8 md:px-12 py-6 md:py-8 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] md:tracking-[0.25em] transition-all duration-700 shadow-2xl shadow-lime/20 hover:-translate-y-1 w-full sm:w-auto">
-              Explore Work <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5" />
-            </Button>
-            <Button variant="outline" className="border-white/20 text-white hover:border-white/60 rounded-full px-8 md:px-12 py-6 md:py-8 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] md:tracking-[0.25em] hover:bg-white/5 backdrop-blur-sm transition-all duration-700 hover:-translate-y-1 w-full sm:w-auto">
-              Start Project
-            </Button>
+            <div className="hs-rule w-full h-px bg-white/[0.14] mb-6 md:mb-8 origin-left" />
+
+            {/* HEADLINE: two clip-containers stacked */}
+            <div className="mb-6 md:mb-8 overflow-visible">
+
+              {/* DIGITAL */}
+              <div className="hs-d overflow-hidden leading-none">
+                <div className="hs-text">
+                  <span
+                    className="font-black text-white whitespace-nowrap block"
+                    style={{
+                      fontSize: "clamp(3.2rem, 8.5vw, 9.5rem)",
+                      letterSpacing: "-0.045em",
+                      lineHeight: 0.88,
+                    }}
+                  >
+                    DIGITAL
+                  </span>
+                </div>
+              </div>
+
+              {/* ADDIS — slightly indented for typographic tension */}
+              <div className="hs-a overflow-hidden leading-none pl-[0.08em]">
+                <div className="hs-text flex items-end gap-3">
+                  <span
+                    className="font-black italic whitespace-nowrap block"
+                    style={{
+                      fontSize: "clamp(3.2rem, 8.5vw, 9.5rem)",
+                      letterSpacing: "-0.045em",
+                      lineHeight: 0.88,
+                      color: "rgba(204, 255, 0, 0.88)",
+                    }}
+                  >
+                    ADDIS
+                  </span>
+                  {/* lime dot accent */}
+                  <span className="mb-1.5 md:mb-3 block w-2 h-2 md:w-3.5 md:h-3.5 rounded-full flex-shrink-0" style={{ backgroundColor: "rgba(204,255,0,0.7)" }} />
+                </div>
+              </div>
+            </div>
+
+            <div className="hs-rule-bottom w-full h-px bg-white/[0.14] mb-6 md:mb-8 origin-left" />
+
+            {/* Footer strip: desc | scroll indicator | CTA */}
+            <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 md:gap-0">
+
+              {/* Left descriptor */}
+              <p
+                className="hs-desc text-white/40 font-medium leading-relaxed max-w-sm"
+                style={{ fontSize: "clamp(0.78rem, 1vw, 0.95rem)" }}
+              >
+                Ethiopia's premier digital agency — building elite software, identities, and cloud infrastructure.
+              </p>
+
+              {/* Center: scroll indicator */}
+              <div className="hs-scroll-indicator hidden lg:flex flex-col items-center gap-1.5 pointer-events-none">
+                <div className="hs-scroll-dot w-1 h-1 rounded-full bg-lime/60" />
+                <div className="w-px h-8 bg-white/12" />
+                <span className="text-[7px] text-white/20 uppercase tracking-[0.5em] font-black">Scroll</span>
+              </div>
+
+              {/* Right CTA */}
+              <div className="hs-cta pointer-events-auto">
+                <Link
+                  href="/contact"
+                  className="group inline-flex items-center gap-4"
+                >
+                  <div className="relative overflow-hidden">
+                    <span className="block text-[9px] font-black uppercase tracking-[0.5em] text-white/50 group-hover:text-white transition-colors duration-400 leading-none mb-0.5">
+                      Start a
+                    </span>
+                    <span className="block text-[9px] font-black uppercase tracking-[0.5em] text-white group-hover:text-lime transition-colors duration-400 leading-none">
+                      Project →
+                    </span>
+                  </div>
+                  <div className="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center
+                    group-hover:bg-lime group-hover:border-lime group-hover:scale-110
+                    transition-all duration-450 ease-out">
+                    <svg width="13" height="13" viewBox="0 0 13 13" fill="none"
+                      className="text-white group-hover:text-black transition-colors duration-300">
+                      <path d="M1.5 11.5L11.5 1.5M11.5 1.5H4.5M11.5 1.5V8.5"
+                        stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </div>
+                </Link>
+              </div>
+            </div>
+
           </div>
         </div>
 
-        {/* About Section */}
-        <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-4 sm:px-6 md:px-20 items-center text-center">
-          <div className="w-16 md:w-24 h-[1px] bg-lime/40 mb-8 md:mb-12" />
-          <h2 className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[7rem] font-black text-white max-w-7xl leading-[0.9] tracking-tighter uppercase select-none">
-            <span className="about-title-line block">ELEVATING BRANDS.</span>
-            <span className="about-title-line block text-white/20 italic">SOLVING CHALLENGES.</span>
-          </h2>
-          <p className="mt-6 md:mt-10 text-white/40 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase px-4">
-            Technology should make people’s work easier, safer and more meaningful. We are a multidisciplinary team focused on solving real-world challenges through long-term partnerships and people-centric design.
-          </p>
-          <div className="mt-10 md:mt-14 lg:mt-16 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-24">
-            <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">120+</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Solutions Delivered</p>
+
+
+        {/* ══════════════════════════════════════════════════════
+            ABOUT CONTENT (scroll reveal — "The Curtain")
+        ══════════════════════════════════════════════════════ */}
+        <div
+          ref={aboutContentRef}
+          className="absolute inset-0 z-10 opacity-0 pointer-events-none"
+          style={{
+            background: [
+              "linear-gradient(135deg, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.78) 50%, rgba(0,0,0,0.30) 100%)",
+              "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 40%)"
+            ].join(", ")
+          }}
+        >
+          <div className="flex flex-col h-full px-8 md:px-14 pt-32 pb-12 md:pb-16">
+
+            {/* Label */}
+            <div className="flex items-center gap-3 mb-auto">
+              <div className="w-5 h-px bg-lime" />
+              <span className="text-[8px] text-lime font-black uppercase tracking-[0.7em]">002 — Who We Are</span>
             </div>
-            <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">15+</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Core Technologists</p>
+
+            {/* Manifesto */}
+            <div className="max-w-4xl mb-10 md:mb-14">
+              <h2
+                className="font-black text-white leading-[0.84] mb-6 md:mb-10"
+                style={{
+                  fontSize: "clamp(2.6rem, 8vw, 9rem)",
+                  letterSpacing: "-0.04em",
+                }}
+              >
+                <span className="block">We don't</span>
+                <span className="block text-white/25 italic">just build.</span>
+                <span className="block text-lime">We architect</span>
+                <span className="block text-white/25">futures.</span>
+              </h2>
+              <p className="text-white/35 max-w-md text-sm md:text-base leading-relaxed font-medium">
+                A multidisciplinary collective of engineers, designers and strategists — obsessed with digital products that last and experiences that inspire.
+              </p>
             </div>
-            <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">5yr</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Innovation Legacy</p>
+
+            {/* Stats grid */}
+            <div className="border-t border-white/8 pt-8">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-0">
+                {[
+                  { n: "120+", label: "Projects Delivered" },
+                  { n: "15+",  label: "Expert Minds"       },
+                  { n: "6yr",  label: "In the Field"       },
+                  { n: "3×",   label: "Award-Winning"      },
+                ].map(({ n, label }, i) => (
+                  <div
+                    key={label}
+                    className={`flex flex-col gap-2 ${i > 0 ? "md:border-l md:border-white/5 md:pl-8" : ""}`}
+                  >
+                    <span
+                      className="font-black text-white tracking-tighter leading-none"
+                      style={{ fontSize: "clamp(1.8rem, 3.5vw, 3.5rem)" }}
+                    >
+                      {n}
+                    </span>
+                    <span className="text-[8px] text-white/25 uppercase tracking-[0.45em] font-black">{label}</span>
+                  </div>
+                ))}
+              </div>
             </div>
+
           </div>
         </div>
 
