@@ -160,7 +160,7 @@ export function HeroSequence() {
         duration: 1,
         stagger: 0.12,
         ease: "power4.out",
-        delay: 0.5
+        delay: 2.5
       });
 
       const scrollTl = gsap.timeline({
@@ -197,17 +197,20 @@ export function HeroSequence() {
 
   return (
     <div ref={containerRef} className="hero-sequence-container" style={{ height: "500vh" }}>
-      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-black">
+      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-[#0A100D]">
         
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover z-0" />
+        {/* Right Side Video (Split Layout) */}
+        <div className="absolute inset-y-0 right-0 w-full md:w-[55%] h-full z-0 overflow-hidden md:rounded-l-[3rem] shadow-[-20px_0_50px_rgba(0,0,0,0.5)]">
+          <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover object-center scale-[1.05]" />
+          <div className="hero-sequence-overlay absolute inset-0 z-[1] bg-black/20 pointer-events-none" />
+        </div>
 
-        <div className="hero-sequence-overlay absolute inset-0 z-[1] bg-black/50 pointer-events-none" />
-        <div className="hero-sequence-vignette absolute inset-0 z-[3] shadow-[inset_0_0_150px_60px_rgba(0,0,0,0.8)] pointer-events-none" />
-        <div className="hero-sequence-grain absolute inset-0 z-[4] opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+        <div className="hero-sequence-vignette absolute inset-0 z-[3] shadow-[inset_0_0_150px_60px_rgba(0,0,0,0.8)] pointer-events-none hidden md:block" />
+        <div className="hero-sequence-grain absolute inset-0 z-[4] opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
         {/* Progress bar - hidden on mobile */}
         <div className="hero-progress-track hidden md:block absolute right-8 top-1/2 -translate-y-1/2 w-[1px] h-32 bg-white/5 z-50">
-          <div ref={progressFillRef} className="hero-progress-fill w-full h-full bg-lime origin-top scale-y-0 shadow-[0_0_15px_rgba(204,255,0,0.4)]" />
+          <div ref={progressFillRef} className="hero-progress-fill w-full h-full bg-lime scale-y-0 shadow-[0_0_15px_rgba(204,255,0,0.4)]" />
         </div>
 
         {/* Loader */}
@@ -217,45 +220,70 @@ export function HeroSequence() {
           </div>
         )}
 
-        {/* Hero Copy */}
-        <div ref={heroContentRef} className="absolute inset-x-0 top-[25%] sm:top-[22%] md:top-[18%] z-20 flex flex-col items-center justify-center px-4 sm:px-6 md:px-20 text-center mx-auto max-w-7xl">
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-6 md:mb-10 overflow-hidden">
-            <div className="hero-badge border border-white/10 bg-black/40 backdrop-blur-xl px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] text-white/70 uppercase">
-              Est. 2018
-            </div>
-            <div className="hero-badge border border-lime/30 bg-lime/10 backdrop-blur-xl px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] text-lime uppercase font-black">
-              Innovation First
-            </div>
-          </div>
-
+        {/* Hero Copy (Split Layout) */}
+        <div ref={heroContentRef} className="absolute inset-y-0 left-0 w-full md:w-[45%] z-20 flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-left pb-20 md:pb-0">
           <h1 className="hero-title select-none w-full" style={{ perspective: "1500px" }}>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase">INNOVATING</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-lime leading-[0.85] tracking-tighter uppercase">YOUR DIGITAL</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] italic tracking-tighter uppercase">WORLD.</span>
+            <span className="font-moonwalk block text-[4rem] sm:text-[5rem] md:text-[6rem] lg:text-[7.5rem] xl:text-[9rem] text-white leading-[0.85] tracking-[0.05em] drop-shadow-2xl hero-line">
+              Digital<br/>Addis
+            </span>
           </h1>
 
-          <div className="hero-subtitle-wrap mt-6 md:mt-10 lg:mt-12 max-w-xl md:max-w-2xl mx-auto px-2">
-             <p className="hero-subtitle text-white/50 text-sm md:text-base lg:text-xl leading-relaxed tracking-tight">
-               Full-service digital solutions in cloud, development, branding, and technology — built for speed, scale, and real impact.
+          <div className="hero-subtitle-wrap mt-6 md:mt-8 max-w-sm lg:max-w-md pr-4">
+             <p className="hero-subtitle text-white/70 text-sm lg:text-base leading-relaxed tracking-wide font-light">
+               We Innovate. We Secure. We Transform. Step into the future with our cutting-edge digital solutions and creative branding.
              </p>
           </div>
 
-          <div className="hero-cta mt-8 md:mt-12 lg:mt-14 flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 w-full sm:w-auto px-4">
-            <Button className="bg-lime text-black hover:bg-white rounded-full px-8 md:px-12 py-6 md:py-8 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] md:tracking-[0.25em] transition-all duration-700 shadow-2xl shadow-lime/20 hover:-translate-y-1 w-full sm:w-auto">
-              Explore Work <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5" />
+          <div className="hero-cta mt-8 md:mt-10 flex flex-col sm:flex-row items-center justify-start gap-4">
+            <Button className="bg-transparent border border-white/20 text-white hover:bg-white hover:text-black rounded-full px-8 py-6 text-[10px] md:text-xs tracking-[0.2em] transition-all duration-500 w-full sm:w-auto">
+              Discover <span className="ml-3 font-serif">→</span>
             </Button>
-            <Button variant="outline" className="border-white/20 text-white hover:border-white/60 rounded-full px-8 md:px-12 py-6 md:py-8 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] md:tracking-[0.25em] hover:bg-white/5 backdrop-blur-sm transition-all duration-700 hover:-translate-y-1 w-full sm:w-auto">
-              Start Project
+            <Button variant="ghost" className="bg-white/5 border border-white/5 hover:bg-white/10 text-white rounded-full px-6 py-6 text-[10px] md:text-xs tracking-[0.1em] transition-all duration-500 w-full sm:w-auto group">
+              <span className="bg-white text-black rounded-full w-6 h-6 flex items-center justify-center mr-3 group-hover:scale-110 transition-transform shrink-0">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+              </span>
+              Connect With Us
             </Button>
+          </div>
+        </div>
+
+        {/* Bottom Feature Bar */}
+        <div className="absolute bottom-0 left-0 w-full z-30 flex gap-6 px-6 sm:px-12 md:px-16 lg:px-24 py-6 md:py-8 items-center bg-gradient-to-t from-black/80 to-transparent border-t border-white/5 backdrop-blur-sm">
+          <div className="flex items-center gap-4 cursor-pointer group shrink-0">
+             <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white transition-colors">
+                <svg className="w-4 h-4 text-white group-hover:text-[#0A100D] translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+             </div>
+             <span className="text-[10px] font-bold tracking-widest text-white uppercase hidden sm:block">Play Trailer</span>
+          </div>
+
+          <div className="flex-1 hidden lg:flex items-center gap-8 xl:gap-12 ml-6 xl:ml-16">
+            <div className="flex items-center gap-3 max-w-[220px]">
+              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                 <span className="text-[10px] text-white">1</span>
+              </div>
+              <p className="text-[9px] text-white/50 leading-relaxed">To deliver innovative digital solutions, empowering businesses to excel and adapt.</p>
+            </div>
+            <div className="flex items-center gap-3 max-w-[220px]">
+              <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
+                 <span className="text-[10px] text-white">2</span>
+              </div>
+              <p className="text-[9px] text-white/50 leading-relaxed">To be a global leader in digital innovation, transforming technology into seamless experiences.</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3 sm:gap-4 ml-auto shrink-0 relative z-50">
+             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-[#0A100D] transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">in</span></a>
+             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-[#0A100D] transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">ig</span></a>
+             <a href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/30 flex items-center justify-center hover:bg-white hover:text-[#0A100D] transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(255,255,255,0.05)] text-white"><span className="text-[10px] font-bold uppercase tracking-widest">x</span></a>
           </div>
         </div>
 
         {/* About Section */}
         <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-4 sm:px-6 md:px-20 items-center text-center">
           <div className="w-16 md:w-24 h-[1px] bg-lime/40 mb-8 md:mb-12" />
-          <h2 className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[7rem] font-black text-white max-w-7xl leading-[0.9] tracking-tighter uppercase select-none">
-            <span className="about-title-line block">ELEVATING BRANDS.</span>
-            <span className="about-title-line block text-white/20 italic">SOLVING CHALLENGES.</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-light text-white max-w-5xl mx-auto leading-[1.1] tracking-tight select-none mb-4 md:mb-6">
+            <span className="about-title-line block">Elevating Brands.</span>
+            <span className="about-title-line block text-white/40">Solving Challenges.</span>
           </h2>
           <p className="mt-6 md:mt-10 text-white/40 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase px-4">
             Technology should make people’s work easier, safer and more meaningful. We are a multidisciplinary team focused on solving real-world challenges through long-term partnerships and people-centric design.
@@ -270,7 +298,7 @@ export function HeroSequence() {
               <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Core Technologists</p>
             </div>
             <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">5yr</p>
+              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">10+yr</p>
               <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Innovation Legacy</p>
             </div>
           </div>

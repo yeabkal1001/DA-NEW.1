@@ -3,9 +3,9 @@ import { CountUp } from "@/src/components/CountUp";
 
 const stats = [
   { value: 100, suffix: "+", label: "Happy Clients" },
-  { value: 120, suffix: "+", label: "completed projects" },
-  { value: 5, suffix: "+", label: "years experience" },
-  { value: 10, suffix: "+", label: "members" },
+  { value: 120, suffix: "+", label: "Completed Projects" },
+  { value: 10, suffix: "+", label: "Years Experience" },
+  { value: 10, suffix: "+", label: "Team Members" },
 ];
 
 export function Stats() {

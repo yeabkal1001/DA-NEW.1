@@ -24,7 +24,9 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const mainServices = [
   {

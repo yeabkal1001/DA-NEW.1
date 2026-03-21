@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect, useCallback, memo } from "react";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import Image from "next/image";
@@ -19,6 +20,7 @@ const navLinks = [
 export const Navbar = memo(function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const pathname = usePathname();
 
   // Optimized scroll handler with throttling
   useEffect(() => {
@@ -60,58 +62,65 @@ export const Navbar = memo(function Navbar() {
     <>
       <header
         className={cn(
-          "fixed top-4 md:top-8 left-0 right-0 z-[100] transition-all duration-700",
-          isScrolled ? "opacity-0 -translate-y-20 pointer-events-none" : "opacity-100 translate-y-0"
+          "fixed top-4 md:top-6 left-0 right-0 z-[100] transition-all duration-700 pointer-events-none",
+          isScrolled ? "py-1 opacity-95 scale-[0.98] md:scale-95" : "opacity-100 translate-y-0"
         )}
       >
-        <div className="w-full px-4 md:px-6 flex justify-center">
-          <div className="flex items-center justify-between gap-4 md:gap-12 border border-black/10 dark:border-white/10 rounded-full bg-white/40 dark:bg-black/40 backdrop-blur-xl px-4 md:px-4 py-2 md:py-3 md:pl-8 shadow-2xl max-w-7xl w-full">
-            {/* Brand Logo - Using Next.js Image for optimization */}
-            <Link href="/" className="group flex items-center gap-2 md:gap-4 shrink-0" aria-label="Digital Addis - Home">
-              <div className="relative h-8 md:h-10 w-8 md:w-10">
-                <Image 
-                  src="/dalogo.webp" 
-                  alt="Digital Addis Logo" 
-                  fill
-                  sizes="(max-width: 768px) 32px, 40px"
-                  className="object-contain transition-transform duration-500 group-hover:scale-105"
-                  priority
-                />
+        <div className="w-full px-4 md:px-8 flex justify-center pointer-events-auto">
+          <div className="flex items-center justify-between gap-4 w-full max-w-7xl border border-white/10 rounded-full bg-[#0d1410]/60 backdrop-blur-xl px-2 py-2 shadow-2xl">
+            
+            {/* Desktop Navigation Group (Left) */}
+            <div className="hidden lg:flex items-center gap-1 pl-1">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.link;
+                return (
+                  <Link
+                    key={link.name}
+                    href={link.link}
+                    prefetch={true}
+                    aria-label={link.ariaLabel}
+                    className={cn(
+                      "relative text-[10px] md:text-xs font-semibold tracking-widest uppercase transition-all duration-500 px-6 py-3 rounded-full flex items-center gap-3",
+                      isActive 
+                        ? "bg-white text-[#0A100D] shadow-[0_0_20px_rgba(255,255,255,0.1)]" 
+                        : "text-white/60 hover:text-white hover:bg-white/5"
+                    )}
+                  >
+                    {/* Inject Logo inside the Home pill dynamically */}
+                    {link.name === "Home" && isActive && (
+                      <div className="relative w-4 h-4 shrink-0 -ml-1">
+                        <Image src="/dalogo.webp" alt="Logo" fill sizes="16px" className="object-contain brightness-0" />
+                      </div>
+                    )}
+                    {link.name}
+                  </Link>
+                );
+              })}
+            </div>
+
+            {/* Mobile Branding (only visible on small screens) */}
+            <Link href="/" className="lg:hidden flex items-center gap-3 shrink-0 pl-4 py-2" aria-label="Digital Addis - Home">
+              <div className="relative h-6 w-6">
+                <Image src="/dalogo.webp" alt="Digital Addis Logo" fill sizes="24px" className="object-contain invert" priority/>
               </div>
-              <div className="hidden sm:flex flex-col border-l border-black/10 dark:border-white/10 pl-3 md:pl-4 py-0.5">
-                <span className="text-[8px] md:text-[10px] font-black text-black dark:text-white uppercase tracking-[0.3em] leading-tight">
-                  Digital
-                </span>
-                <span className="text-[8px] md:text-[10px] font-black text-lime uppercase tracking-[0.3em] leading-tight">
-                  Addis
-                </span>
-              </div>
+              <span className="text-[10px] font-bold text-white uppercase tracking-widest shrink-0">Home</span>
             </Link>
 
-            {/* Desktop Navigation - Optimized with prefetch */}
-            <nav className="hidden lg:flex items-center gap-10" aria-label="Main navigation">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.link}
-                  prefetch={true}
-                  aria-label={link.ariaLabel}
-                  className="relative text-black/40 dark:text-white/40 text-[10px] font-black uppercase tracking-[0.4em] transition-all duration-300 hover:text-black dark:hover:text-white focus-visible:text-black dark:focus-visible:text-white"
-                >
-                  {link.name}
-                </Link>
-              ))}
-            </nav>
-
-            {/* Theme Toggle and Contact */}
-            <div className="hidden md:flex items-center gap-4">
-              <ThemeToggle />
+            {/* Right Side Tools */}
+            <div className="hidden md:flex items-center gap-2 pr-1">
+              <div className="bg-white/5 border border-white/5 rounded-full px-1 py-1 mr-2">
+                 <ThemeToggle />
+              </div>
               <Link
                 href="/contact"
                 prefetch={true}
-                className="bg-lime text-black px-6 lg:px-8 py-2.5 lg:py-3 rounded-full text-[9px] lg:text-[10px] font-black uppercase tracking-[0.2em] hover:bg-white transition-all duration-500 shadow-xl shadow-lime/10"
+                className="group flex items-center gap-3 bg-white/5 border border-white/10 text-white/90 px-6 py-3 rounded-full text-[10px] md:text-xs tracking-widest uppercase hover:bg-white hover:text-[#0A100D] hover:border-white transition-all duration-500 shadow-lg"
               >
                 Let's Talk
+                <span className="flex gap-[3px] ml-1">
+                  <span className="w-1 h-1 rounded-full bg-current opacity-70 group-hover:opacity-100 transition-opacity"></span>
+                  <span className="w-1 h-1 rounded-full bg-current opacity-70 group-hover:opacity-100 transition-opacity"></span>
+                </span>
               </Link>
             </div>
 

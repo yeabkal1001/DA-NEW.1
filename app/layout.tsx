@@ -1,8 +1,22 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Outfit } from "next/font/google";
+import localFont from "next/font/local";
 import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 import { PageLoader } from "@/src/components/PageLoader";
 import { ThemeProvider } from "@/src/components/theme-provider";
+import { cn } from "@/src/lib/utils";
+
+const outfit = Outfit({ 
+  subsets: ["latin"], 
+  variable: "--font-outfit",
+  display: "swap"
+});
+
+const moonWalk = localFont({
+  src: "../public/fonts/Moon Walk Font/Moon Walk.otf",
+  variable: "--font-moonwalk",
+});
 
 // Enhanced SEO metadata for the entire site
 export const metadata: Metadata = {
@@ -168,7 +182,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="antialiased">
+      <body className={cn("antialiased", outfit.variable, moonWalk.variable)}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

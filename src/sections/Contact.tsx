@@ -23,10 +23,35 @@ export function Contact() {
     service: "",
     description: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setSubmitStatus('success');
+        setFormData({
+          fullName: "", email: "", phone: "", company: "", service: "", description: ""
+        });
+      } else {
+        setSubmitStatus('error');
+      }
+    } catch (error) {
+      console.error("Form submission error:", error);
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -152,10 +177,21 @@ export function Contact() {
 
                 <Button
                   type="submit"
-                  className="w-full bg-lime text-black hover:bg-black hover:text-white rounded-full py-7 md:py-10 text-[10px] md:text-[12px] font-[1000] uppercase tracking-[0.4em] md:tracking-[0.5em] transition-all duration-500 shadow-xl shadow-lime/20 border-none"
+                  disabled={isSubmitting}
+                  className="w-full bg-lime text-black hover:bg-black hover:text-white rounded-full py-7 md:py-10 text-[10px] md:text-[12px] font-[1000] uppercase tracking-[0.4em] md:tracking-[0.5em] transition-all duration-500 shadow-xl shadow-lime/20 border-none disabled:opacity-70"
                 >
-                  Get Started Now
+                  {isSubmitting ? "Sending Request..." : "Get Started Now"}
                 </Button>
+                {submitStatus === 'success' && (
+                  <p className="mt-4 text-center text-lime font-black text-xs md:text-sm tracking-widest uppercase">
+                    Message sent successfully!
+                  </p>
+                )}
+                {submitStatus === 'error' && (
+                  <p className="mt-4 text-center text-red-500 font-black text-xs md:text-sm tracking-widest uppercase">
+                    Failed to send message. Please try again.
+                  </p>
+                )}
               </form>
             </ScrollReveal>
           </div>
