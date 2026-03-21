@@ -1,189 +1,162 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback, memo } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Download, Github, Linkedin, Twitter, Dribbble, ChevronDown } from "lucide-react";
+import Image from "next/image";
 
 // Register GSAP plugin once at module level
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const ORIGINAL_FRAME_COUNT = 192;
-const SKIP_STEP = 4;
-const FRAME_COUNT = Math.ceil(ORIGINAL_FRAME_COUNT / SKIP_STEP);
-const PRIORITY_FRAMES = 5;
+// Skills for the marquee - matching reference
+const skills = [
+  "Animation-Specialist",
+  "Frontend Architect", 
+  "Next.js Expert",
+  "UI/UX Designer",
+  "React Developer",
+  "Motion Design",
+  "Design Systems",
+  "Performance Expert"
+];
 
-// Pre-compute frame names at module level for performance
-const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
-  const originalIndex = i * SKIP_STEP;
-  const num = String(originalIndex).padStart(3, "0");
-  const delay = (originalIndex % 3 === 0 || originalIndex === 0) ? "0.041s" : "0.042s";
-  return `/images/image sequence/frame_${num}_delay-${delay}_compressed.webp`;
+// Social links
+const socialLinks = [
+  { icon: Github, href: "#", label: "GitHub" },
+  { icon: Linkedin, href: "#", label: "LinkedIn" },
+  { icon: Twitter, href: "#", label: "Twitter" },
+  { icon: Dribbble, href: "#", label: "Dribbble" },
+];
+
+// Skill Marquee Component
+const SkillMarquee = memo(function SkillMarquee() {
+  return (
+    <div className="relative overflow-hidden py-4 md:py-6">
+      <div className="flex animate-marquee whitespace-nowrap">
+        {[...skills, ...skills, ...skills, ...skills].map((skill, index) => (
+          <div key={index} className="flex items-center mx-3 md:mx-5">
+            <span className="text-lg md:text-2xl lg:text-3xl font-light text-white/30 tracking-tight">
+              {skill}
+            </span>
+            <span className="ml-3 md:ml-5 text-lime text-base md:text-lg">✦</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 });
 
 export function HeroSequence() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
   const progressFillRef = useRef<HTMLDivElement>(null);
-  
-  const imagesRef = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
   const [isLoaded, setIsLoaded] = useState(false);
-  const [loadProgress, setLoadProgress] = useState(0);
 
-  const drawFrame = useCallback((index: number) => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: false });
-    const img = imagesRef.current[index];
-    if (!ctx || !img || !img.complete) return;
-
-    const canvasRatio = canvas.width / canvas.height;
-    const imgRatio = img.naturalWidth / img.naturalHeight;
-
-    let drawWidth, drawHeight, drawX, drawY;
-
-    if (imgRatio > canvasRatio) {
-      drawHeight = canvas.height;
-      drawWidth = drawHeight * imgRatio;
-      drawX = (canvas.width - drawWidth) / 2;
-      drawY = 0;
-    } else {
-      drawWidth = canvas.width;
-      drawHeight = drawWidth / imgRatio;
-      drawX = 0;
-      drawY = (canvas.height - drawHeight) / 2;
-    }
-
-    ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+  useEffect(() => {
+    const timer = setTimeout(() => setIsLoaded(true), 300);
+    return () => clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    let loadedCount = 0;
-    let isMounted = true;
-    let rafId: number = 0;
-
-    const loadImages = async () => {
-      // Priority 1: First frame immediately
-      const firstImg = new Image();
-      firstImg.src = frameNames[0];
-      firstImg.onload = () => {
-        if (!isMounted) return;
-        imagesRef.current[0] = firstImg;
-        drawFrame(0);
-      };
-
-      // Priority 2: Priority block (10-15 frames) for initial scroll experience
-      for (let i = 0; i < PRIORITY_FRAMES; i++) {
-        if (!isMounted) return;
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.decoding = "async";
-        img.src = frameNames[i];
-        await new Promise((resolve) => {
-          img.onload = () => {
-            imagesRef.current[i] = img;
-            loadedCount++;
-            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            resolve(null);
-          };
-          img.onerror = resolve;
-        });
-      }
-
-      setIsLoaded(true);
-
-      // Priority 3: Remaining frames using requestIdleCallback to stay off the main thread
-      const loadRemaining = (startIndex: number) => {
-        if (!isMounted || startIndex >= FRAME_COUNT) return;
-
-        const task = () => {
-          const batchSize = 3;
-          const end = Math.min(startIndex + batchSize, FRAME_COUNT);
-          
-          for (let i = startIndex; i < end; i++) {
-            const img = new Image();
-            img.src = frameNames[i];
-            img.onload = () => {
-              imagesRef.current[i] = img;
-              loadedCount++;
-              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
-            };
-          }
-          
-          if (end < FRAME_COUNT) {
-            if ('requestIdleCallback' in window) {
-              window.requestIdleCallback(() => loadRemaining(end));
-            } else {
-              setTimeout(() => loadRemaining(end), 100);
-            }
-          }
-        };
-
-        task();
-      };
-
-      loadRemaining(PRIORITY_FRAMES);
-    };
-
-    loadImages();
-    return () => { 
-      isMounted = false; 
-      cancelAnimationFrame(rafId);
-    };
-  }, [drawFrame]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (canvasRef.current) {
-        canvasRef.current.width = window.innerWidth;
-        canvasRef.current.height = window.innerHeight;
-        drawFrame(0);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, [drawFrame]);
 
   useEffect(() => {
     if (!isLoaded || !containerRef.current) return;
 
     const ctx = gsap.context(() => {
-      gsap.from(".hero-line", {
+      const tl = gsap.timeline({ defaults: { ease: "power4.out" } });
+      
+      // Availability badge
+      tl.from(".hero-badge", {
         opacity: 0,
-        y: 60,
-        duration: 1,
-        stagger: 0.12,
-        ease: "power4.out",
-        delay: 0.5
+        y: 20,
+        duration: 0.8,
+        delay: 0.1
       });
 
+      // Name letters animation
+      tl.from(".hero-letter", {
+        opacity: 0,
+        y: 120,
+        rotateX: -90,
+        stagger: 0.04,
+        duration: 1,
+        ease: "power4.out"
+      }, "-=0.5");
+
+      // Marquee
+      tl.from(".hero-marquee", {
+        opacity: 0,
+        y: 30,
+        duration: 0.8
+      }, "-=0.6");
+
+      // Description
+      tl.from(".hero-desc", {
+        opacity: 0,
+        y: 30,
+        duration: 0.8
+      }, "-=0.5");
+
+      // CTAs
+      tl.from(".hero-cta", {
+        opacity: 0,
+        y: 20,
+        stagger: 0.1,
+        duration: 0.6
+      }, "-=0.4");
+
+      // Social links
+      tl.from(".hero-social", {
+        opacity: 0,
+        y: 20,
+        stagger: 0.08,
+        duration: 0.5
+      }, "-=0.3");
+
+      // Image
+      tl.from(".hero-image", {
+        opacity: 0,
+        scale: 1.1,
+        duration: 1.2,
+        ease: "power3.out"
+      }, "-=1.2");
+
+      // Scroll indicator
+      tl.from(".scroll-hint", {
+        opacity: 0,
+        y: -20,
+        duration: 0.6
+      }, "-=0.3");
+
+      // Scroll-triggered transitions
       const scrollTl = gsap.timeline({
         scrollTrigger: {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom bottom",
           scrub: 0.5,
-          pin: ".hero-sequence-pinned",
+          pin: ".hero-pinned",
         }
       });
 
-      const frameObj = { frame: 0 };
-      scrollTl.to(frameObj, {
-        frame: FRAME_COUNT - 1,
-        snap: "frame",
-        ease: "none",
-        duration: 1,
-        onUpdate: () => drawFrame(Math.round(frameObj.frame))
-      }, 0);
-
       scrollTl.to(progressFillRef.current, { scaleY: 1, ease: "none" }, 0);
-      scrollTl.to(heroContentRef.current, { opacity: 0, y: -100, duration: 0.2 }, 0.2);
+      
+      scrollTl.to(heroContentRef.current, { 
+        opacity: 0, 
+        y: -100, 
+        duration: 0.3 
+      }, 0.1);
+
+      scrollTl.to(".hero-image", {
+        y: -80,
+        scale: 0.9,
+        opacity: 0,
+        duration: 0.3
+      }, 0.1);
+
       scrollTl.fromTo(aboutContentRef.current, 
         { opacity: 0, y: 100 },
         { opacity: 1, y: 0, duration: 0.3 }, 
@@ -193,85 +166,205 @@ export function HeroSequence() {
     }, containerRef);
 
     return () => ctx.revert();
-  }, [isLoaded, drawFrame]);
+  }, [isLoaded]);
+
+  // Split name into individual letters for animation
+  const renderName = () => {
+    const name = "YEABSIRA";
+    return name.split("").map((letter, i) => (
+      <span 
+        key={i} 
+        className="hero-letter inline-block hover:text-lime transition-colors duration-300 cursor-default"
+        style={{ transformStyle: "preserve-3d" }}
+      >
+        {letter}
+      </span>
+    ));
+  };
 
   return (
-    <div ref={containerRef} className="hero-sequence-container" style={{ height: "500vh" }}>
-      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-black">
+    <div ref={containerRef} className="hero-container" style={{ height: "400vh" }}>
+      <div className="hero-pinned h-screen w-full sticky top-0 overflow-hidden bg-[#0a0a0a]">
         
-        <canvas ref={canvasRef} className="absolute inset-0 w-full h-full object-cover z-0" />
-
-        <div className="hero-sequence-overlay absolute inset-0 z-[1] bg-black/50 pointer-events-none" />
-        <div className="hero-sequence-vignette absolute inset-0 z-[3] shadow-[inset_0_0_150px_60px_rgba(0,0,0,0.8)] pointer-events-none" />
-        <div className="hero-sequence-grain absolute inset-0 z-[4] opacity-[0.04] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
-
-        {/* Progress bar - hidden on mobile */}
-        <div className="hero-progress-track hidden md:block absolute right-8 top-1/2 -translate-y-1/2 w-[1px] h-32 bg-white/5 z-50">
-          <div ref={progressFillRef} className="hero-progress-fill w-full h-full bg-lime origin-top scale-y-0 shadow-[0_0_15px_rgba(204,255,0,0.4)]" />
+        {/* Background effects */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-lime/5 rounded-full blur-[150px] -translate-x-1/2 -translate-y-1/2" />
+          <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-lime/3 rounded-full blur-[100px] translate-x-1/3 translate-y-1/3" />
         </div>
 
-        {/* Loader */}
+        {/* Grain texture */}
+        <div className="absolute inset-0 z-[1] opacity-[0.015] pointer-events-none" 
+          style={{ backgroundImage: "url('data:image/svg+xml,%3Csvg viewBox=\"0 0 256 256\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cfilter id=\"noise\"%3E%3CfeTurbulence type=\"fractalNoise\" baseFrequency=\"0.9\" numOctaves=\"4\" stitchTiles=\"stitch\"/%3E%3C/filter%3E%3Crect width=\"100%25\" height=\"100%25\" filter=\"url(%23noise)\" opacity=\"1\"/%3E%3C/svg%3E')" }} 
+        />
+
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-lime via-lime/50 to-transparent z-40" />
+
+        {/* Progress indicator */}
+        <div className="hidden md:block absolute right-8 top-1/2 -translate-y-1/2 w-[2px] h-20 bg-white/10 z-40 rounded-full overflow-hidden">
+          <div ref={progressFillRef} className="w-full h-full bg-lime origin-top scale-y-0 rounded-full" />
+        </div>
+
+        {/* Loading state */}
         {!isLoaded && (
-          <div className="absolute inset-0 z-[100] bg-black flex items-center justify-center">
-            <p className="text-lime font-mono text-[9px] tracking-[0.4em]">{loadProgress}% CACHING ASSETS</p>
+          <div className="absolute inset-0 z-[100] bg-[#0a0a0a] flex flex-col items-center justify-center gap-4">
+            <div className="w-10 h-10 border-2 border-lime/20 border-t-lime rounded-full animate-spin" />
+            <p className="text-lime/50 font-mono text-[10px] tracking-[0.3em] uppercase">Loading</p>
           </div>
         )}
 
-        {/* Hero Copy */}
-        <div ref={heroContentRef} className="absolute inset-x-0 top-[25%] sm:top-[22%] md:top-[18%] z-20 flex flex-col items-center justify-center px-4 sm:px-6 md:px-20 text-center mx-auto max-w-7xl">
-          <div className="flex flex-wrap justify-center gap-2 md:gap-4 mb-6 md:mb-10 overflow-hidden">
-            <div className="hero-badge border border-white/10 bg-black/40 backdrop-blur-xl px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] text-white/70 uppercase">
-              Est. 2018
+        {/* Main Hero Content */}
+        <div ref={heroContentRef} className="relative z-20 h-full flex flex-col">
+          <div className="flex-1 flex flex-col lg:flex-row">
+            
+            {/* Left Content */}
+            <div className="flex-1 flex flex-col justify-center px-6 md:px-12 lg:px-16 xl:px-20 pt-20 lg:pt-0">
+              
+              {/* Availability Badge */}
+              <div className="hero-badge mb-6 md:mb-8">
+                <div className="inline-flex items-center gap-2.5 px-4 py-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-lime opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-lime"></span>
+                  </span>
+                  <span className="text-white/60 text-xs md:text-sm tracking-wide font-light">
+                    Available for Remote / Freelance / Full-time
+                  </span>
+                </div>
+              </div>
+
+              {/* Main Name */}
+              <h1 className="mb-2 overflow-hidden" style={{ perspective: "1000px" }}>
+                <span className="block text-[3rem] sm:text-[4rem] md:text-[6rem] lg:text-[7rem] xl:text-[9rem] font-black text-white leading-[0.85] tracking-[-0.04em] uppercase">
+                  {renderName()}
+                </span>
+              </h1>
+
+              {/* Skills Marquee */}
+              <div className="hero-marquee border-y border-white/5 -mx-6 md:-mx-12 lg:-mx-16 xl:-mx-20 my-4 md:my-5 overflow-hidden"
+                style={{ 
+                  maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+                  WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)"
+                }}
+              >
+                <SkillMarquee />
+              </div>
+
+              {/* Description */}
+              <div className="hero-desc max-w-xl mt-3 md:mt-5">
+                <p className="text-white/40 text-sm md:text-base lg:text-lg leading-relaxed font-light">
+                  Animation-specialist <span className="text-lime font-medium">Frontend Developer</span> with 3+ years experience building production Next.js frontends and design systems. I bridge the gap between{" "}
+                  <span className="text-white/70">high-performance logic</span> and{" "}
+                  <span className="text-white/70">emotional design</span>.
+                </p>
+              </div>
+
+              {/* CTA Buttons */}
+              <div className="flex flex-wrap gap-3 mt-8 md:mt-10">
+                <Button 
+                  className="hero-cta bg-lime text-black hover:bg-white rounded-full px-6 md:px-8 py-5 md:py-6 text-xs md:text-sm font-bold tracking-wide transition-all duration-300 hover:scale-[1.02] hover:shadow-[0_0_30px_rgba(204,255,0,0.25)]"
+                >
+                  <span>View My Work</span>
+                  <ArrowUpRight className="ml-2 w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="outline"
+                  className="hero-cta border-white/15 bg-white/[0.02] text-white hover:bg-white/5 hover:border-white/30 rounded-full px-6 md:px-8 py-5 md:py-6 text-xs md:text-sm font-medium tracking-wide transition-all duration-300"
+                >
+                  <span>{"Let's Talk"}</span>
+                  <ArrowRight className="ml-2 w-4 h-4" />
+                </Button>
+                <Button 
+                  variant="outline"
+                  className="hero-cta border-white/10 bg-transparent text-white/50 hover:text-white hover:bg-white/5 hover:border-white/15 rounded-full px-6 md:px-8 py-5 md:py-6 text-xs md:text-sm font-medium tracking-wide transition-all duration-300"
+                >
+                  <span className="uppercase text-[10px] md:text-xs tracking-widest">Download Resume</span>
+                  <Download className="ml-2 w-4 h-4" />
+                </Button>
+              </div>
+
+              {/* Social Links */}
+              <div className="flex items-center gap-2.5 mt-10 md:mt-12">
+                {socialLinks.map((social, index) => (
+                  <a
+                    key={index}
+                    href={social.href}
+                    aria-label={social.label}
+                    className="hero-social w-10 h-10 md:w-11 md:h-11 rounded-full border border-white/10 flex items-center justify-center text-white/30 hover:text-lime hover:border-lime/40 hover:bg-lime/5 transition-all duration-300"
+                  >
+                    <social.icon className="w-4 h-4 md:w-[18px] md:h-[18px]" />
+                  </a>
+                ))}
+              </div>
             </div>
-            <div className="hero-badge border border-lime/30 bg-lime/10 backdrop-blur-xl px-4 md:px-6 py-1.5 md:py-2 rounded-full text-[8px] md:text-[10px] tracking-[0.3em] md:tracking-[0.4em] text-lime uppercase font-black">
-              Innovation First
+
+            {/* Right Image Section */}
+            <div className="hidden lg:flex flex-1 items-center justify-center relative pr-8 xl:pr-16">
+              <div className="hero-image relative w-full max-w-[550px] aspect-[3/4]">
+                {/* Decorative circle */}
+                <div className="absolute -top-6 -right-6 w-28 h-28 border border-lime/20 rounded-full" />
+                <div className="absolute -bottom-4 -left-4 w-20 h-20 bg-lime/10 rounded-full blur-xl" />
+                
+                {/* Main image */}
+                <div className="relative w-full h-full rounded-2xl overflow-hidden border border-white/5 bg-gradient-to-br from-white/5 to-transparent">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-10" />
+                  <Image
+                    src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=1200&auto=format&fit=crop"
+                    alt="Yeabsira - Frontend Developer"
+                    fill
+                    sizes="(max-width: 1024px) 0vw, 50vw"
+                    className="object-cover object-top"
+                    priority
+                  />
+                  {/* Image caption */}
+                  <div className="absolute bottom-5 left-5 right-5 z-20">
+                    <div className="flex items-center gap-2 text-lime text-[10px] font-mono tracking-[0.2em]">
+                      <span className="w-6 h-[1px] bg-lime" />
+                      <span>SINCE 2021</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating stats */}
+                <div className="absolute -left-8 xl:-left-14 bottom-1/4 bg-black/90 backdrop-blur-xl border border-white/10 rounded-xl p-4 z-30 shadow-2xl">
+                  <div className="text-2xl xl:text-3xl font-black text-lime mb-0.5">50+</div>
+                  <div className="text-[9px] xl:text-[10px] text-white/40 uppercase tracking-wider font-medium">Projects Done</div>
+                </div>
+              </div>
             </div>
           </div>
 
-          <h1 className="hero-title select-none w-full" style={{ perspective: "1500px" }}>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] tracking-tighter uppercase">INNOVATING</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-lime leading-[0.85] tracking-tighter uppercase">YOUR DIGITAL</span>
-            <span className="hero-line block text-3xl sm:text-4xl md:text-5xl lg:text-[8rem] xl:text-[10rem] font-black text-white leading-[0.85] italic tracking-tighter uppercase">WORLD.</span>
-          </h1>
-
-          <div className="hero-subtitle-wrap mt-6 md:mt-10 lg:mt-12 max-w-xl md:max-w-2xl mx-auto px-2">
-             <p className="hero-subtitle text-white/50 text-sm md:text-base lg:text-xl leading-relaxed tracking-tight">
-               Full-service digital solutions in cloud, development, branding, and technology — built for speed, scale, and real impact.
-             </p>
-          </div>
-
-          <div className="hero-cta mt-8 md:mt-12 lg:mt-14 flex flex-col sm:flex-row flex-wrap justify-center gap-3 md:gap-6 w-full sm:w-auto px-4">
-            <Button className="bg-lime text-black hover:bg-white rounded-full px-8 md:px-12 py-6 md:py-8 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] md:tracking-[0.25em] transition-all duration-700 shadow-2xl shadow-lime/20 hover:-translate-y-1 w-full sm:w-auto">
-              Explore Work <ArrowRight className="ml-2 md:ml-3 w-4 h-4 md:w-5" />
-            </Button>
-            <Button variant="outline" className="border-white/20 text-white hover:border-white/60 rounded-full px-8 md:px-12 py-6 md:py-8 text-[10px] md:text-xs font-black uppercase tracking-[0.2em] md:tracking-[0.25em] hover:bg-white/5 backdrop-blur-sm transition-all duration-700 hover:-translate-y-1 w-full sm:w-auto">
-              Start Project
-            </Button>
+          {/* Scroll Indicator */}
+          <div className="scroll-hint absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5">
+            <span className="text-[9px] text-white/25 uppercase tracking-[0.2em] font-light">Scroll to Explore</span>
+            <div className="w-[1px] h-6 bg-gradient-to-b from-lime/50 to-transparent relative">
+              <ChevronDown className="absolute -bottom-2.5 left-1/2 -translate-x-1/2 w-3.5 h-3.5 text-lime/60 animate-bounce" />
+            </div>
           </div>
         </div>
 
-        {/* About Section */}
-        <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-4 sm:px-6 md:px-20 items-center text-center">
-          <div className="w-16 md:w-24 h-[1px] bg-lime/40 mb-8 md:mb-12" />
-          <h2 className="text-3xl sm:text-4xl md:text-[3.5rem] lg:text-[7rem] font-black text-white max-w-7xl leading-[0.9] tracking-tighter uppercase select-none">
-            <span className="about-title-line block">ELEVATING BRANDS.</span>
-            <span className="about-title-line block text-white/20 italic">SOLVING CHALLENGES.</span>
+        {/* About Section (Revealed on Scroll) */}
+        <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-6 md:px-12 lg:px-20 items-center text-center">
+          <div className="w-14 md:w-20 h-[1px] bg-lime/30 mb-8 md:mb-10" />
+          <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-[5.5rem] font-black text-white max-w-5xl leading-[0.9] tracking-tighter uppercase select-none">
+            <span className="block">Crafting Experiences.</span>
+            <span className="block text-white/15 italic mt-1 md:mt-2">Pixel by Pixel.</span>
           </h2>
-          <p className="mt-6 md:mt-10 text-white/40 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase px-4">
-            Technology should make people’s work easier, safer and more meaningful. We are a multidisciplinary team focused on solving real-world challenges through long-term partnerships and people-centric design.
+          <p className="mt-6 md:mt-8 text-white/35 max-w-2xl text-sm md:text-base lg:text-lg leading-relaxed font-light px-4">
+            I believe great interfaces should feel invisible yet memorable. As a frontend specialist, I focus on creating seamless user experiences through clean code, thoughtful animations, and pixel-perfect design.
           </p>
-          <div className="mt-10 md:mt-14 lg:mt-16 flex flex-wrap justify-center gap-6 sm:gap-8 md:gap-10 lg:gap-24">
+          <div className="mt-10 md:mt-12 flex flex-wrap justify-center gap-10 sm:gap-14 md:gap-20">
             <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">120+</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Solutions Delivered</p>
+              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-lime leading-none group-hover:scale-105 transition-transform duration-500">50+</p>
+              <p className="text-[8px] md:text-[9px] text-white/25 uppercase tracking-[0.25em] mt-2.5 font-medium">Projects Done</p>
             </div>
             <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">15+</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Core Technologists</p>
+              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-lime leading-none group-hover:scale-105 transition-transform duration-500">20+</p>
+              <p className="text-[8px] md:text-[9px] text-white/25 uppercase tracking-[0.25em] mt-2.5 font-medium">Happy Clients</p>
             </div>
             <div className="text-center group">
-              <p className="text-3xl sm:text-4xl md:text-4xl lg:text-7xl font-black text-lime leading-none group-hover:scale-110 transition-transform duration-500">5yr</p>
-              <p className="text-[8px] md:text-[9px] text-white/20 uppercase tracking-[0.3em] md:tracking-[0.4em] mt-2 md:mt-3 lg:mt-4 font-bold">Innovation Legacy</p>
+              <p className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black text-lime leading-none group-hover:scale-105 transition-transform duration-500">3yr</p>
+              <p className="text-[8px] md:text-[9px] text-white/25 uppercase tracking-[0.25em] mt-2.5 font-medium">Experience</p>
             </div>
           </div>
         </div>
