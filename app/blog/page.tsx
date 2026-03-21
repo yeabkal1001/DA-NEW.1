@@ -132,11 +132,11 @@ export default function BlogPage() {
   }, []);
 
   return (
-    <main className="min-h-screen bg-background text-white">
+    <main className="min-h-screen bg-background text-foreground">
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[65vh] md:min-h-[70vh] bg-black text-white flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[65vh] md:min-h-[70vh] bg-background text-foreground flex items-center overflow-hidden">
         {/* Background */}
         <div className="absolute inset-0">
           <div className="absolute top-1/3 left-1/3 w-[350px] md:w-[500px] h-[350px] md:h-[500px] bg-lime/10 rounded-full blur-[120px] md:blur-[150px]" />
@@ -144,30 +144,30 @@ export default function BlogPage() {
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40">
           <div className="max-w-3xl">
-            <div className="blog-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-white/5 rounded-full border border-white/10">
+            <div className="blog-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
               <span className="w-2 h-2 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Blog & Insights</span>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60 dark:text-white/60">Blog & Insights</span>
             </div>
             
-            <h1 className="blog-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="blog-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8 text-foreground dark:text-white">
               Ideas, Insights
               <br />
               <span className="text-lime italic">& Innovation</span>
             </h1>
             
-            <p className="blog-hero-reveal text-white/50 text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-10 max-w-2xl">
+            <p className="blog-hero-reveal text-foreground/50 dark:text-white/50 text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-10 max-w-2xl">
               Explore our latest thoughts on technology, design, and digital transformation.
             </p>
 
             {/* Search Bar */}
             <div className="blog-hero-reveal relative max-w-xl">
-              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-4 md:w-5 h-4 md:h-5 text-white/40" />
+              <Search className="absolute left-4 md:left-5 top-1/2 -translate-y-1/2 w-4 md:w-5 h-4 md:h-5 text-foreground/40 dark:text-white/40" />
               <input
                 type="text"
                 placeholder="Search articles..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-white/5 border border-white/10 rounded-full py-3 md:py-4 pl-11 md:pl-14 pr-4 md:pr-6 text-sm md:text-base text-white placeholder:text-white/30 focus:outline-none focus:border-lime/50 transition-colors"
+                className="w-full bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full py-3 md:py-4 pl-11 md:pl-14 pr-4 md:pr-6 text-sm md:text-base text-foreground dark:text-white placeholder:text-foreground/40 dark:placeholder:text-white/30 focus:outline-none focus:border-lime/50 transition-colors"
               />
             </div>
           </div>
@@ -175,12 +175,12 @@ export default function BlogPage() {
       </section>
 
       {/* Featured Posts */}
-      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-white">
+      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-foreground">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="mb-8 md:mb-12">
-            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-3 md:mb-4 bg-black/5 rounded-full">
+            <div className="inline-flex items-center p-1 px-3 md:px-4 mb-3 md:mb-4 bg-black/5 dark:bg-white/5 rounded-full">
               <TrendingUp className="w-3 h-3 mr-2" />
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em]">Featured Articles</span>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60 dark:text-white/60">Featured Articles</span>
             </div>
           </ScrollReveal>
 
@@ -235,7 +235,7 @@ export default function BlogPage() {
       </section>
 
       {/* All Posts with Sidebar */}
-      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-t border-white/5">
+      <section className="py-12 md:py-20 lg:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03] border-t border-black/5 dark:border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-3 gap-8 md:gap-12">
             {/* Main Content */}
@@ -254,7 +254,7 @@ export default function BlogPage() {
                         className={`px-3 py-1.5 rounded-full text-[10px] md:text-xs font-bold uppercase tracking-wider transition-all whitespace-nowrap flex-shrink-0 ${
                           activeCategory === category
                             ? 'bg-lime text-black'
-                            : 'bg-white/5 text-white/60 hover:bg-white/10 hover:text-white'
+                            : 'bg-black/5 dark:bg-white/5 text-foreground/60 dark:text-white/60 hover:bg-black/10 dark:hover:bg-white/10 hover:text-foreground dark:hover:text-white'
                         }`}
                       >
                         {category}
@@ -267,7 +267,7 @@ export default function BlogPage() {
               <div className="space-y-4 md:space-y-6">
                 {filteredPosts.filter(p => !p.featured).map((post, index) => (
                   <ScrollReveal key={post.id} delay={index * 0.05}>
-                    <Link href={`/blog/${post.id}`} className="group block bg-white/5 rounded-xl md:rounded-2xl overflow-hidden border border-white/10 hover:border-lime/50 transition-all duration-300 h-full">
+                    <Link href={`/blog/${post.id}`} className="group block bg-black/5 dark:bg-white/5 rounded-xl md:rounded-2xl overflow-hidden border border-black/10 dark:border-white/10 hover:border-lime/50 transition-all duration-300 h-full">
                       <div className="grid sm:grid-cols-3 gap-0">
                         <div className="relative h-40 sm:h-auto overflow-hidden">
                           <img 
@@ -278,18 +278,18 @@ export default function BlogPage() {
                         </div>
                         <div className="sm:col-span-2 p-4 md:p-6">
                           <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                            <span className="px-2 py-0.5 md:py-1 bg-lime/10 text-black rounded text-[10px] md:text-xs font-bold">
+                            <span className="px-2 py-0.5 md:py-1 bg-lime/10 dark:bg-lime/20 text-lime rounded text-[10px] md:text-xs font-bold">
                               {post.category}
                             </span>
-                            <span className="text-gray-400 text-[10px] md:text-xs flex items-center gap-1">
+                            <span className="text-foreground/40 dark:text-white/40 text-[10px] md:text-xs flex items-center gap-1">
                               <Calendar className="w-3 h-3" />
                               {post.date}
                             </span>
                           </div>
-                          <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2 group-hover:text-lime transition-colors leading-snug">
+                          <h3 className="text-base md:text-lg font-bold mb-1 md:mb-2 group-hover:text-lime transition-colors text-foreground dark:text-white leading-snug">
                             {post.title}
                           </h3>
-                          <p className="text-white/40 text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">
+                          <p className="text-foreground/40 dark:text-white/40 text-xs md:text-sm line-clamp-2 mb-3 md:mb-4">
                             {post.excerpt}
                           </p>
                           <div className="flex items-center justify-between">
@@ -299,9 +299,9 @@ export default function BlogPage() {
                                 alt={post.author}
                                 className="w-6 md:w-8 h-6 md:h-8 rounded-full object-cover"
                               />
-                              <span className="text-xs md:text-sm font-medium text-white">{post.author}</span>
+                              <span className="text-xs md:text-sm font-medium text-foreground dark:text-white">{post.author}</span>
                             </div>
-                            <span className="text-white/30 text-[10px] md:text-xs">{post.readTime}</span>
+                            <span className="text-foreground/30 dark:text-white/30 text-[10px] md:text-xs">{post.readTime}</span>
                           </div>
                         </div>
                       </div>
@@ -312,7 +312,7 @@ export default function BlogPage() {
 
               {filteredPosts.filter(p => !p.featured).length === 0 && (
                 <div className="text-center py-12 md:py-20">
-                  <p className="text-gray-400">No articles found matching your criteria.</p>
+                  <p className="text-foreground/40 dark:text-white/40">No articles found matching your criteria.</p>
                 </div>
               )}
             </div>
@@ -321,8 +321,8 @@ export default function BlogPage() {
             <div className="lg:col-span-1 space-y-6 md:space-y-8">
               {/* Categories */}
               <ScrollReveal>
-                <div className="bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/10">
-                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4 text-white">Categories</h3>
+                <div className="bg-black/5 dark:bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 border border-black/10 dark:border-white/10">
+                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4 text-foreground dark:text-white">Categories</h3>
                   <ul className="space-y-1 md:space-y-2">
                     {categories.map((category) => (
                       <li key={category}>
@@ -331,7 +331,7 @@ export default function BlogPage() {
                           className={`w-full text-left px-3 md:px-4 py-2 rounded-lg text-xs md:text-sm font-medium transition-colors ${
                             activeCategory === category
                               ? 'bg-lime text-black'
-                              : 'text-white/60 hover:bg-white/5 hover:text-white'
+                              : 'text-foreground/60 dark:text-white/60 hover:bg-black/5 dark:hover:bg-white/5 hover:text-foreground dark:hover:text-white'
                           }`}
                         >
                           {category}
@@ -344,13 +344,13 @@ export default function BlogPage() {
 
               {/* Trending Topics */}
               <ScrollReveal delay={0.1}>
-                <div className="bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 border border-white/10">
-                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4 text-white">Trending Topics</h3>
+                <div className="bg-black/5 dark:bg-white/5 rounded-xl md:rounded-2xl p-4 md:p-6 border border-black/10 dark:border-white/10">
+                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-3 md:mb-4 text-foreground dark:text-white">Trending Topics</h3>
                   <div className="flex flex-wrap gap-2">
                     {trendingTopics.map((topic, index) => (
                       <span 
                         key={index}
-                        className="px-2 md:px-3 py-1.5 md:py-2 bg-white/10 rounded-full text-[10px] md:text-xs font-bold text-white/60 hover:bg-lime hover:text-black transition-colors cursor-pointer"
+                        className="px-2 md:px-3 py-1.5 md:py-2 bg-black/5 dark:bg-white/10 rounded-full text-[10px] md:text-xs font-bold text-foreground/60 dark:text-white/60 hover:bg-lime hover:text-black transition-colors cursor-pointer"
                       >
                         {topic}
                       </span>
@@ -395,7 +395,7 @@ export default function BlogPage() {
             </p>
             <Link 
               href="/contact"
-              className="inline-flex items-center gap-2 md:gap-3 bg-black text-white px-6 md:px-8 py-3 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-gray-900 transition-all duration-500 group"
+              className="inline-flex items-center gap-2 md:gap-3 bg-black text-white dark:bg-white dark:text-black px-6 md:px-8 py-3 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-lime hover:text-black transition-all duration-500 group"
             >
               Get in Touch
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

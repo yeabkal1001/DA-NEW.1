@@ -185,7 +185,7 @@ export default function RootLayout({
       <body className={cn("antialiased", sans.variable, moonWalk.variable)}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >

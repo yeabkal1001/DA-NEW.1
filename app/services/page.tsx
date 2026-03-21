@@ -53,8 +53,8 @@ const mainServices = [
     tagline: "Scalable Infrastructure for Growth",
     description: "Transform your infrastructure with our cloud solutions for maximum efficiency and cost-effectiveness.",
     features: ["Cloud Migration", "Infrastructure Management", "DevOps Services", "Cost Optimization", "Multi-cloud Strategy"],
-    color: "bg-gray-200/10",
-    textColor: "text-white",
+    color: "bg-black/5 dark:bg-white/5",
+    textColor: "text-foreground dark:text-white",
   },
   {
     icon: Cpu,
@@ -80,8 +80,8 @@ const mainServices = [
     tagline: "Empowering Your Team",
     description: "Equip your team with the skills they need to succeed in the digital age.",
     features: ["Technical Training", "Certification Programs", "Workshops", "On-site Training", "E-learning Solutions"],
-    color: "bg-gray-200/10",
-    textColor: "text-white",
+    color: "bg-black/5 dark:bg-white/5",
+    textColor: "text-foreground dark:text-white",
   },
 ];
 
@@ -128,7 +128,7 @@ export default function ServicesPage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[80vh] md:min-h-[85vh] bg-black dark:bg-black text-white flex items-center overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[80vh] md:min-h-[85vh] bg-background text-foreground flex items-center overflow-hidden">
         {/* Background Effects */}
         <div className="absolute inset-0">
           <div className="absolute top-1/4 left-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-lime/10 rounded-full blur-[100px] md:blur-[150px]" />
@@ -137,40 +137,40 @@ export default function ServicesPage() {
 
         {/* Grid Pattern - Hidden on mobile for performance */}
         <div className="absolute inset-0 opacity-[0.03] hidden md:block" style={{
-          backgroundImage: `linear-gradient(rgba(255,255,255,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.1) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)`,
           backgroundSize: '60px 60px'
         }} />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40">
           <div className="max-w-4xl">
-            <div className="services-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-white/5 rounded-full border border-white/10">
+            <div className="services-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
               <span className="w-2 h-2 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
-              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Our Services</span>
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60 dark:text-white/60">Our Services</span>
             </div>
             
-            <h1 className="services-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+            <h1 className="services-hero-reveal text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[5rem] xl:text-[6rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8 text-foreground dark:text-white">
               Full-Service
               <br />
               <span className="text-lime italic">Digital Solutions</span>
               <br />
-              <span className="text-white/40">Built for Impact</span>
+              <span className="text-foreground/40 dark:text-white/40">Built for Impact</span>
             </h1>
             
-            <p className="services-hero-reveal text-white/50 text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-10 max-w-2xl">
+            <p className="services-hero-reveal text-foreground/50 dark:text-white/50 text-base md:text-lg lg:text-xl leading-relaxed mb-8 md:mb-10 max-w-2xl">
               From custom software and cybersecurity to cloud services and digital consulting, we deliver end-to-end solutions that drive real transformation.
             </p>
             
             <div className="services-hero-reveal flex flex-col sm:flex-row gap-3 md:gap-4">
               <Link 
                 href="/contact"
-                className="inline-flex items-center justify-center gap-2 md:gap-3 bg-lime text-black px-6 md:px-8 py-3.5 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-white transition-all duration-500 group"
+                className="inline-flex items-center justify-center gap-2 md:gap-3 bg-lime text-black px-6 md:px-8 py-3.5 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 group"
               >
                 Start a Project
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
               <Link 
                 href="/projects"
-                className="inline-flex items-center justify-center gap-2 md:gap-3 border border-white/20 text-white px-6 md:px-8 py-3.5 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-white/10 transition-all duration-500"
+                className="inline-flex items-center justify-center gap-2 md:gap-3 border border-black/20 dark:border-white/20 text-[#212121] dark:text-white px-6 md:px-8 py-3.5 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-500"
               >
                 View Our Work
               </Link>
@@ -181,8 +181,8 @@ export default function ServicesPage() {
         {/* Floating Service Icons - Hidden on mobile */}
         <div className="absolute right-10 top-1/2 -translate-y-1/2 hidden xl:flex flex-col gap-4">
           {[Code2, Shield, Cloud, Cpu].map((Icon, i) => (
-            <div key={i} className="services-hero-reveal w-14 h-14 bg-white/5 border border-white/10 rounded-2xl flex items-center justify-center hover:bg-lime hover:border-lime transition-all group">
-              <Icon className="w-6 h-6 text-white/40 group-hover:text-black transition-colors" />
+            <div key={i} className="services-hero-reveal w-14 h-14 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-2xl flex items-center justify-center hover:bg-lime hover:border-lime transition-all group">
+              <Icon className="w-6 h-6 text-[#212121]/40 dark:text-white/40 group-hover:text-black transition-colors" />
             </div>
           ))}
         </div>
@@ -246,7 +246,7 @@ export default function ServicesPage() {
       </section>
 
       {/* Additional Services Grid */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-t border-white/5">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03] border-t border-black/5 dark:border-white/5">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-10 md:mb-16">
             <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground">
@@ -271,19 +271,19 @@ export default function ServicesPage() {
       </section>
 
       {/* Industries Section */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black text-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-foreground border-y border-black/5 dark:border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <ScrollReveal>
-              <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-white/5 rounded-full border border-white/10">
-                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">Industries We Serve</span>
+              <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60 dark:text-white/60">Industries We Serve</span>
               </div>
-              <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+              <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground dark:text-white">
                 Expertise Across
                 <br />
                 <span className="text-lime italic">Multiple Sectors</span>
               </h2>
-              <p className="text-white/50 text-base md:text-lg leading-relaxed">
+              <p className="text-foreground/50 dark:text-white/50 text-base md:text-lg leading-relaxed">
                 Our experience spans diverse industries, giving us unique insights into the challenges and opportunities each sector faces.
               </p>
             </ScrollReveal>
@@ -293,7 +293,7 @@ export default function ServicesPage() {
                 {industries.map((industry, index) => (
                   <span 
                     key={index}
-                    className="px-3 md:px-5 py-2 md:py-3 bg-white/5 border border-white/10 rounded-full text-xs md:text-sm font-bold hover:bg-lime hover:text-black hover:border-lime transition-all cursor-default"
+                    className="px-3 md:px-5 py-2 md:py-3 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full text-xs md:text-sm font-bold hover:bg-lime hover:text-black hover:border-lime transition-all cursor-default text-foreground dark:text-white"
                   >
                     {industry}
                   </span>
@@ -348,7 +348,7 @@ export default function ServicesPage() {
             </p>
             <Link 
               href="/contact"
-              className="inline-flex items-center gap-2 md:gap-3 bg-black text-white px-8 md:px-10 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-gray-900 transition-all duration-500 group"
+              className="inline-flex items-center gap-2 md:gap-3 bg-black text-white dark:bg-white dark:text-black px-8 md:px-10 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-lime hover:text-black transition-all duration-500 group"
             >
               Get Started Today
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

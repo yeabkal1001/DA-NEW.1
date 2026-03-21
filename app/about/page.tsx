@@ -63,34 +63,40 @@ export default function AboutPage() {
       <Navbar />
       
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[85vh] md:min-h-[90vh] bg-black dark:bg-black text-white flex items-center overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-5">
-          <div className="absolute top-20 left-10 md:left-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-lime blur-[100px] md:blur-[120px]" />
-          <div className="absolute bottom-20 right-10 md:right-20 w-64 md:w-96 h-64 md:h-96 rounded-full bg-white blur-[100px] md:blur-[120px]" />
+      <section ref={heroRef} className="relative min-h-[70vh] md:min-h-[80vh] bg-background text-foreground flex items-center overflow-hidden">
+        {/* Background Effects */}
+        <div className="absolute inset-0">
+          <div className="absolute top-1/4 right-1/4 w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-lime/10 rounded-full blur-[100px] md:blur-[150px]" />
+          <div className="absolute bottom-1/4 left-1/4 w-[250px] md:w-[400px] h-[250px] md:h-[400px] bg-lime/5 rounded-full blur-[80px] md:blur-[120px]" />
         </div>
+
+        {/* Grid Pattern */}
+        <div className="absolute inset-0 opacity-[0.08] dark:opacity-[0.03] hidden md:block" style={{
+          backgroundImage: `linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)`,
+          backgroundSize: '60px 60px'
+        }} />
         
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-24 md:py-32 pt-32 md:pt-40">
           <div className="grid lg:grid-cols-2 gap-10 md:gap-16 items-center">
             <div>
-              <div className="about-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-white/5 rounded-full border border-white/10">
+              <div className="about-hero-reveal inline-flex items-center p-1 px-3 md:px-4 mb-6 md:mb-8 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
                 <span className="w-2 h-2 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
-                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-white/60">About Us</span>
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60 dark:text-white/60">About Us</span>
               </div>
               
-              <h1 className="about-hero-reveal text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[5.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8">
+              <h1 className="about-hero-reveal text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] lg:text-[5.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 md:mb-8 text-foreground dark:text-white">
                 About
                 <br />
                 <span className="text-lime italic">DigitalAddis</span>
               </h1>
               
-              <p className="about-hero-reveal text-white/50 text-base md:text-lg lg:text-xl leading-relaxed mb-6 md:mb-8 max-w-xl">
+              <p className="about-hero-reveal text-foreground/50 dark:text-white/50 text-base md:text-lg lg:text-xl leading-relaxed mb-6 md:mb-8 max-w-xl">
                 A full-service digital agency delivering innovative solutions that drive real transformation.
               </p>
               
               <Link 
                 href="/services"
-                className="about-hero-reveal inline-flex items-center gap-2 md:gap-3 bg-lime text-black px-6 md:px-8 py-3.5 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-white transition-all duration-500 group"
+                className="about-hero-reveal inline-flex items-center gap-2 md:gap-3 bg-lime text-black px-6 md:px-8 py-3.5 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 group"
               >
                 Explore Services
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -107,7 +113,7 @@ export default function AboutPage() {
                   <div className={`text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black mb-1 md:mb-2 ${index === 0 ? 'text-black' : 'text-lime'}`}>
                     {stat.number}
                   </div>
-                  <div className={`text-xs md:text-sm font-bold uppercase tracking-wider ${index === 0 ? 'text-black/60' : 'text-white/40'}`}>
+                  <div className={`text-xs md:text-sm font-bold uppercase tracking-wider ${index === 0 ? 'text-black/60' : 'text-foreground/40 dark:text-white/40'}`}>
                     {stat.label}
                   </div>
                 </div>
@@ -157,7 +163,7 @@ export default function AboutPage() {
       </section>
 
       {/* Mission & Vision */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-y border-white/5">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03] border-y border-black/5 dark:border-white/5">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 gap-6 md:gap-8">
             {/* Mission */}
@@ -200,13 +206,13 @@ export default function AboutPage() {
       </section>
 
       {/* Values */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-foreground">
         <div className="max-w-7xl mx-auto">
           <ScrollReveal className="text-center mb-10 md:mb-16">
             <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-black/5 dark:bg-white/5 rounded-full border border-black/10 dark:border-white/10">
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-muted-foreground">Our Values</span>
             </div>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase text-foreground">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase text-foreground dark:text-white">
               What <span className="text-lime">Drives</span> Us
             </h2>
           </ScrollReveal>
@@ -232,21 +238,21 @@ export default function AboutPage() {
       </section>
 
       {/* Team CTA */}
-      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black text-white">
+      <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-background border-t border-black/5 dark:border-white/5">
         <div className="max-w-5xl mx-auto text-center">
           <ScrollReveal>
             <div className="w-16 md:w-20 h-16 md:h-20 bg-lime rounded-full flex items-center justify-center mx-auto mb-6 md:mb-8">
               <Users className="w-8 md:w-10 h-8 md:h-10 text-black" />
             </div>
-            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[4rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-foreground">
               Ready to <span className="text-lime italic">Work Together?</span>
             </h2>
-            <p className="text-white/50 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed px-4">
+            <p className="text-foreground/50 dark:text-white/50 text-base md:text-lg lg:text-xl max-w-2xl mx-auto mb-8 md:mb-10 leading-relaxed px-4">
               Our purpose is to help organizations grow, adapt and move forward with confidence, while contributing to a stronger, more inclusive and sustainable digital future.
             </p>
             <Link 
               href="/contact"
-              className="inline-flex items-center gap-2 md:gap-3 bg-lime text-black px-8 md:px-10 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-white transition-all duration-500 group"
+              className="inline-flex items-center gap-2 md:gap-3 bg-lime text-black px-8 md:px-10 py-4 md:py-5 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-500 group"
             >
               Start a Project
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

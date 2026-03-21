@@ -186,26 +186,26 @@ export default function BlogPostPage() {
   }
 
   return (
-    <main className="min-h-screen bg-background text-white">
+    <main className="min-h-screen bg-background text-foreground transition-all duration-500">
       <Navbar />
 
       {/* Hero Section */}
-      <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[75vh] bg-black text-white flex items-end overflow-hidden">
+      <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[75vh] bg-background text-foreground flex items-end overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
           <img
             src={post.image}
             alt={post.title}
-            className="w-full h-full object-cover opacity-50"
+            className="w-full h-full object-cover opacity-50 dark:opacity-60"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
         </div>
 
         <div className="relative z-10 max-w-4xl mx-auto px-4 sm:px-6 md:px-12 lg:px-20 py-16 md:py-24 w-full">
           {/* Back Button */}
           <Link
             href="/blog"
-            className="blog-post-reveal inline-flex items-center gap-2 text-white/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
+            className="blog-post-reveal inline-flex items-center gap-2 text-foreground/60 dark:text-white/60 hover:text-lime text-sm font-bold uppercase tracking-wider mb-8 transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             Back to Blog
@@ -215,7 +215,7 @@ export default function BlogPostPage() {
             <span className="px-4 py-2 bg-lime text-black rounded-full text-xs font-bold uppercase">
               {post.category}
             </span>
-            <span className="text-white/60 text-sm flex items-center gap-2">
+            <span className="text-foreground/60 dark:text-white/60 text-sm flex items-center gap-2">
               <Clock className="w-4 h-4" />
               {post.readTime} read
             </span>
@@ -232,8 +232,8 @@ export default function BlogPostPage() {
               className="w-14 h-14 rounded-full object-cover border-2 border-lime"
             />
             <div>
-              <p className="text-white font-bold text-lg">{post.author}</p>
-              <p className="text-white/50 text-sm flex items-center gap-2">
+              <p className="text-foreground dark:text-white font-bold text-lg">{post.author}</p>
+              <p className="text-foreground/50 dark:text-white/50 text-sm flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 {post.date}
               </p>
@@ -243,7 +243,7 @@ export default function BlogPostPage() {
       </section>
 
       {/* Article Content */}
-      <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-white">
+      <section className="py-16 md:py-24 px-4 sm:px-6 md:px-12 lg:px-20 bg-background text-foreground">
         <div className="max-w-3xl mx-auto">
           {/* Content */}
           <div className="prose prose-lg max-w-none">
@@ -294,21 +294,21 @@ export default function BlogPostPage() {
           </ScrollReveal>
 
           {/* Share */}
-          <ScrollReveal className="mt-8 pt-8 border-t border-white/10">
+          <ScrollReveal className="mt-8 pt-8 border-t border-black/10 dark:border-white/10">
             <div className="flex items-center justify-between flex-wrap gap-4">
-              <p className="font-bold uppercase tracking-wider text-sm text-white/40">Share this article</p>
+              <p className="font-bold uppercase tracking-wider text-sm text-foreground/40 dark:text-white/40">Share this article</p>
               <div className="flex gap-3">
-                <button className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Twitter className="w-5 h-5 text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Twitter className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
                 </button>
-                <button className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Facebook className="w-5 h-5 text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Facebook className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
                 </button>
-                <button className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Linkedin className="w-5 h-5 text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Linkedin className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
                 </button>
-                <button className="w-12 h-12 bg-white/5 border border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
-                  <Share2 className="w-5 h-5 text-white/40 group-hover:text-black" />
+                <button className="w-12 h-12 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 rounded-full flex items-center justify-center hover:bg-lime transition-all group">
+                  <Share2 className="w-5 h-5 text-foreground/40 dark:text-white/40 group-hover:text-black" />
                 </button>
               </div>
             </div>
@@ -317,7 +317,7 @@ export default function BlogPostPage() {
       </section>
 
       {/* Author Bio */}
-      <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-gray-900/50 border-y border-white/5">
+      <section className="py-16 px-4 sm:px-6 md:px-12 lg:px-20 bg-black/[0.03] dark:bg-white/[0.03] border-y border-black/5 dark:border-white/5">
         <div className="max-w-3xl mx-auto">
           <ScrollReveal>
             <div className="bg-white/5 rounded-3xl p-8 md:p-12 border border-white/10">

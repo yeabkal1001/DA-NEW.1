@@ -20,9 +20,8 @@
   }
 
   :root {
-    /* LIGHT MODE: #e6e6e6 Background, #212121 Text */
-    --background: 0 0% 90%; 
-    --foreground: 0 0% 13%; 
+    --background: 0 0% 90%; /* #e6e6e6 */
+    --foreground: 0 0% 13%; /* #212121 */
     
     --card: 0 0% 90%;
     --card-foreground: 0 0% 13%;
@@ -30,35 +29,34 @@
     --popover: 0 0% 90%;
     --popover-foreground: 0 0% 13%;
     
-    --primary: 75 100% 44%;
-    --primary-foreground: 0 0% 13%; /* Black text on lime */
+    --primary: 72 100% 50%; /* #cbfe00 */
+    --primary-foreground: 0 0% 13%;
     
-    --secondary: 0 0% 80%; /* Slightly darker white variant */
+    --secondary: 0 0% 85%; /* Slight variation of #e6e6e6 */
     --secondary-foreground: 0 0% 13%;
     
-    --muted: 0 0% 80%;
-    --muted-foreground: 0 0% 35%; /* Mid-grey text */
+    --muted: 0 0% 85%;
+    --muted-foreground: 0 0% 40%;
     
-    --accent: 75 100% 44%;
+    --accent: 72 100% 50%;
     --accent-foreground: 0 0% 13%;
     
-    --destructive: 75 100% 44%;
-    --destructive-foreground: 0 0% 13%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 0 0% 75%;
-    --input: 0 0% 75%;
-    --ring: 75 100% 44%;
+    --border: 0 0% 80%;
+    --input: 0 0% 80%;
+    --ring: 72 100% 50%;
     --radius: 0.625rem;
     
-    --lime: #a7e000;
+    --lime: #cbfe00;
     --black: #212121;
     --white: #e6e6e6;
   }
 
   .dark {
-    /* DARK MODE: #212121 Background, #e6e6e6 Text */
-    --background: 0 0% 13%; 
-    --foreground: 0 0% 90%; 
+    --background: 0 0% 13%; /* #212121 */
+    --foreground: 0 0% 90%; /* #e6e6e6 */
     
     --card: 0 0% 13%;
     --card-foreground: 0 0% 90%;
@@ -66,27 +64,27 @@
     --popover: 0 0% 13%;
     --popover-foreground: 0 0% 90%;
     
-    --primary: 75 100% 44%;
-    --primary-foreground: 0 0% 13%; /* Black text on lime */
+    --primary: 72 100% 50%;
+    --primary-foreground: 0 0% 13%;
     
-    --secondary: 0 0% 18%; /* Slightly lighter black variant */
+    --secondary: 0 0% 18%;
     --secondary-foreground: 0 0% 90%;
     
     --muted: 0 0% 18%;
-    --muted-foreground: 0 0% 65%; /* Mid-grey text */
+    --muted-foreground: 0 0% 60%;
     
-    --accent: 75 100% 44%;
+    --accent: 72 100% 50%;
     --accent-foreground: 0 0% 13%;
     
-    --destructive: 75 100% 44%;
-    --destructive-foreground: 0 0% 13%;
+    --destructive: 0 100% 50%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 0 0% 25%;
-    --input: 0 0% 25%;
-    --ring: 75 100% 44%;
+    --border: 0 0% 20%;
+    --input: 0 0% 20%;
+    --ring: 72 100% 50%;
     --radius: 0.625rem;
     
-    --lime: #a7e000;
+    --lime: #cbfe00;
     --black: #212121;
     --white: #e6e6e6;
   }
@@ -167,16 +165,16 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--white);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
+  background: var(--black);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--lime);
 }
 
 /* ============================
@@ -211,25 +209,16 @@
   position: absolute;
   inset: 0;
   z-index: 2;
+  background: none;
+  pointer-events: none;
+}
+.dark .hero-sequence-overlay {
   background:
     linear-gradient(
       105deg,
-      rgba(0, 0, 0, 0.72) 0%,
-      rgba(0, 0, 0, 0.4) 35%,
-      rgba(0, 0, 0, 0.08) 65%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to top,
-      rgba(0, 0, 0, 0.55) 0%,
-      transparent 35%
-    ),
-    linear-gradient(
-      to bottom,
-      rgba(0, 0, 0, 0.3) 0%,
-      transparent 15%
+      rgba(33, 33, 33, 0.9) 0%,
+      rgba(33, 33, 33, 0.1) 60%
     );
-  pointer-events: none;
 }
 
 /* Cinematic vignette */
