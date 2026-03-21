@@ -145,13 +145,13 @@ export function Process() {
           <h2 className="process-header-text text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-foreground dark:text-white tracking-tight">
             How <span className="text-lime italic">We Bring Ideas</span>
             <br />
-            to Life Turning Vision
+            to Life, Turning Vision
           </h2>
           <div className="process-header-text mt-3 md:mt-4 inline-block">
             <span className="relative inline-block">
               <span className="text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-foreground dark:text-white">Into</span>
               <span className="ml-1 md:ml-2 inline-block bg-lime rounded-full px-4 md:px-6 lg:px-8 py-1 md:py-2 text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black italic text-black -rotate-2">
-                To Life
+                Reality
               </span>
             </span>
           </div>
