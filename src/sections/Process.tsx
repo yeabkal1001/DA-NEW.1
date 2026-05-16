@@ -331,7 +331,7 @@ function NotebookCard({ step }: { step: typeof processSteps[0] }) {
   return (
     <div className="relative group cursor-pointer select-none">
       {/* Dark outer shell — always dark, slightly lighter in dark mode */}
-      <div className="bg-foreground rounded-[23px] shadow-[0px_3px_6px_5px_rgba(0,0,0,0.15)] relative overflow-hidden"
+      <div className="bg-zinc-950 dark:bg-zinc-900 rounded-[23px] shadow-[0px_3px_6px_5px_rgba(0,0,0,0.15)] relative overflow-hidden"
         style={{ padding: "0" }}
       >
         {/* Black header area */}
@@ -368,7 +368,7 @@ function NotebookCard({ step }: { step: typeof processSteps[0] }) {
 function NotebookCardMobile({ step }: { step: typeof processSteps[0] }) {
   return (
     <div className="relative select-none">
-      <div className="bg-foreground rounded-[18px] shadow-lg relative overflow-hidden">
+      <div className="bg-zinc-950 dark:bg-zinc-900 rounded-[18px] shadow-lg relative overflow-hidden">
         {/* Black header */}
         <div className="relative h-[70px]">
           <div className="absolute top-4 right-5 w-2 h-2 rounded-full bg-lime shadow-inner" />

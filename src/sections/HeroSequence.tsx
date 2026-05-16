@@ -214,8 +214,10 @@ export function HeroSequence() {
       scrollTl.to(progressFillRef.current, { scaleY: 0.33, ease: "none", duration: 1.0 }, 0);
       scrollTl.to(heroContentRef.current, { opacity: 0, y: -100, duration: 0.3 }, 0.7); 
       
-      // Start model on the right
-      gsap.set(canvasRef.current, { x: "20vw" });
+      const isMobile = window.innerWidth < 768;
+
+      // Start model on the right (or center on mobile)
+      gsap.set(canvasRef.current, { x: isMobile ? "0vw" : "20vw" });
 
       // --- PART 2: Elevating Brands (1.0 -> 1.5) ---
       // 20 frames / 0.5 duration (Matches speed of Part 1)
@@ -234,11 +236,13 @@ export function HeroSequence() {
       scrollTl.to(aboutContentRef.current, { opacity: 0, y: -100, duration: 0.2 }, 1.4);
       
       // Move model to the left while scrolling to match text on the right
-      scrollTl.to(canvasRef.current, {
-        x: "-20vw",
-        duration: 1.5, // Spans Part 1 and 2
-        ease: "none"
-      }, 0);
+      if (!isMobile) {
+        scrollTl.to(canvasRef.current, {
+          x: "-20vw",
+          duration: 1.5, // Spans Part 1 and 2
+          ease: "none"
+        }, 0);
+      }
 
       // --- PART 3: The Dive & HUD (1.5 -> 3.0) ---
       // 60 frames / 1.5 duration (Matches speed of Part 1 & 2)
@@ -252,11 +256,13 @@ export function HeroSequence() {
       scrollTl.to(progressFillRef.current, { scaleY: 1, ease: "none", duration: 1.5 }, 1.5);
       
       // Move model back to center before the zoom gets too deep
-      scrollTl.to(canvasRef.current, {
-        x: "0vw",
-        duration: 0.6,
-        ease: "power2.out"
-      }, 1.5);
+      if (!isMobile) {
+        scrollTl.to(canvasRef.current, {
+          x: "0vw",
+          duration: 0.6,
+          ease: "power2.out"
+        }, 1.5);
+      }
 
       // Reveal a single, ultra-minimal section label at the start of the dive  
       scrollTl.fromTo(diveTextRef.current,
