@@ -14,10 +14,16 @@ if (typeof window !== 'undefined') {
 const ORIGINAL_FRAME_COUNT = 120;
 const SKIP_STEP = 2; // Sample to 60 frames for performance
 const FRAME_COUNT = Math.ceil(ORIGINAL_FRAME_COUNT / SKIP_STEP);
+
+const DIVE_ORIGINAL_FRAME_COUNT = 247;
+const DIVE_SKIP_STEP = 2; // Sample to ~124 frames
+const DIVE_FRAME_COUNT = Math.ceil(DIVE_ORIGINAL_FRAME_COUNT / DIVE_SKIP_STEP);
+
+const TOTAL_FRAMES = FRAME_COUNT + DIVE_FRAME_COUNT;
 const PRIORITY_FRAMES = 5;
 
 // Pre-compute frame names at module level for performance
-const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
+const frameNamesTurn = Array.from({ length: FRAME_COUNT }, (_, i) => {
   // Reverse the sequence so we start from the side profile and end at the front view
   const reversedI = FRAME_COUNT - 1 - i;
   const originalIndex = reversedI * SKIP_STEP;
@@ -25,29 +31,52 @@ const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
   return `/images/background-remover/frame_${num}_delay-0.041s.png`;
 });
 
+const frameNamesDive = Array.from({ length: DIVE_FRAME_COUNT }, (_, i) => {
+  const originalIndex = i * DIVE_SKIP_STEP;
+  const num = String(originalIndex).padStart(3, "0");
+  return `/images/image sequence 2 processed/frame_${num}_delay-0.041s.webp`;
+});
+
+const allFrameNames = [...frameNamesTurn, ...frameNamesDive];
+
 export function HeroSequence() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const heroContentRef = useRef<HTMLDivElement>(null);
   const aboutContentRef = useRef<HTMLDivElement>(null);
+  const diveTextRef = useRef<HTMLDivElement>(null);
   const progressFillRef = useRef<HTMLDivElement>(null);
   
-  const imagesRef = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
+  const imagesRef = useRef<HTMLImageElement[]>(new Array(TOTAL_FRAMES).fill(null));
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
 
   const drawFrame = useCallback((index: number) => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-    const ctx = canvas.getContext("2d", { alpha: true });
+    const ctx = canvas.getContext("2d");
     const img = imagesRef.current[index];
     if (!ctx || !img || !img.complete) return;
 
-    // Clear previous frame
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const cw = canvas.width;
+    const ch = canvas.height;
+    const iw = img.naturalWidth;
+    const ih = img.naturalHeight;
 
-    // Draw the image directly
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+    // Cover-mode with slight over-zoom to crop out watermarks at the edges
+    const scale = Math.max(cw / iw, ch / ih) * 1.2; 
+    const sw = iw * scale;
+    const sh = ih * scale;
+    const sx = (cw - sw) / 2;
+    let sy = (ch - sh) / 2;
+
+    // Second batch (dive) adjustment: move image higher if it feels too low compared to turn sequence
+    if (index >= FRAME_COUNT) {
+      sy -= (ch * 0.15); // Precise shift up by 15% of viewport height
+    }
+
+    ctx.clearRect(0, 0, cw, ch);
+    ctx.drawImage(img, sx, sy, sw, sh);
   }, [imagesRef]);
 
   useEffect(() => {
@@ -58,14 +87,15 @@ export function HeroSequence() {
     const loadImages = async () => {
       // Priority 1: First frame immediately
       const firstImg = new Image();
-      firstImg.src = frameNames[0];
+      firstImg.src = allFrameNames[0];
       firstImg.onload = () => {
         if (!isMounted) return;
         imagesRef.current[0] = firstImg;
         // Lock internal canvas resolution to the image's native resolution exactly once
         if (canvasRef.current) {
-          canvasRef.current.width = firstImg.naturalWidth;
-          canvasRef.current.height = firstImg.naturalHeight;
+          // Set canvas to screen size so cover-mode draw works correctly
+          canvasRef.current.width = window.innerWidth;
+          canvasRef.current.height = window.innerHeight;
         }
         drawFrame(0);
       };
@@ -76,12 +106,12 @@ export function HeroSequence() {
         const img = new Image();
         img.crossOrigin = "anonymous";
         img.decoding = "async";
-        img.src = frameNames[i];
+        img.src = allFrameNames[i];
         await new Promise((resolve) => {
           img.onload = () => {
             imagesRef.current[i] = img;
             loadedCount++;
-            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+            setLoadProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
             resolve(null);
           };
           img.onerror = resolve;
@@ -92,23 +122,23 @@ export function HeroSequence() {
 
       // Priority 3: Remaining frames using requestIdleCallback to stay off the main thread
       const loadRemaining = (startIndex: number) => {
-        if (!isMounted || startIndex >= FRAME_COUNT) return;
+        if (!isMounted || startIndex >= TOTAL_FRAMES) return;
 
         const task = () => {
           const batchSize = 3;
-          const end = Math.min(startIndex + batchSize, FRAME_COUNT);
+          const end = Math.min(startIndex + batchSize, TOTAL_FRAMES);
           
           for (let i = startIndex; i < end; i++) {
             const img = new Image();
-            img.src = frameNames[i];
+            img.src = allFrameNames[i];
             img.onload = () => {
               imagesRef.current[i] = img;
               loadedCount++;
-              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+              setLoadProgress(Math.round((loadedCount / TOTAL_FRAMES) * 100));
             };
           }
           
-          if (end < FRAME_COUNT) {
+          if (end < TOTAL_FRAMES) {
             if ('requestIdleCallback' in window) {
               window.requestIdleCallback(() => loadRemaining(end));
             } else {
@@ -130,7 +160,22 @@ export function HeroSequence() {
     };
   }, [drawFrame]);
 
-  // The canvas resizing is now handled entirely by CSS object-cover so we don't need a manual window resize listener that warps the image aspect ratio.
+  // Match canvas pixel dimensions to the window — redraw current frame on resize
+  useEffect(() => {
+    const syncCanvasSize = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      // Re-draw current frame at new size
+      const frameObj = { frame: 0 }; // will re-draw whatever GSAP last set
+      drawFrame(0);
+    };
+
+    syncCanvasSize();
+    window.addEventListener('resize', syncCanvasSize, { passive: true });
+    return () => window.removeEventListener('resize', syncCanvasSize);
+  }, [drawFrame]);
 
   useEffect(() => {
     if (!isLoaded || !containerRef.current) return;
@@ -156,29 +201,70 @@ export function HeroSequence() {
       });
 
       const frameObj = { frame: 0 };
+      
+      // --- PART 1: The Turn Begins (0 -> 1.0) ---
+      // 40 frames / 1.0 duration
       scrollTl.to(frameObj, {
-        frame: FRAME_COUNT - 1,
-        snap: "frame",
+        frame: 40,
         ease: "none",
-        duration: 1,
+        duration: 1.0,
         onUpdate: () => drawFrame(Math.round(frameObj.frame))
       }, 0);
-
-      scrollTl.to(progressFillRef.current, { scaleY: 1, ease: "none" }, 0);
-      scrollTl.to(heroContentRef.current, { opacity: 0, y: -100, duration: 0.2 }, 0.2);
       
-      // Move 3D model from right to left
-      scrollTl.to(canvasRef.current, {
-        x: "-38vw",
-        duration: 0.8,
-        ease: "power1.inOut"
-      }, 0.1);
+      scrollTl.to(progressFillRef.current, { scaleY: 0.33, ease: "none", duration: 1.0 }, 0);
+      scrollTl.to(heroContentRef.current, { opacity: 0, y: -100, duration: 0.3 }, 0.7); 
+      
+      // Start model on the right
+      gsap.set(canvasRef.current, { x: "20vw" });
 
+      // --- PART 2: Elevating Brands (1.0 -> 1.5) ---
+      // 20 frames / 0.5 duration (Matches speed of Part 1)
+      scrollTl.to(frameObj, {
+        frame: FRAME_COUNT - 1, // 59
+        ease: "none",
+        duration: 0.5,
+        onUpdate: () => drawFrame(Math.round(frameObj.frame))
+      }, 1.0);
+      
+      scrollTl.to(progressFillRef.current, { scaleY: 0.66, ease: "none", duration: 0.5 }, 1.0);
       scrollTl.fromTo(aboutContentRef.current, 
         { opacity: 0, y: 100 },
-        { opacity: 1, y: 0, duration: 0.3 }, 
-        0.4
+        { opacity: 1, y: 0, duration: 0.2 }, 1.05
       );
+      scrollTl.to(aboutContentRef.current, { opacity: 0, y: -100, duration: 0.2 }, 1.4);
+      
+      // Move model to the left while scrolling to match text on the right
+      scrollTl.to(canvasRef.current, {
+        x: "-20vw",
+        duration: 1.5, // Spans Part 1 and 2
+        ease: "none"
+      }, 0);
+
+      // --- PART 3: The Dive & HUD (1.5 -> 3.0) ---
+      // 60 frames / 1.5 duration (Matches speed of Part 1 & 2)
+      scrollTl.to(frameObj, {
+        frame: TOTAL_FRAMES - 1,
+        ease: "none",
+        duration: 1.5,
+        onUpdate: () => drawFrame(Math.round(frameObj.frame))
+      }, 1.5);
+      
+      scrollTl.to(progressFillRef.current, { scaleY: 1, ease: "none", duration: 1.5 }, 1.5);
+      
+      // Move model back to center before the zoom gets too deep
+      scrollTl.to(canvasRef.current, {
+        x: "0vw",
+        duration: 0.6,
+        ease: "power2.out"
+      }, 1.5);
+
+      // Reveal a single, ultra-minimal section label at the start of the dive  
+      scrollTl.fromTo(diveTextRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.2, ease: "power2.out" },
+        1.7
+      );
+      scrollTl.to(diveTextRef.current, { opacity: 0, duration: 0.2, ease: "power2.in" }, 2.3);
 
     }, containerRef);
 
@@ -186,16 +272,16 @@ export function HeroSequence() {
   }, [isLoaded, drawFrame]);
 
   return (
-    <div ref={containerRef} className="hero-sequence-container" style={{ height: "500vh" }}>
-      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-background">
+    <div ref={containerRef} className="hero-sequence-container" style={{ height: "1200vh" }}>
+      <div className="hero-sequence-pinned h-screen w-full sticky top-0 overflow-hidden bg-background perspective-[1000px]">
         
-        {/* Background & Canvas (Merged Layout) */}
-        <div className="absolute inset-0 w-full h-full z-0 overflow-hidden bg-background">
-          <canvas ref={canvasRef} className="absolute top-1/2 left-1/2 md:left-[68%] -translate-x-1/2 -translate-y-1/2 max-w-none w-auto h-auto object-none pointer-events-none scale-[0.8] md:scale-100" />
-          <div className="hero-sequence-overlay absolute inset-0 z-[1] pointer-events-none bg-transparent" />
-        </div>
+        {/* Canvas covers 100% of screen via JS cover-mode draw */}
+        <canvas 
+          ref={canvasRef} 
+          className="absolute inset-0 w-full h-full pointer-events-none" 
+        />
 
-        <div className="hero-sequence-vignette absolute inset-0 z-[3] dark:shadow-[inset_0_0_150px_60px_rgba(0,0,0,0.8)] pointer-events-none hidden md:block" />
+
         <div className="hero-sequence-grain absolute inset-0 z-[4] opacity-[0.03] pointer-events-none bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
 
         {/* Progress bar - hidden on mobile */}
@@ -239,45 +325,22 @@ export function HeroSequence() {
           </div>
         </div>
 
-        {/* Bottom Feature Bar */}
-        <div className="absolute bottom-0 left-0 w-full z-30 flex gap-6 px-6 sm:px-12 md:px-16 lg:px-24 py-6 md:py-8 items-center bg-gradient-to-t from-background via-background/90 to-transparent border-t border-foreground/5 backdrop-blur-sm">
-          <div className="flex items-center gap-4 cursor-pointer group shrink-0">
-             <div className="w-10 h-10 rounded-full bg-foreground/10 flex items-center justify-center group-hover:bg-foreground transition-colors">
-                <svg className="w-4 h-4 text-foreground group-hover:text-background translate-x-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-             </div>
-             <span className="text-[10px] font-bold tracking-widest text-foreground uppercase hidden sm:block">Play Trailer</span>
-          </div>
 
-          <div className="flex-1 hidden lg:flex items-center gap-8 xl:gap-12 ml-6 xl:ml-16">
-            <div className="flex items-center gap-3 max-w-[220px]">
-              <div className="w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center shrink-0">
-                 <span className="text-[10px] text-foreground">1</span>
-              </div>
-              <p className="text-[9px] text-foreground/50 leading-relaxed font-bold">To deliver innovative digital solutions, empowering businesses to excel and adapt.</p>
-            </div>
-            <div className="flex items-center gap-3 max-w-[220px]">
-              <div className="w-6 h-6 rounded-full bg-foreground/10 flex items-center justify-center shrink-0">
-                 <span className="text-[10px] text-foreground">2</span>
-              </div>
-              <p className="text-[9px] text-foreground/50 leading-relaxed font-bold">To be a global leader in digital innovation, transforming technology into seamless experiences.</p>
-            </div>
-          </div>
 
-          <div className="flex items-center gap-3 sm:gap-4 ml-auto shrink-0 relative z-50">
-             <a href="#" className="w-10 h-10 rounded-full bg-foreground/5 border border-foreground/20 flex items-center justify-center hover:bg-foreground hover:text-background transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] text-foreground"><span className="text-[10px] font-bold uppercase tracking-widest">in</span></a>
-             <a href="#" className="w-10 h-10 rounded-full bg-foreground/5 border border-foreground/20 flex items-center justify-center hover:bg-foreground hover:text-background transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] text-foreground"><span className="text-[10px] font-bold uppercase tracking-widest">ig</span></a>
-             <a href="#" className="w-10 h-10 rounded-full bg-foreground/5 border border-foreground/20 flex items-center justify-center hover:bg-foreground hover:text-background transition-all duration-300 transform hover:scale-110 shadow-[0_0_15px_rgba(0,0,0,0.05)] dark:shadow-[0_0_15px_rgba(255,255,255,0.05)] text-foreground"><span className="text-[10px] font-bold uppercase tracking-widest">x</span></a>
-          </div>
+        {/* Part 3: Single ultra-minimal section label — the dive breathes on its own */}
+        <div ref={diveTextRef} className="absolute bottom-10 left-1/2 -translate-x-1/2 z-[15] flex flex-col items-center gap-3 pointer-events-none opacity-0">
+          <div className="h-[1px] w-12 bg-white/40" />
+          <p className="text-white/60 font-mono text-[9px] tracking-[0.5em] uppercase">03 — Enter the World</p>
         </div>
 
-        {/* About Section (Right Alignment with Image on Left) */}
+        {/* Part 2: About Section (Right Alignment with Image on Left) */}
         <div ref={aboutContentRef} className="absolute inset-0 z-10 opacity-0 pointer-events-none flex flex-col justify-center px-6 sm:px-12 md:px-16 lg:px-24 text-right items-end">
           <div className="w-16 md:w-24 h-[1px] bg-lime/40 mb-8 md:mb-12" />
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-light text-foreground max-w-5xl leading-[1.1] tracking-tight select-none mb-4 md:mb-6">
             <span className="about-title-line block">Elevating Brands.</span>
             <span className="about-title-line block text-foreground/40">Solving Challenges.</span>
           </h2>
-          <p className="mt-6 md:mt-10 text-foreground/60 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase pl-4 md:pl-8 about-description">
+          <p className="mt-6 md:mt-10 text-foreground/60 max-w-xl md:max-w-3xl text-sm md:text-lg lg:text-xl leading-relaxed font-light lowercase pr-4 about-description">
             Technology should make people’s work easier, safer and more meaningful. We are a multidisciplinary team focused on solving real-world challenges through long-term partnerships and people-centric design.
           </p>
           <div className="mt-10 md:mt-14 lg:mt-16 flex flex-wrap justify-end gap-10 sm:gap-12 md:gap-16 lg:gap-24">

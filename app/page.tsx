@@ -65,6 +65,11 @@ const Contact = dynamic(
   { loading: () => <SectionSkeleton height="h-96" />, ssr: true }
 );
 
+const HorizontalWords = dynamic(
+  () => import("@/src/sections/HorizontalWords").then(m => ({ default: m.default })),
+  { loading: () => <SectionSkeleton height="h-screen" />, ssr: true }
+);
+
 const Footer = dynamic(
   () => import("@/src/sections/Footer").then(m => ({ default: m.Footer })),
   { loading: () => <SectionSkeleton height="h-24" bg="bg-secondary/30" />, ssr: true }
@@ -123,12 +128,13 @@ export default function Home() {
       <Navbar />
       <main id="main-content" className="min-h-screen bg-background transition-colors duration-500">
         <HeroSequence />
+        <HorizontalWords />
+        <Process />
         <LogoMarquee />
         <Services />
         <TextMarquee />
         <Team />
         <Tools />
-        <Process />
         <Testimonials />
         <Stats />
         <TrustedBrands />
