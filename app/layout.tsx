@@ -140,6 +140,8 @@ const jsonLd = {
   ]
 };
 
+import { SmoothScroll } from "@/src/components/SmoothScroll";
+
 export default function RootLayout({
   children,
 }: {
@@ -184,8 +186,10 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <PageLoader />
-          <ErrorBoundary>{children}</ErrorBoundary>
+          <SmoothScroll>
+            <PageLoader />
+            <ErrorBoundary>{children}</ErrorBoundary>
+          </SmoothScroll>
         </ThemeProvider>
       </body>
     </html>
