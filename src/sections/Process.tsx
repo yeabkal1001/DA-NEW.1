@@ -1,15 +1,11 @@
 'use client';
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { MotionPathPlugin } from "gsap/MotionPathPlugin";
-
-// The exact path data used by both the visible dashed trail and the arrow
-const MOTION_PATH = "M 1050 250 C 900 350, 500 450, 310 620 C 200 720, 250 780, 400 830 C 600 900, 900 950, 1050 1050 C 900 1150, 500 1250, 350 1450";
 
 if (typeof window !== 'undefined') {
-  gsap.registerPlugin(ScrollTrigger, MotionPathPlugin);
+  gsap.registerPlugin(ScrollTrigger);
 }
 
 const processSteps = [
@@ -41,38 +37,131 @@ const processSteps = [
 
 const BETWEEN_TEXT = "From the first conversation to the final launch, we carefully design, develop, and refine every detail to ensure the result is not only visually engaging but also effective and impactful for your audience.";
 
+// Canvas Sequence Setup
+const ORIGINAL_FRAME_COUNT = 192;
+const SKIP_STEP = 1; // Use all frames for maximum smoothness
+const FRAME_COUNT = Math.ceil(ORIGINAL_FRAME_COUNT / SKIP_STEP);
+const PRIORITY_FRAMES = 5;
+
+const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
+  const originalIndex = i * SKIP_STEP;
+  const num = String(originalIndex).padStart(3, "0");
+  return `/images/Assembly/frame_${num}_delay-0.041s.webp`;
+});
+
 export function Process() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const pathRef = useRef<SVGPathElement>(null);
-  const arrowRef = useRef<SVGGElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const imagesRef = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
+  
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
+
+  const drawFrame = useCallback((index: number) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: true });
+    const img = imagesRef.current[index];
+    if (!ctx || !img || !img.complete) return;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+  }, []);
+
+  useEffect(() => {
+    let loadedCount = 0;
+    let isMounted = true;
+
+    const loadImages = async () => {
+      // First frame immediately
+      const firstImg = new Image();
+      firstImg.src = frameNames[0];
+      firstImg.onload = () => {
+        if (!isMounted) return;
+        imagesRef.current[0] = firstImg;
+        if (canvasRef.current) {
+          canvasRef.current.width = firstImg.naturalWidth;
+          canvasRef.current.height = firstImg.naturalHeight;
+        }
+        drawFrame(0);
+      };
+
+      // Priority block
+      for (let i = 0; i < PRIORITY_FRAMES; i++) {
+        if (!isMounted) return;
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        img.decoding = "async";
+        img.src = frameNames[i];
+        await new Promise((resolve) => {
+          img.onload = () => {
+            imagesRef.current[i] = img;
+            loadedCount++;
+            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+            resolve(null);
+          };
+          img.onerror = resolve;
+        });
+      }
+
+      setIsLoaded(true);
+
+      // Remaining frames
+      const loadRemaining = (startIndex: number) => {
+        if (!isMounted || startIndex >= FRAME_COUNT) return;
+
+        const task = () => {
+          const batchSize = 3;
+          const end = Math.min(startIndex + batchSize, FRAME_COUNT);
+          
+          for (let i = startIndex; i < end; i++) {
+            const img = new Image();
+            img.src = frameNames[i];
+            img.onload = () => {
+              imagesRef.current[i] = img;
+              loadedCount++;
+              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+            };
+          }
+          
+          if (end < FRAME_COUNT) {
+            if ('requestIdleCallback' in window) {
+              window.requestIdleCallback(() => loadRemaining(end));
+            } else {
+              setTimeout(() => loadRemaining(end), 100);
+            }
+          }
+        };
+
+        task();
+      };
+
+      loadRemaining(PRIORITY_FRAMES);
+    };
+
+    loadImages();
+    return () => { isMounted = false; };
+  }, [drawFrame]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     const ctx = gsap.context(() => {
-      // Arrow follows the dotted path on scroll — desktop only
-      if (pathRef.current && arrowRef.current && window.innerWidth >= 768) {
-        gsap.set(arrowRef.current, {
-          opacity: 1,
-          scale: 1,
-        });
-
-        gsap.to(arrowRef.current, {
-          motionPath: {
-            path: "#process-motion-path",
-            align: "#process-motion-path",
-            alignOrigin: [0.5, 0.5],
-            autoRotate: true,
-            start: 0,
-            end: 1,
-          },
+      // Canvas Sequence ScrollTrigger
+      if (isLoaded && canvasRef.current) {
+        const frameObj = { frame: 0 };
+        gsap.to(frameObj, {
+          frame: FRAME_COUNT - 1,
+          snap: "frame",
           ease: "none",
           scrollTrigger: {
             trigger: ".process-grid-container",
-            start: "top 70%",
-            end: "bottom 30%",
+            start: "top top",
+            end: "bottom bottom",
             scrub: 0.5,
+            pin: ".canvas-wrapper",
           },
+          onUpdate: () => drawFrame(Math.round(frameObj.frame))
         });
       }
 
@@ -122,7 +211,7 @@ export function Process() {
 
     }, containerRef);
     return () => ctx.revert();
-  }, []);
+  }, [isLoaded, drawFrame]);
 
   return (
     <section ref={containerRef} className="py-16 md:py-32 bg-background relative overflow-hidden">
@@ -131,7 +220,7 @@ export function Process() {
         {/* Header */}
         <div className="process-header mb-10 md:mb-16 text-center px-4">
           <h2 className="process-header-text text-3xl sm:text-4xl md:text-5xl lg:text-7xl xl:text-8xl font-black leading-[0.9] text-foreground tracking-tight">
-            How <span className="text-lime italic">We Bring Ideas</span>
+            How <span className="text-foreground dark:text-lime italic">We Bring Ideas</span>
             <br />
             to Life, Turning Vision
           </h2>
@@ -158,33 +247,20 @@ export function Process() {
             <div className="diagonal-band-3 absolute top-[85%] left-[-20%] w-[160%] h-[70px] bg-lime -rotate-[8deg] opacity-90" />
           </div>
 
-          {/* SVG — Dotted Path + Arrow (both inside same SVG so coordinates match exactly) */}
-          <svg className="absolute inset-0 w-full h-full pointer-events-none z-[5]" viewBox="0 0 1400 1900" preserveAspectRatio="xMidYMid meet">
-            <defs>
-              <filter id="arrow-glow" x="-50%" y="-50%" width="200%" height="200%">
-                <feDropShadow dx="0" dy="2" stdDeviation="3" floodOpacity="0.3" />
-              </filter>
-            </defs>
-
-            {/* The visible dashed trail */}
-            <path
-              ref={pathRef}
-              id="process-motion-path"
-              d={MOTION_PATH}
-              fill="none"
-              stroke="currentColor"
-              className="text-foreground/15"
-              strokeWidth="2"
-              strokeDasharray="10 14"
-              strokeLinecap="round"
+          {/* GSAP Pinned Canvas Sequence */}
+          <div className="canvas-wrapper absolute top-0 left-0 h-screen w-full pointer-events-none z-[5] flex items-center justify-center"
+               style={{ WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)", maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)" }}>
+            {/* Loader shown if images are not ready */}
+            {!isLoaded && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <p className="text-lime font-mono text-[9px] tracking-[0.4em]">{loadProgress}% CACHING ASSETS</p>
+              </div>
+            )}
+            <canvas 
+              ref={canvasRef} 
+              className={`max-w-none w-auto h-[120%] lg:h-[150%] object-contain drop-shadow-2xl transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
             />
-
-            {/* Arrow that travels along the path */}
-            <g ref={arrowRef} className="opacity-0">
-              <polygon points="-12,-8 12,0 -12,8 -6,0" fill="currentColor" className="text-foreground" filter="url(#arrow-glow)" />
-              <polygon points="-10,-6 10,0 -10,6 -5,0" fill="currentColor" className="text-background" />
-            </g>
-          </svg>
+          </div>
 
           {/* ─── Card 1 — Discover & Understand (top-right) ─── */}
           <div
@@ -272,7 +348,7 @@ function NotebookCard({ step }: { step: typeof processSteps[0] }) {
         {/* White inner content area */}
         <div className="bg-background rounded-[20px] mx-3 mb-3 shadow-[0px_4px_4px_0px_rgba(0,0,0,0.05)] overflow-hidden">
           <div className="p-7 pt-8 pb-8 min-h-[280px] flex flex-col">
-            <h3 className="text-[48px] lg:text-[58px] font-extrabold text-lime leading-[0.88] tracking-tight whitespace-pre-line mb-5 group-hover:scale-[1.02] transition-transform duration-300 origin-left">
+            <h3 className="text-[48px] lg:text-[58px] font-extrabold text-foreground dark:text-lime leading-[0.88] tracking-tight whitespace-pre-line mb-5 group-hover:scale-[1.02] transition-transform duration-300 origin-left">
               {step.title}
             </h3>
 
@@ -305,7 +381,7 @@ function NotebookCardMobile({ step }: { step: typeof processSteps[0] }) {
         {/* White inner */}
         <div className="bg-background rounded-[14px] mx-2.5 mb-2.5 shadow overflow-hidden">
           <div className="p-5 pt-5 pb-6 min-h-[180px] flex flex-col">
-            <h3 className="text-3xl sm:text-4xl font-extrabold text-lime leading-[0.88] tracking-tight whitespace-pre-line mb-4">
+            <h3 className="text-3xl sm:text-4xl font-extrabold text-foreground dark:text-lime leading-[0.88] tracking-tight whitespace-pre-line mb-4">
               {step.title}
             </h3>
             <p className="text-foreground text-sm leading-relaxed font-normal mt-auto">

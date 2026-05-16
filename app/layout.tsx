@@ -1,21 +1,16 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { Plus_Jakarta_Sans } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import localFont from "next/font/local";
 import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 import { PageLoader } from "@/src/components/PageLoader";
 import { ThemeProvider } from "@/src/components/theme-provider";
 import { cn } from "@/src/lib/utils";
 
-const sans = Plus_Jakarta_Sans({ 
+const sans = Space_Grotesk({ 
   subsets: ["latin"], 
   variable: "--font-sans",
   display: "swap"
-});
-
-const moonWalk = localFont({
-  src: "../public/fonts/Moon Walk Font/Moon Walk.otf",
-  variable: "--font-moonwalk",
 });
 
 // Enhanced SEO metadata for the entire site
@@ -182,7 +177,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className={cn("antialiased", sans.variable, moonWalk.variable)} suppressHydrationWarning={true}>
+      <body className={cn("antialiased", sans.variable)} suppressHydrationWarning={true}>
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

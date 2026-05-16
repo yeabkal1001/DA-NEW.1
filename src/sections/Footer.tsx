@@ -46,7 +46,7 @@ export function Footer() {
                   key={index}
                   href={social.href}
                   aria-label={social.label}
-                  className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-foreground/10 flex items-center justify-center hover:border-lime hover:text-lime transition-colors"
+                  className="w-9 h-9 md:w-10 md:h-10 rounded-full border border-foreground/10 flex items-center justify-center hover:border-foreground dark:hover:border-lime hover:text-foreground dark:hover:text-lime transition-colors"
                 >
                   <social.icon className="h-3.5 w-3.5 md:h-4 md:w-4" />
                 </a>
@@ -64,7 +64,7 @@ export function Footer() {
                 <li key={index}>
                   <Link
                     href={item.href}
-                    className="text-muted-foreground hover:text-lime transition-colors text-xs md:text-sm"
+                    className="text-muted-foreground hover:text-foreground dark:hover:text-lime transition-colors text-xs md:text-sm"
                   >
                     {item.label}
                   </Link>
@@ -83,7 +83,7 @@ export function Footer() {
                 <li key={index}>
                   <Link
                     href={item.href}
-                    className="text-muted-foreground hover:text-lime transition-colors text-xs md:text-sm"
+                    className="text-muted-foreground hover:text-foreground dark:hover:text-lime transition-colors text-xs md:text-sm"
                   >
                     {item.label}
                   </Link>
@@ -103,7 +103,7 @@ export function Footer() {
               <p className="pt-1 md:pt-2">
                 <a
                   href="mailto:support@digital-addis.com"
-                  className="text-lime hover:underline break-all"
+                  className="text-foreground dark:text-lime hover:underline break-all"
                 >
                   support@digital-addis.com
                 </a>

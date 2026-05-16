@@ -57,10 +57,9 @@ export function Tools() {
         <ScrollReveal className="mb-8 md:mb-16">
           <h2 
             className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-4 text-foreground leading-[0.9] uppercase tracking-widest"
-            style={{ fontFamily: 'var(--font-moonwalk)' }}
           >
             The Tools Powering Our<br />
-            <span className="text-lime">Digital</span>{" "}
+            <span className="text-foreground dark:text-lime">Digital</span>{" "}
             <span className="bg-lime px-4 py-1 md:py-2 rounded-full inline-block text-black mt-2">
               Innovation
             </span>
@@ -90,7 +89,6 @@ export function Tools() {
           <ScrollReveal className="bg-foreground text-background rounded-2xl md:rounded-3xl p-8 md:p-12 flex flex-col justify-between">
             <h3 
                className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-8 md:mb-12 leading-[0.9] uppercase tracking-widest"
-               style={{ fontFamily: 'var(--font-moonwalk)' }}
             >
               Together,<br />
               We Achieve<br />
@@ -106,7 +104,6 @@ export function Tools() {
           <div className="bg-lime rounded-2xl md:rounded-3xl p-6 md:p-8">
             <p 
                className="text-2xl md:text-3xl lg:text-4xl mb-6 md:mb-8 text-black uppercase tracking-widest leading-none"
-               style={{ fontFamily: 'var(--font-moonwalk)' }}
             >
               #tools we use
             </p>

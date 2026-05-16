@@ -87,7 +87,7 @@ export function Testimonials() {
           <div className="flex items-start justify-between flex-wrap gap-4">
             <div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground">
-                What Our <span className="text-lime">Clients</span>
+                What Our <span className="text-foreground dark:text-lime">Clients</span>
                 <br />
                 Say About Us
               </h2>

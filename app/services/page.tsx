@@ -209,28 +209,28 @@ export default function ServicesPage() {
                 <div className={`${service.color} rounded-[1.5rem] md:rounded-[2.5rem] lg:rounded-[3rem] p-6 md:p-12 lg:p-16 xl:p-20 group hover:shadow-2xl hover:-translate-y-1 transition-all duration-500`}>
                   <div className="grid lg:grid-cols-2 gap-6 md:gap-10 items-center">
                     <div>
-                      <div className={`w-12 md:w-16 h-12 md:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 ${service.color === 'bg-lime' ? 'bg-black' : service.color === 'bg-foreground' ? 'bg-lime' : 'bg-foreground'}`}>
-                        <service.icon className={`w-6 md:w-8 h-6 md:h-8 ${service.color === 'bg-lime' ? 'text-lime' : service.color === 'bg-foreground' ? 'text-background' : 'text-foreground'}`} />
+                      <div className={`w-12 md:w-16 h-12 md:h-16 rounded-xl md:rounded-2xl flex items-center justify-center mb-4 md:mb-6 ${service.color === 'bg-lime' ? 'bg-black' : service.color === 'bg-foreground' ? 'bg-lime dark:bg-background' : 'bg-foreground/10'}`}>
+                        <service.icon className={`w-6 md:w-8 h-6 md:h-8 ${service.color === 'bg-lime' ? 'text-lime' : service.color === 'bg-foreground' ? 'text-black dark:text-lime' : 'text-foreground'}`} />
                       </div>
-                      <p className={`text-xs md:text-sm font-bold uppercase tracking-wider mb-1 md:mb-2 ${service.textColor === 'text-background' ? 'text-background/40' : 'text-foreground/40'}`}>
+                      <p className={`text-xs md:text-sm font-bold uppercase tracking-wider mb-1 md:mb-2 ${service.color === 'bg-lime' ? 'text-black/50' : service.textColor === 'text-background' ? 'text-background/60' : 'text-foreground/40'}`}>
                         {service.tagline}
                       </p>
                       <h3 className={`text-xl sm:text-2xl md:text-2xl lg:text-4xl xl:text-5xl font-black uppercase tracking-tight mb-3 md:mb-4 ${service.textColor}`}>
                         {service.title}
                       </h3>
-                      <p className={`text-base md:text-lg leading-relaxed ${service.textColor === 'text-background' ? 'text-background/60' : 'text-foreground/60'}`}>
+                      <p className={`text-base md:text-lg leading-relaxed ${service.color === 'bg-lime' ? 'text-black/70' : service.textColor === 'text-background' ? 'text-background/80' : 'text-foreground/60'}`}>
                         {service.description}
                       </p>
                     </div>
                     <div>
-                      <div className={`rounded-xl md:rounded-2xl p-4 md:p-6 ${service.color === 'bg-lime' ? 'bg-foreground/5' : service.color === 'bg-foreground' ? 'bg-background/5' : 'bg-foreground/5'}`}>
-                        <p className={`text-[10px] md:text-xs font-black uppercase tracking-widest mb-3 md:mb-4 ${service.textColor === 'text-background' ? 'text-background/40' : 'text-foreground/40'}`}>
+                      <div className={`rounded-xl md:rounded-2xl p-4 md:p-6 ${service.color === 'bg-lime' ? 'bg-black/5' : service.color === 'bg-foreground' ? 'bg-background/5' : 'bg-foreground/5'}`}>
+                        <p className={`text-[10px] md:text-xs font-black uppercase tracking-widest mb-3 md:mb-4 ${service.color === 'bg-lime' ? 'text-black/50' : service.textColor === 'text-background' ? 'text-background/60' : 'text-foreground/40'}`}>
                           Key Capabilities
                         </p>
                         <ul className="space-y-2 md:space-y-3">
                           {service.features.map((feature, i) => (
                             <li key={i} className={`flex items-center gap-2 md:gap-3 ${service.textColor}`}>
-                              <CheckCircle2 className={`w-4 md:w-5 h-4 md:h-5 flex-shrink-0 ${service.color === 'bg-foreground' ? 'text-lime' : 'text-foreground'}`} />
+                              <CheckCircle2 className={`w-4 md:w-5 h-4 md:h-5 flex-shrink-0 ${service.color === 'bg-lime' ? 'text-black' : service.color === 'bg-foreground' ? 'text-lime dark:text-background' : 'text-foreground'}`} />
                               <span className="font-medium text-sm md:text-base">{feature}</span>
                             </li>
                           ))}

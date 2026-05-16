@@ -395,11 +395,11 @@ export default function ProjectDetailPage() {
         <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-lime">
           <div className="max-w-4xl mx-auto text-center">
             <ScrollReveal>
-              <blockquote className="text-2xl md:text-3xl lg:text-4xl font-black leading-tight mb-8">
+              <blockquote className="text-2xl md:text-3xl lg:text-4xl font-black leading-tight mb-8 text-black">
                 "{project.testimonial.quote}"
               </blockquote>
               <div>
-                <p className="font-bold text-lg">{project.testimonial.author}</p>
+                <p className="font-bold text-lg text-black">{project.testimonial.author}</p>
                 <p className="text-black/60">{project.testimonial.role}</p>
               </div>
             </ScrollReveal>

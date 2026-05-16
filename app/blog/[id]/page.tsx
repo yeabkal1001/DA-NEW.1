@@ -374,22 +374,22 @@ export default function BlogPostPage() {
       </section>
 
       {/* Newsletter CTA */}
-      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-foreground text-background">
+      <section className="py-20 md:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-black text-white">
         <div className="max-w-3xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-[2rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6">
+            <h2 className="text-[2rem] md:text-[3.5rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-6 text-white">
               Stay <span className="text-lime italic">Updated</span>
             </h2>
-            <p className="text-background/50 text-lg mb-10 max-w-xl mx-auto">
+            <p className="text-white/50 text-lg mb-10 max-w-xl mx-auto">
               Subscribe to our newsletter for the latest insights on technology, design, and digital transformation.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
               <input
                 type="email"
                 placeholder="Enter your email"
-                className="flex-1 bg-background/10 border border-background/10 rounded-full py-4 px-6 text-background placeholder:text-background/30 focus:outline-none focus:border-lime/50 transition-colors"
+                className="flex-1 bg-white/10 border border-white/10 rounded-full py-4 px-6 text-white placeholder:text-white/30 focus:outline-none focus:border-lime/50 transition-colors"
               />
-              <button className="bg-lime text-black px-8 py-4 rounded-full text-sm font-black uppercase tracking-wider hover:bg-background hover:text-foreground transition-colors">
+              <button className="bg-lime text-black px-8 py-4 rounded-full text-sm font-black uppercase tracking-wider hover:bg-white hover:text-black transition-colors">
                 Subscribe
               </button>
             </div>

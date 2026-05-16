@@ -38,7 +38,7 @@ export function Team() {
               Minds <br className="hidden sm:block" />
               Behind <br className="hidden sm:block" />
               The <br className="hidden sm:block" />
-              <span className="text-lime italic">Innovation</span>
+              <span className="text-foreground dark:text-lime italic">Innovation</span>
             </h2>
             <p className="team-reveal text-muted-foreground text-sm md:text-base leading-relaxed max-w-sm font-medium">
               Our team is a diverse group of visionary designers, innovative developers, and strategic thinkers, united by a shared passion for creating bold digital experiences.
@@ -56,9 +56,9 @@ export function Team() {
               </div>
               
               <div className="team-reveal h-[180px] md:h-[220px] bg-lime rounded-[1.5rem] md:rounded-[2rem] p-5 md:p-6 flex flex-col justify-end relative overflow-hidden group">
-                <div className="absolute top-[-15px] right-[-15px] w-20 md:w-24 h-20 md:h-24 bg-foreground/5 rounded-full scale-150 group-hover:scale-125 transition-transform duration-700" />
-                <h3 className="text-2xl md:text-3xl font-black text-foreground uppercase leading-[0.9] mb-2 md:mb-3">Our <br />Vision</h3>
-                <p className="text-foreground/60 text-xs font-bold max-w-xs leading-[1.1]">
+                <div className="absolute top-[-15px] right-[-15px] w-20 md:w-24 h-20 md:h-24 bg-black/10 rounded-full scale-150 group-hover:scale-125 transition-transform duration-700" />
+                <h3 className="text-2xl md:text-3xl font-black text-black uppercase leading-[0.9] mb-2 md:mb-3">Our <br />Vision</h3>
+                <p className="text-black/80 text-xs font-bold max-w-xs leading-[1.1]">
                   We aim to craft digital experiences that inspire, innovate, and push the boundaries of creativity.
                 </p>
               </div>
@@ -67,9 +67,9 @@ export function Team() {
             {/* Column 2: Green Process + Secondary Team Member */}
             <div className="sm:col-span-1 md:col-span-4 flex flex-col gap-3 md:gap-4 md:-translate-y-4">
               <div className="team-reveal h-[200px] md:h-[280px] bg-lime rounded-[1.5rem] md:rounded-[2rem] p-6 md:p-8 flex flex-col relative overflow-hidden group">
-                <div className="absolute top-[-20px] right-[-20px] w-20 md:w-24 h-20 md:h-24 bg-foreground/5 rounded-full group-hover:scale-150 transition-transform duration-700" />
-                <h3 className="text-2xl md:text-3xl font-black text-foreground uppercase leading-[0.9] mb-3 md:mb-4">Our <br />Process</h3>
-                <p className="text-foreground/60 text-xs font-bold leading-[1.1]">
+                <div className="absolute top-[-20px] right-[-20px] w-20 md:w-24 h-20 md:h-24 bg-black/10 rounded-full group-hover:scale-150 transition-transform duration-700" />
+                <h3 className="text-2xl md:text-3xl font-black text-black uppercase leading-[0.9] mb-3 md:mb-4">Our <br />Process</h3>
+                <p className="text-black/80 text-xs font-bold leading-[1.1]">
                   From concept to execution, our process blends strategic design, cutting-edge technology, and creative thinking.
                 </p>
               </div>

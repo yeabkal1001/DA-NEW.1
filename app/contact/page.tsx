@@ -156,11 +156,11 @@ export default function ContactPage() {
                   </p>
                   
                   <div className="bg-lime rounded-xl md:rounded-2xl p-5 md:p-8 group hover:shadow-2xl hover:-translate-y-1 transition-all duration-300">
-                    <p className="font-black text-sm md:text-base mb-2 md:mb-3 uppercase tracking-tight">Prefer a quick chat?</p>
+                    <p className="font-black text-sm md:text-base mb-2 md:mb-3 uppercase tracking-tight text-black">Prefer a quick chat?</p>
                     <p className="text-black/70 text-xs md:text-sm mb-4 md:mb-6 leading-relaxed">
                       Schedule a free 30-minute consultation call with our team.
                     </p>
-                    <button className="w-full bg-black text-white py-3 md:py-4 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-black/80 transition-all">
+                    <button className="w-full bg-black text-lime py-3 md:py-4 rounded-full font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-white hover:text-black transition-all">
                       Book a Call
                     </button>
                   </div>

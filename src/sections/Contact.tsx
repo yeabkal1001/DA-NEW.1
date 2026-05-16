@@ -80,21 +80,21 @@ export function Contact() {
           <div className="lg:col-span-5 h-full">
             <ScrollReveal className="h-full">
               <div className="bg-primary rounded-[2rem] md:rounded-[3rem] p-8 md:p-12 lg:p-16 h-full flex flex-col justify-between relative overflow-hidden group shadow-2xl shadow-primary/20 min-h-[280px] md:min-h-0">
-                <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-primary-foreground/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute top-0 right-0 w-48 md:w-64 h-48 md:h-64 bg-black/10 rounded-full blur-[60px] -translate-y-1/2 translate-x-1/2" />
                 
                 <div className="relative z-10">
-                  <div className="w-12 h-12 md:w-16 md:h-16 bg-foreground rounded-full flex items-center justify-center mb-6 md:mb-10 group-hover:rotate-45 transition-transform duration-500">
+                  <div className="w-12 h-12 md:w-16 md:h-16 bg-black rounded-full flex items-center justify-center mb-6 md:mb-10 group-hover:rotate-45 transition-transform duration-500">
                      <ArrowUpRight className="text-primary w-6 h-6 md:w-8 md:h-8" />
                   </div>
-                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.2rem] font-[1001] text-primary-foreground uppercase leading-[1] mb-6 md:mb-8 tracking-tighter">
+                  <h3 className="text-2xl sm:text-3xl md:text-4xl lg:text-[3.2rem] font-[1001] text-black uppercase leading-[1] mb-6 md:mb-8 tracking-tighter">
                     Partner with Digital Addis and turn your vision into a successful digital solution.
                   </h3>
                 </div>
 
                 <div className="relative z-10 mt-8 md:mt-12 pt-6 md:pt-12 border-t border-black/10">
                   <div className="flex items-center gap-3 md:gap-4">
-                     <div className="w-10 h-10 md:w-12 md:h-12 bg-foreground/5 rounded-full flex items-center justify-center font-black text-sm md:text-base">@</div>
-                     <p className="text-primary-foreground font-black uppercase tracking-wider md:tracking-widest text-xs md:text-sm">support@digital-addis.com</p>
+                     <div className="w-10 h-10 md:w-12 md:h-12 bg-black/10 text-black rounded-full flex items-center justify-center font-black text-sm md:text-base">@</div>
+                     <p className="text-black font-black uppercase tracking-wider md:tracking-widest text-xs md:text-sm">support@digital-addis.com</p>
                   </div>
                 </div>
               </div>
@@ -129,7 +129,7 @@ export function Contact() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6 mb-4 md:mb-6">
                   <div className="relative group">
-                    <Phone className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                    <Phone className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-foreground dark:group-focus-within:text-lime transition-colors" />
                     <Input
                       placeholder="PHONE NUMBER"
                       className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-background border-black/10 dark:border-white/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase text-foreground dark:text-white"
@@ -138,7 +138,7 @@ export function Contact() {
                     />
                   </div>
                   <div className="relative group">
-                    <Building className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                    <Building className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-foreground dark:group-focus-within:text-lime transition-colors" />
                     <Input
                       placeholder="COMPANY NAME"
                       className="pl-12 md:pl-16 py-6 md:py-8 rounded-[1.25rem] md:rounded-[1.5rem] bg-background border-foreground/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider md:tracking-widest uppercase text-foreground"
@@ -166,7 +166,7 @@ export function Contact() {
                 </div>
 
                 <div className="relative group mb-6 md:mb-8">
-                  <FileText className="absolute left-4 md:left-6 top-6 md:top-8 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-lime transition-colors" />
+                  <FileText className="absolute left-4 md:left-6 top-6 md:top-8 h-4 w-4 md:h-5 md:w-5 text-gray-400 group-focus-within:text-foreground dark:group-focus-within:text-lime transition-colors" />
                   <Textarea
                     placeholder="TELL US ABOUT YOUR PROJECT..."
                     className="pl-12 md:pl-16 pt-6 md:pt-8 min-h-[140px] md:min-h-[180px] rounded-[1.5rem] md:rounded-[2rem] bg-background text-foreground border border-foreground/10 shadow-sm focus:ring-2 focus:ring-lime/20 focus:border-lime transition-all font-bold text-[10px] md:text-xs tracking-wider uppercase leading-loose"
@@ -183,7 +183,7 @@ export function Contact() {
                   {isSubmitting ? "Sending Request..." : "Get Started Now"}
                 </Button>
                 {submitStatus === 'success' && (
-                  <p className="mt-4 text-center text-lime font-black text-xs md:text-sm tracking-widest uppercase">
+                  <p className="mt-4 text-center text-foreground dark:text-lime font-black text-xs md:text-sm tracking-widest uppercase">
                     Message sent successfully!
                   </p>
                 )}

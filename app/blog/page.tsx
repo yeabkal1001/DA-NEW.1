@@ -193,27 +193,27 @@ export default function BlogPage() {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             {featuredPosts.map((post, index) => (
               <ScrollReveal key={post.id} delay={index * 0.15}>
-                <Link href={`/blog/${post.id}`} className="group block relative bg-foreground rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[320px] md:h-[380px] lg:h-[500px]">
+                <Link href={`/blog/${post.id}`} className="group block relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[320px] md:h-[380px] lg:h-[500px]">
                   <img 
                     src={post.image} 
                     alt={post.title}
                     className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
                   <div className="absolute inset-0 p-5 md:p-8 lg:p-10 flex flex-col justify-end">
                     <div className="flex items-center gap-2 md:gap-4 mb-3 md:mb-4">
                       <span className="px-2 md:px-3 py-1 bg-lime text-black rounded-full text-[10px] md:text-xs font-bold">
                         {post.category}
                       </span>
-                      <span className="text-background/40 text-[10px] md:text-xs flex items-center gap-1">
+                      <span className="text-white/60 text-[10px] md:text-xs flex items-center gap-1">
                         <Clock className="w-3 h-3" />
                         {post.readTime}
                       </span>
                     </div>
-                    <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-background uppercase tracking-tight mb-2 md:mb-3 group-hover:text-lime transition-colors leading-tight">
+                    <h2 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-black text-white uppercase tracking-tight mb-2 md:mb-3 group-hover:text-lime transition-colors leading-tight">
                       {post.title}
                     </h2>
-                    <p className="text-background/50 text-xs md:text-sm leading-relaxed mb-4 md:mb-6 line-clamp-2">
+                    <p className="text-white/60 text-xs md:text-sm leading-relaxed mb-4 md:mb-6 line-clamp-2">
                       {post.excerpt}
                     </p>
                     <div className="flex items-center justify-between">
@@ -224,8 +224,8 @@ export default function BlogPage() {
                           className="w-8 md:w-10 h-8 md:h-10 rounded-full object-cover"
                         />
                         <div>
-                          <p className="text-background text-xs md:text-sm font-bold">{post.author}</p>
-                          <p className="text-background/40 text-[10px] md:text-xs">{post.date}</p>
+                          <p className="text-white text-xs md:text-sm font-bold">{post.author}</p>
+                          <p className="text-white/50 text-[10px] md:text-xs">{post.date}</p>
                         </div>
                       </div>
                       <span className="w-10 md:w-12 h-10 md:h-12 bg-lime rounded-full flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -367,17 +367,17 @@ export default function BlogPage() {
 
               {/* Newsletter */}
               <ScrollReveal delay={0.2}>
-                <div className="bg-foreground rounded-xl md:rounded-2xl p-4 md:p-6 text-background">
-                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2">Stay Updated</h3>
-                  <p className="text-background/50 text-xs md:text-sm mb-3 md:mb-4">
+                <div className="bg-black rounded-xl md:rounded-2xl p-4 md:p-6 text-white">
+                  <h3 className="text-base md:text-lg font-black uppercase tracking-tight mb-2 text-white">Stay Updated</h3>
+                  <p className="text-white/50 text-xs md:text-sm mb-3 md:mb-4">
                     Subscribe for the latest insights delivered to your inbox.
                   </p>
                   <input
                     type="email"
                     placeholder="Your email address"
-                    className="w-full bg-background/10 border border-background/10 rounded-lg py-2.5 md:py-3 px-3 md:px-4 text-xs md:text-sm text-background placeholder:text-background/30 focus:outline-none focus:border-lime/50 mb-2 md:mb-3"
+                    className="w-full bg-white/10 border border-white/10 rounded-lg py-2.5 md:py-3 px-3 md:px-4 text-xs md:text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-lime/50 mb-2 md:mb-3"
                   />
-                  <button className="w-full bg-lime text-black py-2.5 md:py-3 rounded-lg font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-background hover:text-foreground transition-colors">
+                  <button className="w-full bg-lime text-black py-2.5 md:py-3 rounded-lg font-bold text-xs md:text-sm uppercase tracking-wider hover:bg-white hover:text-black transition-colors">
                     Subscribe
                   </button>
                 </div>
@@ -391,7 +391,7 @@ export default function BlogPage() {
       <section className="py-16 md:py-24 lg:py-32 px-4 sm:px-6 md:px-12 lg:px-20 bg-lime">
         <div className="max-w-4xl mx-auto text-center">
           <ScrollReveal>
-            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6">
+            <h2 className="text-[1.75rem] sm:text-[2rem] md:text-[3rem] font-[900] leading-[0.95] tracking-tighter uppercase mb-4 md:mb-6 text-black">
               Want to Share
               <br />
               Your Story?
@@ -401,7 +401,7 @@ export default function BlogPage() {
             </p>
             <Link 
               href="/contact"
-              className="inline-flex items-center gap-2 md:gap-3 bg-foreground text-background px-6 md:px-8 py-3 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-lime hover:text-black transition-all duration-500 group"
+              className="inline-flex items-center gap-2 md:gap-3 bg-black text-lime px-6 md:px-8 py-3 md:py-4 rounded-full text-[10px] md:text-[11px] font-black uppercase tracking-[0.15em] md:tracking-[0.2em] hover:bg-white hover:text-black transition-all duration-500 group"
             >
               Get in Touch
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

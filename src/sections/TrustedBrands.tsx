@@ -27,7 +27,7 @@ export function TrustedBrands() {
         {/* Section header */}
         <ScrollReveal className="mb-12 text-center">
           <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-foreground">
-            <span className="text-lime">Trusted</span> by Leading
+            <span className="text-foreground dark:text-lime">Trusted</span> by Leading
             <br />
             Brands
           </h2>

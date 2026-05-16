@@ -188,25 +188,25 @@ export default function ProjectsPage() {
           <div className="grid md:grid-cols-2 gap-4 md:gap-6">
             {featuredProjects.slice(0, 2).map((project, index) => (
               <ScrollReveal key={project.id} delay={index * 0.15}>
-                <div className="group relative bg-foreground rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[350px] md:h-[500px] lg:h-[550px]">
+                <div className="group relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[350px] md:h-[500px] lg:h-[550px]">
                   <img 
                     src={project.image} 
                     alt={project.title}
                     className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground via-foreground/50 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                   <div className="absolute inset-0 p-5 md:p-8 lg:p-10 flex flex-col justify-end">
                     <div className="flex flex-wrap gap-2 mb-3 md:mb-4">
                       {project.tags.slice(0, 2).map((tag, i) => (
-                        <span key={i} className="px-2 md:px-3 py-1 bg-background/10 rounded-full text-[10px] md:text-xs font-bold text-background/80">
+                        <span key={i} className="px-2 md:px-3 py-1 bg-white/10 rounded-full text-[10px] md:text-xs font-bold text-white/80">
                           {tag}
                         </span>
                       ))}
                     </div>
-                    <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-background uppercase tracking-tight mb-2 group-hover:text-lime transition-colors">
+                    <h3 className="text-xl md:text-2xl lg:text-3xl font-black text-white uppercase tracking-tight mb-2 group-hover:text-lime transition-colors">
                       {project.title}
                     </h3>
-                    <p className="text-background/50 text-xs md:text-sm leading-relaxed mb-4 md:mb-6 max-w-md line-clamp-2">
+                    <p className="text-white/60 text-xs md:text-sm leading-relaxed mb-4 md:mb-6 max-w-md line-clamp-2">
                       {project.description}
                     </p>
                     <div className="flex items-center justify-between">

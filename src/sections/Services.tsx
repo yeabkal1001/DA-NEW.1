@@ -94,9 +94,9 @@ export function Services() {
         {/* Section header */}
         <ScrollReveal className="mb-12">
           <h2 className="text-3xl sm:text-4xl md:text-4xl lg:text-5xl font-bold mb-4 text-foreground">
-            Mastering the <span className="text-lime">digital</span>
+            Mastering the <span className="text-foreground dark:text-lime">digital</span>
             <br />
-            landscape with <span className="text-lime">precision.</span>
+            landscape with <span className="text-foreground dark:text-lime">precision.</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-xl">
             Comprehensive services designed to scale your business and dominate

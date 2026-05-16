@@ -56,7 +56,7 @@ export function Hero() {
     >
       {/* Decorative curved line */}
       <svg
-        className="absolute top-20 right-0 w-96 h-96 opacity-20 pointer-events-none text-lime"
+        className="absolute top-20 right-0 w-96 h-96 opacity-20 pointer-events-none text-foreground dark:text-lime"
         viewBox="0 0 400 400"
         fill="none"
       >
@@ -90,7 +90,7 @@ export function Hero() {
           ref={titleRef}
           className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight mb-6 opacity-0"
         >
-          We create <span className="text-lime">digital</span>
+          We create <span className="text-foreground dark:text-lime">digital</span>
           <br />
           experiences that matter
         </h1>
