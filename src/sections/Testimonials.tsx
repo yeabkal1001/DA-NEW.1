@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollReveal } from "@/src/components/ScrollReveal";
 import { Play } from "lucide-react";
+import { gsapManager } from "@/src/lib/gsapManager";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -57,7 +58,7 @@ export function Testimonials() {
     const cards = cardsRef.current?.children;
     if (!cards) return;
 
-    const ctx = gsap.context(() => {
+    gsapManager.createContext("testimonials-section", () => {
       gsap.fromTo(
         cards,
         { opacity: 0, x: 50 },
@@ -74,9 +75,11 @@ export function Testimonials() {
           },
         }
       );
-    });
+    }, cardsRef.current || undefined);
 
-    return () => ctx.revert();
+    return () => {
+      gsapManager.killContext("testimonials-section");
+    };
   }, []);
 
   return (

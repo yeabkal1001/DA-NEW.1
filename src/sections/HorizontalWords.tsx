@@ -4,6 +4,7 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { ThumbsUp, MousePointer2, Smartphone } from 'lucide-react';
+import { gsapManager } from '@/src/lib/gsapManager';
 import '@/app/styles/horizontal-words.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -12,7 +13,7 @@ const HorizontalWords = () => {
     const sectionRef = useRef<HTMLElement>(null);
 
     useEffect(() => {
-        const ctx = gsap.context(() => {
+        gsapManager.createContext("horizontal-words-section", () => {
             const container = sectionRef.current;
             if (!container) return;
 
@@ -112,9 +113,11 @@ const HorizontalWords = () => {
                 }
             });
 
-        }, sectionRef);
+        }, sectionRef.current || undefined);
 
-        return () => ctx.revert();
+        return () => {
+            gsapManager.killContext("horizontal-words-section");
+        };
     }, []);
 
     const text = "We wanna be where the people are";

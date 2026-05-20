@@ -5,6 +5,7 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
+import { gsapManager } from "@/src/lib/gsapManager";
 
 // Register GSAP plugin once at module level
 if (typeof window !== 'undefined') {
@@ -180,7 +181,7 @@ export function HeroSequence() {
   useEffect(() => {
     if (!isLoaded || !containerRef.current) return;
 
-    const ctx = gsap.context(() => {
+    gsapManager.createContext("hero-sequence", () => {
       gsap.from(".hero-line", {
         opacity: 0,
         y: 60,
@@ -272,9 +273,11 @@ export function HeroSequence() {
       );
       scrollTl.to(diveTextRef.current, { opacity: 0, duration: 0.2, ease: "power2.in" }, 2.3);
 
-    }, containerRef);
+    }, containerRef.current || undefined);
 
-    return () => ctx.revert();
+    return () => {
+      gsapManager.killContext("hero-sequence");
+    };
   }, [isLoaded, drawFrame]);
 
   return (

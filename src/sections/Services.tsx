@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import { gsapManager } from "@/src/lib/gsapManager";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -113,7 +114,7 @@ export function Services() {
     gsap.set(s3.querySelectorAll<HTMLElement>(".sc-split-line-inner"), { yPercent: 110 });
 
     // ── Entrance ──────────────────────────────────────────
-    const ctx = gsap.context(() => {
+    gsapManager.createContext("services-section", () => {
 
       gsap.timeline({
         scrollTrigger: { trigger: sectionRef.current, start: "top 70%", once: true },
@@ -182,10 +183,10 @@ export function Services() {
           yPercent: 0, stagger: 0.05, duration: 0.9, ease: "power3.out",
         }, 2.8);
 
-    }, sectionRef);
+    }, sectionRef.current || undefined);
 
     return () => {
-      ctx.revert();
+      gsapManager.killContext("services-section");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       splits.forEach((s: any) => s?.revert?.());
     };

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsapManager } from "@/src/lib/gsapManager";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,7 +11,7 @@ export function Team() {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
+    gsapManager.createContext("team-section", () => {
       gsap.from(".team-reveal", {
         y: 40,
         opacity: 0,
@@ -22,8 +23,11 @@ export function Team() {
           start: "top 85%",
         }
       });
-    }, containerRef);
-    return () => ctx.revert();
+    }, containerRef.current || undefined);
+
+    return () => {
+      gsapManager.killContext("team-section");
+    };
   }, []);
 
   return (

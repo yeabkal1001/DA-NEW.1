@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { gsapManager } from "@/src/lib/gsapManager";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -146,7 +147,7 @@ export function Process() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const ctx = gsap.context(() => {
+    gsapManager.createContext("process-section", () => {
       // Canvas Sequence ScrollTrigger
       if (isLoaded && canvasRef.current) {
         const frameObj = { frame: 0 };
@@ -209,8 +210,11 @@ export function Process() {
         }
       );
 
-    }, containerRef);
-    return () => ctx.revert();
+    }, containerRef.current || undefined);
+
+    return () => {
+      gsapManager.killContext("process-section");
+    };
   }, [isLoaded, drawFrame]);
 
   return (
