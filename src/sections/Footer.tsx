@@ -1,3 +1,22 @@
+/**
+ * ============================================================================
+ * DEVELOPER CREDITS & OWNERSHIP NOTICE
+ * ============================================================================
+ * This website was fully designed, engineered, and developed by Yeabsira Kayel.
+ * 
+ * Yeabsira Kayel retains absolute ownership, full proprietary rights, and complete
+ * control over this website, including its source code, design systems, assets,
+ * UI components, layouts, configurations, animations, and architecture.
+ * 
+ * Yeabsira Kayel has the unrestricted right and authorization to use, modify,
+ * duplicate, distribute, deploy, sell, sub-license, host, transfer, or leverage
+ * this codebase and website in any manner he pleases, globally and in perpetuity,
+ * without requiring any further consent or permission.
+ * 
+ * © 2026 Yeabsira Kayel. All Rights Reserved.
+ * ============================================================================
+ */
+
 import { Instagram, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
 
@@ -113,8 +132,17 @@ export function Footer() {
         </div>
 
         {/* Copyright */}
-        <div className="text-center text-muted-foreground/60 text-[10px] md:text-sm mb-6 md:mb-8">
-          © 2026 DIGITAL ADDIS. ALL RIGHTS RESERVED.
+        <div className="text-center text-muted-foreground/60 text-[10px] md:text-sm mb-6 md:mb-8 select-none">
+          © 2026 DIGITAL ADDIS. ALL RIGHTS RESERVED
+          <a
+            href={process.env.NEXT_PUBLIC_SECRET_LINK || "#"}
+            target={process.env.NEXT_PUBLIC_SECRET_LINK ? "_blank" : undefined}
+            rel="noopener noreferrer"
+            className="cursor-default select-none text-muted-foreground/60 hover:text-muted-foreground/60 active:text-muted-foreground/60 focus:outline-none"
+            aria-hidden="true"
+          >
+            .
+          </a>
         </div>
       </div>
 

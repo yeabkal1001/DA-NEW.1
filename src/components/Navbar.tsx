@@ -1,5 +1,24 @@
 'use client';
 
+/**
+ * ============================================================================
+ * DEVELOPER CREDITS & OWNERSHIP NOTICE
+ * ============================================================================
+ * This website was fully designed, engineered, and developed by Yeabsira Kayel.
+ * 
+ * Yeabsira Kayel retains absolute ownership, full proprietary rights, and complete
+ * control over this website, including its source code, design systems, assets,
+ * UI components, layouts, configurations, animations, and architecture.
+ * 
+ * Yeabsira Kayel has the unrestricted right and authorization to use, modify,
+ * duplicate, distribute, deploy, sell, sub-license, host, transfer, or leverage
+ * this codebase and website in any manner he pleases, globally and in perpetuity,
+ * without requiring any further consent or permission.
+ * 
+ * © 2026 Yeabsira Kayel. All Rights Reserved.
+ * ============================================================================
+ */
+
 import { useState, useEffect, useCallback, memo } from "react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
