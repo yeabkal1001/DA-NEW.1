@@ -8,6 +8,7 @@ import { Footer } from "@/src/sections/Footer";
 import { ScrollReveal } from "@/src/components/ScrollReveal";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -189,10 +190,11 @@ export default function ProjectsPage() {
             {featuredProjects.slice(0, 2).map((project, index) => (
               <ScrollReveal key={project.id} delay={index * 0.15}>
                 <div className="group relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[350px] md:h-[500px] lg:h-[550px]">
-                  <img 
+                  <OptimizedImage 
                     src={project.image} 
                     alt={project.title}
                     className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
+                    fill
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
                   <div className="absolute inset-0 p-5 md:p-8 lg:p-10 flex flex-col justify-end">
@@ -248,10 +250,11 @@ export default function ProjectsPage() {
                   </button>
                 </div>
                 <div className="relative h-[200px] md:h-[300px] lg:h-auto">
-                  <img 
+                  <OptimizedImage 
                     src={featuredProjects[2]?.image} 
                     alt={featuredProjects[2]?.title}
                     className="absolute inset-0 w-full h-full object-cover"
+                    fill
                   />
                 </div>
               </div>
@@ -296,10 +299,11 @@ export default function ProjectsPage() {
               <ScrollReveal key={project.id} delay={index * 0.05}>
                 <Link href={`/projects/${project.id}`} className="group block bg-foreground/5 rounded-xl md:rounded-2xl overflow-hidden border border-foreground/5 hover:border-lime/50 transition-all duration-300">
                   <div className="relative h-40 md:h-56 overflow-hidden">
-                    <img 
+                    <OptimizedImage 
                       src={project.image} 
                       alt={project.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
                     />
                     <div className="absolute top-3 md:top-4 right-3 md:right-4">
                       <span className="px-2 md:px-3 py-1 bg-background/90 text-foreground backdrop-blur-sm rounded-full text-[10px] md:text-xs font-bold">

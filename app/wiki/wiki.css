@@ -1,0 +1,273 @@
+/* ==========================================================================
+   Wiki Stylesheet (wiki.css)
+   Tailored styles for rendering high-end, responsive Markdown content
+   ========================================================================== */
+
+.wiki-container {
+  min-height: calc(100vh - 4.5rem);
+}
+
+/* Base Prose Style for Markdown Content */
+.wiki-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  letter-spacing: -0.005em;
+  color: hsl(var(--foreground));
+}
+
+/* Headings */
+.wiki-content h1,
+.wiki-content h2,
+.wiki-content h3,
+.wiki-content h4,
+.wiki-content h5,
+.wiki-content h6 {
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: hsl(var(--foreground));
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  scroll-margin-top: 6rem; /* Ensures sticky navbar doesn't cover headings on anchor click */
+  position: relative;
+}
+
+.wiki-content h1 {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  font-weight: 800;
+  border-bottom: 1px solid hsl(var(--border));
+  padding-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.wiki-content h2 {
+  font-size: clamp(1.35rem, 2.5vw, 1.75rem);
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  padding-bottom: 0.35rem;
+}
+
+.wiki-content h3 {
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+}
+
+.wiki-content h4 {
+  font-size: 1.1rem;
+}
+
+/* Heading Anchor Links */
+.wiki-content .anchor-header {
+  group: hover;
+}
+
+.wiki-content .anchor-header::after {
+  content: '#';
+  position: absolute;
+  left: -1.25rem;
+  opacity: 0;
+  color: hsl(var(--primary));
+  transition: opacity 0.2s ease;
+  font-weight: 500;
+}
+
+.wiki-content .anchor-header:hover::after {
+  opacity: 0.7;
+}
+
+/* Paragraphs & Text */
+.wiki-content p {
+  margin-bottom: 1.25rem;
+  color: hsl(var(--foreground) / 0.85);
+}
+
+.wiki-content strong {
+  color: hsl(var(--foreground));
+  font-weight: 600;
+}
+
+.wiki-content em {
+  font-style: italic;
+}
+
+/* Lists */
+.wiki-content ul {
+  list-style-type: disc;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.wiki-content ol {
+  list-style-type: decimal;
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.wiki-content li {
+  margin-bottom: 0.5rem;
+  padding-left: 0.25rem;
+}
+
+.wiki-content li > ul,
+.wiki-content li > ol {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Code Blocks */
+.wiki-content pre {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1.25rem;
+  border-radius: var(--radius);
+  background: #18181b; /* Sleek zinc-900 background always in code blocks */
+  border: 1px solid #27272a; /* zinc-800 border */
+  overflow-x: auto;
+  position: relative;
+}
+
+.wiki-content pre code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-size: 0.875rem;
+  color: #f4f4f5; /* zinc-100 text always in code blocks */
+  line-height: 1.6;
+  background: transparent;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+}
+
+/* Inline Code Badges */
+.wiki-content :not(pre) > code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.85em;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  background: hsl(var(--muted));
+  border: 1px solid hsl(var(--border) / 0.5);
+  color: hsl(var(--foreground));
+  word-break: break-word;
+}
+
+.dark .wiki-content :not(pre) > code {
+  color: #ccff00; /* lime accent for dark mode inline code */
+  background: rgba(204, 255, 0, 0.06);
+  border-color: rgba(204, 255, 0, 0.15);
+}
+
+/* Custom Cite/Reference block */
+.wiki-content cite {
+  display: block;
+  font-style: normal;
+  padding: 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-radius: var(--radius);
+  background: hsl(var(--muted) / 0.4);
+  border: 1px solid hsl(var(--border) / 0.8);
+}
+
+.wiki-content cite ul {
+  margin-bottom: 0;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.wiki-content cite li {
+  font-size: 0.875rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: hsl(var(--foreground) / 0.75);
+}
+
+.wiki-content cite li::before {
+  content: "→";
+  color: hsl(var(--primary));
+  font-weight: bold;
+}
+
+.wiki-content cite li a {
+  color: hsl(var(--foreground));
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.wiki-content cite li a:hover {
+  color: hsl(var(--primary));
+}
+
+/* Blockquotes */
+.wiki-content blockquote {
+  padding: 0.75rem 1.25rem;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-left: 4px solid #ccff00; /* Lime left border always */
+  background: hsl(var(--muted) / 0.3);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  font-style: italic;
+  color: hsl(var(--foreground) / 0.85);
+}
+
+/* Tables */
+.wiki-content table {
+  width: 100%;
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.wiki-content th,
+.wiki-content td {
+  padding: 0.75rem 1rem;
+  border: 1px solid hsl(var(--border));
+  text-align: left;
+}
+
+.wiki-content th {
+  background: hsl(var(--muted) / 0.6);
+  font-weight: 600;
+  color: hsl(var(--foreground));
+}
+
+.wiki-content tr:nth-child(even) {
+  background: hsl(var(--muted) / 0.25);
+}
+
+/* Images */
+.wiki-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid hsl(var(--border) / 0.6);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.dark .wiki-content img {
+  border-color: hsl(var(--border) / 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Custom horizontal rule */
+.wiki-content hr {
+  margin-top: 2.5rem;
+  margin-bottom: 2.5rem;
+  border: 0;
+  border-top: 1px solid hsl(var(--border));
+}
+
+/* Custom anchor highlight classes for GSAP or scrolling */
+.header-highlight {
+  animation: highlight-pulse 2s ease-out;
+}
+
+@keyframes highlight-pulse {
+  0% {
+    background-color: rgba(204, 255, 0, 0.3);
+  }
+  100% {
+    background-color: transparent;
+  }
+}

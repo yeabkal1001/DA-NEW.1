@@ -20,7 +20,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { Space_Grotesk } from "next/font/google";
-import localFont from "next/font/local";
 import { ErrorBoundary } from "@/src/components/ErrorBoundary";
 import { PageLoader } from "@/src/components/PageLoader";
 import { ThemeProvider } from "@/src/components/theme-provider";

@@ -122,6 +122,9 @@ importers:
       lucide-react:
         specifier: ^0.562.0
         version: 0.562.0(react@19.2.4)
+      marked:
+        specifier: ^18.0.4
+        version: 18.0.4
       matter-js:
         specifier: ^0.20.0
         version: 0.20.0
@@ -174,6 +177,9 @@ importers:
       '@imgly/background-removal-node':
         specifier: ^1.4.5
         version: 1.4.5
+      '@types/marked':
+        specifier: ^6.0.0
+        version: 6.0.0
       '@types/matter-js':
         specifier: ^0.20.2
         version: 0.20.2
@@ -1315,6 +1321,10 @@ packages:
   '@types/lodash@4.14.202':
     resolution: {integrity: sha512-OvlIYQK9tNneDlS0VN54LLd5uiPCBOp7gS5Z0f1mjoJYBrtStzgmJBxONW3U6OZqdtNzZPmn9BS/7WI7BFFcFQ==}
 
+  '@types/marked@6.0.0':
+    resolution: {integrity: sha512-jmjpa4BwUsmhxcfsgUit/7A9KbrC48Q0q8KvnY107ogcjGgTFDlIL3RpihNpx2Mu1hM4mdFQjoVc4O6JoGKHsA==}
+    deprecated: This is a stub types definition. marked provides its own type definitions, so you do not need this installed.
+
   '@types/matter-js@0.20.2':
     resolution: {integrity: sha512-3PPKy3QxvZ89h9+wdBV2488I1JLVs7DEpIkPvgO8JC1mUdiVSO37ZIvVctOTD7hIq8OAL2gJ3ugGSuUip6DhCw==}
 
@@ -2053,6 +2063,11 @@ packages:
     resolution: {integrity: sha512-82hOAu7y0dbVuFfmO4bYF1XEwYk/mEbM5E+b1jgci/udUBEE/R7LF5Ip0CCEmXe8AybRM8L+04eP+LGZeDvkiw==}
     peerDependencies:
       react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  marked@18.0.4:
+    resolution: {integrity: sha512-c/BTaKzg0G6ezQx97DAkYU7k0HM6ys0FqYeKBL6hlBByZwy+ycA1+f0vDdjMHKKeEjdgkx0GOv9Il6D+85cOqA==}
+    engines: {node: '>= 20'}
+    hasBin: true
 
   matter-js@0.20.0:
     resolution: {integrity: sha512-iC9fYR7zVT3HppNnsFsp9XOoQdQN2tUyfaKg4CHLH8bN+j6GT4Gw7IH2rP0tflAebrHFw730RR3DkVSZRX8hwA==}
@@ -3758,6 +3773,10 @@ snapshots:
 
   '@types/lodash@4.14.202': {}
 
+  '@types/marked@6.0.0':
+    dependencies:
+      marked: 18.0.4
+
   '@types/matter-js@0.20.2': {}
 
   '@types/ndarray@1.0.14': {}
@@ -4447,6 +4466,8 @@ snapshots:
   lucide-react@0.562.0(react@19.2.4):
     dependencies:
       react: 19.2.4
+
+  marked@18.0.4: {}
 
   matter-js@0.20.0: {}
 

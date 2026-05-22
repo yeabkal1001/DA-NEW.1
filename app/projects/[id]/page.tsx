@@ -6,9 +6,10 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Navbar } from "@/src/components/Navbar";
 import { Footer } from "@/src/sections/Footer";
 import { ScrollReveal } from "@/src/components/ScrollReveal";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Calendar, Globe, Users, Zap } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Users, Zap } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -218,10 +219,12 @@ export default function ProjectDetailPage() {
       <section ref={heroRef} className="relative min-h-[70vh] lg:min-h-[85vh] bg-background text-foreground flex items-end overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img
+          <OptimizedImage
             src={project.image}
             alt={project.title}
-            className="w-full h-full object-cover opacity-40 dark:opacity-60"
+            className="opacity-40 dark:opacity-60 object-cover"
+            fill
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
         </div>
@@ -348,10 +351,11 @@ export default function ProjectDetailPage() {
             {project.gallery.map((img, index) => (
               <ScrollReveal key={index} delay={index * 0.1}>
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden group">
-                  <img
+                  <OptimizedImage
                     src={img}
                     alt={`${project.title} gallery ${index + 1}`}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    fill
                   />
                   <div className="absolute inset-0 bg-transparent group-hover:bg-foreground/20 transition-colors" />
                 </div>

@@ -6,6 +6,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { ScrollReveal } from "@/src/components/ScrollReveal";
 import { Play } from "lucide-react";
 import { gsapManager } from "@/src/lib/gsapManager";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,10 +25,10 @@ const testimonials = [
     playIconColor: "text-lime",
   },
   {
-    name: "Daniel Carter",
-    role: "CEO, Nexa Digital Solutions",
+    name: "David Chen",
+    role: "Founder, ApexTech Solutions",
     content:
-      "They demonstrated professionalism, clear communication, and a deep understanding of our vision and goals. The final result was not only visually impressive but also highly functional and user-friendly.",
+      "They didn't just build our app—they refined our entire digital strategy. Their collaborative approach and focus on clean UX helped us achieve a massive jump in user retention. I highly recommend them to anyone seeking cutting-edge results.",
     image: "/images/testimonial-2.jpg",
     bgColor: "bg-foreground text-background",
     nameColor: "text-background",
@@ -37,61 +38,83 @@ const testimonials = [
     playIconColor: "text-black",
   },
   {
-    name: "Emily Rodriguez",
-    role: "Founder, TechStart Inc.",
+    name: "Elena Rostova",
+    role: "Creative Director, Velo Brands",
     content:
-      "The team at Digital Addis delivered beyond our expectations. Their innovative approach and dedication to quality made all the difference in our project success.",
+      "The visual design and animations they created are stunning. Our customers consistently praise the fluidity and aesthetics of our new website. It was a true partnership that significantly elevated our digital brand presence.",
     image: "/images/testimonial-3.jpg",
-    bgColor: "bg-background border border-foreground/10 text-foreground",
+    bgColor: "bg-foreground/5 text-foreground border border-foreground/10",
     nameColor: "text-foreground",
-    roleColor: "text-foreground/60",
-    contentColor: "text-foreground/80",
+    roleColor: "text-foreground/50",
+    contentColor: "text-foreground/70",
     playBtnColor: "bg-lime",
     playIconColor: "text-black",
   },
 ];
 
 export function Testimonials() {
+  const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const cards = cardsRef.current?.children;
-    if (!cards) return;
-
     gsapManager.createContext("testimonials-section", () => {
-      gsap.fromTo(
-        cards,
-        { opacity: 0, x: 50 },
-        {
-          opacity: 1,
-          x: 0,
-          duration: 0.6,
-          stagger: 0.15,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: cardsRef.current,
-            start: "top 80%",
-            toggleActions: "play none none none",
-          },
+      // Background animation
+      gsap.from(".testimonials-bg", {
+        scale: 0.9,
+        opacity: 0.3,
+        duration: 1.5,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top 80%",
         }
-      );
-    }, cardsRef.current || undefined);
+      });
 
-    return () => {
-      gsapManager.killContext("testimonials-section");
-    };
+      // Cards stagger reveal
+      const cards = cardsRef.current?.children;
+      if (cards) {
+        gsap.fromTo(
+          Array.from(cards),
+          { y: 50, opacity: 0 },
+          {
+            y: 0,
+            opacity: 1,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power4.out",
+            scrollTrigger: {
+              trigger: cardsRef.current,
+              start: "top 80%",
+            }
+          }
+        );
+      }
+    }, containerRef.current || undefined);
+
+    return () => gsapManager.killContext("testimonials-section");
   }, []);
 
   return (
-    <section className="py-20 px-4 sm:px-6 lg:px-8 bg-background">
-      <div className="max-w-7xl mx-auto">
-        {/* Section header */}
-        <ScrollReveal className="mb-12">
-          <div className="flex items-start justify-between flex-wrap gap-4">
+    <section
+      ref={containerRef}
+      className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-background relative overflow-hidden"
+    >
+      {/* Background glow */}
+      <div className="testimonials-bg absolute top-[-10%] right-[-10%] w-[350px] md:w-[600px] h-[350px] md:h-[600px] bg-lime/5 rounded-full blur-[100px] md:blur-[180px] pointer-events-none" />
+      <div className="testimonials-bg absolute bottom-[-10%] left-[-10%] w-[300px] md:w-[500px] h-[300px] md:h-[500px] bg-lime/5 rounded-full blur-[100px] md:blur-[150px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto relative z-10">
+        <ScrollReveal className="mb-12 md:mb-16">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
             <div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-foreground">
-                What Our <span className="text-foreground dark:text-lime">Clients</span>
-                <br />
+              <div className="inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-foreground/5 rounded-full border border-foreground/10">
+                <span className="w-1.5 h-1.5 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
+                <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60">
+                  Client Stories
+                </span>
+              </div>
+              <h2 className="text-[2.5rem] sm:text-[3rem] md:text-[3.5rem] font-[900] leading-[0.9] tracking-tighter text-foreground uppercase mb-4 md:mb-6">
+                What They <br />
                 Say About Us
               </h2>
               <p className="text-muted-foreground text-lg max-w-2xl">
@@ -103,12 +126,13 @@ export function Testimonials() {
             {/* Client avatars */}
             <div className="flex -space-x-3">
               {testimonials.map((t, i) => (
-                <img
-                  key={i}
-                  src={t.image}
-                  alt={t.name}
-                  className="w-12 h-12 rounded-full border-2 border-background object-cover"
-                />
+                <div key={i} className="w-12 h-12 rounded-full border-2 border-background overflow-hidden relative">
+                  <OptimizedImage
+                    src={t.image}
+                    alt={t.name}
+                    fill
+                  />
+                </div>
               ))}
             </div>
           </div>
@@ -126,11 +150,11 @@ export function Testimonials() {
               className={`${testimonial.bgColor} rounded-2xl md:rounded-3xl p-5 md:p-6 min-w-[300px] sm:min-w-[340px] md:min-w-[370px] max-w-[420px] flex-shrink-0 snap-start opacity-0 shadow-sm flex flex-col gap-4`}
             >
               {/* Video thumbnail */}
-              <div className="relative rounded-xl overflow-hidden flex-shrink-0">
-                <img
+              <div className="relative rounded-xl overflow-hidden flex-shrink-0 h-44 w-full">
+                <OptimizedImage
                   src={testimonial.image}
                   alt={testimonial.name}
-                  className="w-full h-44 object-cover"
+                  fill
                 />
                 <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
                   <button
@@ -147,11 +171,13 @@ export function Testimonials() {
                   {testimonial.content}
                 </p>
                 <div className="flex items-center gap-3">
-                  <img
-                    src={testimonial.image}
-                    alt={testimonial.name}
-                    className="w-9 h-9 rounded-full object-cover flex-shrink-0"
-                  />
+                  <div className="w-9 h-9 rounded-full overflow-hidden relative flex-shrink-0">
+                    <OptimizedImage
+                      src={testimonial.image}
+                      alt={testimonial.name}
+                      fill
+                    />
+                  </div>
                   <div>
                     <h4 className={`font-bold text-sm ${testimonial.nameColor}`}>{testimonial.name}</h4>
                     <p className={`text-xs ${testimonial.roleColor}`}>{testimonial.role}</p>

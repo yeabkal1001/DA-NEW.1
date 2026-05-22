@@ -19,6 +19,7 @@
 
 import { Instagram, Twitter, Youtube } from "lucide-react";
 import Link from "next/link";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 const navigation = [
   { label: "Home", href: "/" },
@@ -50,11 +51,14 @@ export function Footer() {
           {/* Brand column */}
           <div className="col-span-2 sm:col-span-2 lg:col-span-1">
             <Link href="/">
-              <img
-                src="/dalogo.webp"
-                alt="Digital Addis Logo"
-                className="h-16 md:h-24 w-auto mb-4 md:mb-6 object-contain brightness-0 dark:brightness-100"
-              />
+              <div className="h-16 md:h-24 w-40 mb-4 md:mb-6">
+                <OptimizedImage
+                  src="/dalogo.webp"
+                  alt="Digital Addis Logo"
+                  className="brightness-0 dark:brightness-100"
+                  fill
+                />
+              </div>
             </Link>
             <p className="text-muted-foreground text-xs md:text-sm mb-4 md:mb-6 max-w-[280px]">
               Creating the digital benchmarks for tomorrow's industry leaders.

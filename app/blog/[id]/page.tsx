@@ -5,9 +5,10 @@ import { gsap } from "gsap";
 import { Navbar } from "@/src/components/Navbar";
 import { Footer } from "@/src/sections/Footer";
 import { ScrollReveal } from "@/src/components/ScrollReveal";
-import { ArrowLeft, ArrowRight, Calendar, Clock, Facebook, Linkedin, Twitter, Share2 } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Facebook, Linkedin, Twitter, Share2 } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 // Blog post data - in real app this would come from a CMS/database
 const blogPostsData: Record<string, {
@@ -193,10 +194,12 @@ export default function BlogPostPage() {
       <section ref={heroRef} className="relative min-h-[60vh] lg:min-h-[75vh] bg-background text-foreground flex items-end overflow-hidden">
         {/* Background Image */}
         <div className="absolute inset-0">
-          <img
+          <OptimizedImage
             src={post.image}
             alt={post.title}
-            className="w-full h-full object-cover opacity-50"
+            className="opacity-50 object-cover"
+            fill
+            priority
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background via-background/70 to-transparent" />
         </div>
@@ -226,10 +229,11 @@ export default function BlogPostPage() {
           </h1>
 
           <div className="blog-post-reveal flex items-center gap-4">
-            <img
+            <OptimizedImage
               src={post.authorImage}
               alt={post.author}
-              className="w-14 h-14 rounded-full object-cover border-2 border-lime"
+              className="w-14 h-14 rounded-full border-2 border-lime"
+              fill
             />
             <div>
               <p className="text-foreground font-bold text-lg">{post.author}</p>
@@ -322,10 +326,11 @@ export default function BlogPostPage() {
           <ScrollReveal>
             <div className="bg-foreground/5 rounded-3xl p-8 md:p-12 border border-foreground/10">
               <div className="flex flex-col md:flex-row items-center gap-6 md:gap-8">
-                <img
+                <OptimizedImage
                   src={post.authorImage}
                   alt={post.author}
-                  className="w-24 h-24 md:w-32 md:h-32 rounded-full object-cover border-4 border-lime"
+                  className="w-24 h-24 md:w-32 md:h-32 rounded-full border-4 border-lime"
+                  fill
                 />
                 <div className="text-center md:text-left">
                   <p className="text-xs text-foreground/40 uppercase tracking-wider mb-2">Written by</p>
@@ -352,10 +357,11 @@ export default function BlogPostPage() {
               <ScrollReveal key={related.id} delay={index * 0.1}>
                 <Link href={`/blog/${related.id}`} className="group block">
                   <div className="relative h-64 rounded-2xl overflow-hidden mb-4">
-                    <img
+                    <OptimizedImage
                       src={related.image}
                       alt={related.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      fill
                     />
                     <div className="absolute top-4 left-4">
                       <span className="px-3 py-1 bg-lime text-black rounded-full text-xs font-bold">

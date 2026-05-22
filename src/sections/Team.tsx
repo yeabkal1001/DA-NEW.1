@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsapManager } from "@/src/lib/gsapManager";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -31,12 +32,20 @@ export function Team() {
   }, []);
 
   return (
-    <section ref={containerRef} className="py-12 md:py-16 lg:py-20 px-4 sm:px-6 md:px-12 lg:px-16 bg-background overflow-hidden min-h-screen flex items-center">
-      <div className="max-w-[1300px] mx-auto w-full">
-        <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 lg:items-center">
+    <section ref={containerRef} className="py-20 md:py-32 px-4 sm:px-6 lg:px-8 bg-background relative overflow-hidden">
+      {/* Background visual element */}
+      <div className="absolute top-1/2 left-[-10%] w-[350px] md:w-[500px] h-[350px] md:h-[500px] bg-lime/5 rounded-full blur-[100px] md:blur-[150px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16 items-start">
           
-          {/* Left Content */}
-          <div className="lg:w-[32%] flex flex-col pt-0">
+          {/* Left Text Content */}
+          <div className="lg:w-[32%] lg:sticky lg:top-32">
+            <div className="team-reveal inline-flex items-center p-1 px-3 md:px-4 mb-4 md:mb-6 bg-foreground/5 rounded-full border border-foreground/10">
+              <span className="w-1.5 h-1.5 bg-lime rounded-full mr-2 md:mr-3 animate-pulse" />
+              <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.3em] md:tracking-[0.4em] text-foreground/60">Our Collective</span>
+            </div>
+            
             <h2 className="team-reveal text-[2.5rem] sm:text-[3rem] md:text-[3.2rem] lg:text-[4.2rem] font-[900] leading-[0.85] tracking-tighter text-foreground uppercase mb-4 md:mb-6">
               The <br className="hidden sm:block" />
               Minds <br className="hidden sm:block" />
@@ -55,7 +64,12 @@ export function Team() {
             {/* Column 1: Large Vertical Team Member + Green Vision */}
             <div className="sm:col-span-1 md:col-span-4 flex flex-col gap-3 md:gap-4">
               <div className="team-reveal flex-1 bg-foreground/5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[200px] md:min-h-[300px]">
-                <img src="/images/IMG_2674.PNG" alt="Team" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <OptimizedImage 
+                  src="/images/IMG_2674.PNG" 
+                  alt="Team Member" 
+                  className="transition-transform duration-700 group-hover:scale-110" 
+                  fill
+                />
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-3/4 h-6 md:h-8 bg-lime rounded-r-full shadow-lg shadow-lime/20" />
               </div>
               
@@ -79,7 +93,12 @@ export function Team() {
               </div>
               
               <div className="team-reveal flex-1 bg-foreground/5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[180px] md:min-h-[250px]">
-                <img src="/images/aman.webp" alt="Team" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <OptimizedImage 
+                  src="/images/aman.webp" 
+                  alt="Team Member" 
+                  className="transition-transform duration-700 group-hover:scale-110" 
+                  fill
+                />
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-3/4 h-6 md:h-8 bg-lime rounded-r-full shadow-lg shadow-lime/20" />
               </div>
             </div>
@@ -87,7 +106,12 @@ export function Team() {
             {/* Column 3: Third Team Member + Black Mission */}
             <div className="sm:col-span-2 md:col-span-4 flex flex-col sm:flex-row md:flex-col gap-3 md:gap-4">
               <div className="team-reveal flex-1 bg-foreground/5 rounded-[1.5rem] md:rounded-[2rem] overflow-hidden relative group min-h-[180px] md:min-h-[250px]">
-                <img src="/images/5875244326257281697_121.jpg" alt="Team" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <OptimizedImage 
+                  src="/images/5875244326257281697_121.jpg" 
+                  alt="Team Member" 
+                  className="transition-transform duration-700 group-hover:scale-110" 
+                  fill
+                />
                 <div className="absolute bottom-4 md:bottom-6 left-0 w-3/4 h-6 md:h-8 bg-lime rounded-r-full shadow-lg shadow-lime/20" />
               </div>
 

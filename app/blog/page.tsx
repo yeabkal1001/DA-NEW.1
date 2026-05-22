@@ -8,6 +8,7 @@ import { Footer } from "@/src/sections/Footer";
 import { ScrollReveal } from "@/src/components/ScrollReveal";
 import { ArrowRight, Calendar, Clock, Search, TrendingUp } from "lucide-react";
 import Link from "next/link";
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -194,10 +195,11 @@ export default function BlogPage() {
             {featuredPosts.map((post, index) => (
               <ScrollReveal key={post.id} delay={index * 0.15}>
                 <Link href={`/blog/${post.id}`} className="group block relative bg-black rounded-[1.5rem] md:rounded-[2rem] lg:rounded-[2.5rem] overflow-hidden h-[320px] md:h-[380px] lg:h-[500px]">
-                  <img 
+                  <OptimizedImage 
                     src={post.image} 
                     alt={post.title}
                     className="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:opacity-40 group-hover:scale-105 transition-all duration-700"
+                    fill
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent" />
                   <div className="absolute inset-0 p-5 md:p-8 lg:p-10 flex flex-col justify-end">
@@ -218,10 +220,11 @@ export default function BlogPage() {
                     </p>
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2 md:gap-3">
-                        <img 
+                        <OptimizedImage 
                           src={post.authorImage} 
                           alt={post.author}
-                          className="w-8 md:w-10 h-8 md:h-10 rounded-full object-cover"
+                          className="w-8 md:w-10 h-8 md:h-10 rounded-full"
+                          fill
                         />
                         <div>
                           <p className="text-white text-xs md:text-sm font-bold">{post.author}</p>
@@ -276,10 +279,11 @@ export default function BlogPage() {
                     <Link href={`/blog/${post.id}`} className="group block bg-foreground/5 rounded-xl md:rounded-2xl overflow-hidden border border-foreground/10 hover:border-lime/50 transition-all duration-300 h-full">
                       <div className="grid sm:grid-cols-3 gap-0">
                         <div className="relative h-40 sm:h-auto overflow-hidden">
-                          <img 
+                          <OptimizedImage 
                             src={post.image} 
                             alt={post.title}
                             className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                            fill
                           />
                         </div>
                         <div className="sm:col-span-2 p-4 md:p-6">
@@ -300,10 +304,11 @@ export default function BlogPage() {
                           </p>
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
-                              <img 
+                              <OptimizedImage 
                                 src={post.authorImage} 
                                 alt={post.author}
-                                className="w-6 md:w-8 h-6 md:h-8 rounded-full object-cover"
+                                className="w-6 md:w-8 h-6 md:h-8 rounded-full"
+                                fill
                               />
                               <span className="text-xs md:text-sm font-medium text-foreground">{post.author}</span>
                             </div>

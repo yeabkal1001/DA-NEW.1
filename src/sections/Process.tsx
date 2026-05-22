@@ -1,9 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { gsapManager } from "@/src/lib/gsapManager";
+import { useDeviceCapabilities } from "@/src/hooks/useDeviceCapabilities";
+import { useReducedMotion } from "@/src/hooks/useReducedMotion";
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
@@ -40,20 +42,39 @@ const BETWEEN_TEXT = "From the first conversation to the final launch, we carefu
 
 // Canvas Sequence Setup
 const ORIGINAL_FRAME_COUNT = 192;
-const SKIP_STEP = 1; // Use all frames for maximum smoothness
-const FRAME_COUNT = Math.ceil(ORIGINAL_FRAME_COUNT / SKIP_STEP);
-const PRIORITY_FRAMES = 5;
-
-const frameNames = Array.from({ length: FRAME_COUNT }, (_, i) => {
-  const originalIndex = i * SKIP_STEP;
-  const num = String(originalIndex).padStart(3, "0");
-  return `/images/Assembly/frame_${num}_delay-0.041s.webp`;
-});
 
 export function Process() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const imagesRef = useRef<HTMLImageElement[]>(new Array(FRAME_COUNT).fill(null));
+  
+  const caps = useDeviceCapabilities();
+  const prefersReducedMotion = useReducedMotion();
+
+  // Dynamic skip rate based on device capability
+  const skipStep = useMemo(() => {
+    if (caps.isMobile || caps.isTablet || caps.isLowEnd) {
+      return 4; // preloads 48 frames instead of 192
+    }
+    return 1;
+  }, [caps.isMobile, caps.isTablet, caps.isLowEnd]);
+
+  const frameCount = useMemo(() => {
+    return Math.ceil(ORIGINAL_FRAME_COUNT / skipStep);
+  }, [skipStep]);
+
+  const frameNames = useMemo(() => {
+    return Array.from({ length: frameCount }, (_, i) => {
+      const originalIndex = i * skipStep;
+      const num = String(originalIndex).padStart(3, "0");
+      return `/images/Assembly/frame_${num}_delay-0.041s.webp`;
+    });
+  }, [frameCount, skipStep]);
+
+  const priorityFrames = useMemo(() => {
+    return Math.min(5, frameCount);
+  }, [frameCount]);
+
+  const imagesRef = useRef<HTMLImageElement[]>([]);
   
   const [isLoaded, setIsLoaded] = useState(false);
   const [loadProgress, setLoadProgress] = useState(0);
@@ -70,10 +91,20 @@ export function Process() {
   }, []);
 
   useEffect(() => {
+    if (prefersReducedMotion) {
+      setIsLoaded(true);
+      return;
+    }
+
     let loadedCount = 0;
     let isMounted = true;
 
+    // Reset image array for new frame count
+    imagesRef.current = new Array(frameCount).fill(null);
+
     const loadImages = async () => {
+      if (frameCount === 0) return;
+
       // First frame immediately
       const firstImg = new Image();
       firstImg.src = frameNames[0];
@@ -88,7 +119,8 @@ export function Process() {
       };
 
       // Priority block
-      for (let i = 0; i < PRIORITY_FRAMES; i++) {
+      const priorityCount = Math.min(priorityFrames, frameCount);
+      for (let i = 0; i < priorityCount; i++) {
         if (!isMounted) return;
         const img = new Image();
         img.crossOrigin = "anonymous";
@@ -96,36 +128,42 @@ export function Process() {
         img.src = frameNames[i];
         await new Promise((resolve) => {
           img.onload = () => {
-            imagesRef.current[i] = img;
-            loadedCount++;
-            setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+            if (isMounted) {
+              imagesRef.current[i] = img;
+              loadedCount++;
+              setLoadProgress(Math.round((loadedCount / frameCount) * 100));
+            }
             resolve(null);
           };
           img.onerror = resolve;
         });
       }
 
-      setIsLoaded(true);
+      if (isMounted) {
+        setIsLoaded(true);
+      }
 
       // Remaining frames
       const loadRemaining = (startIndex: number) => {
-        if (!isMounted || startIndex >= FRAME_COUNT) return;
+        if (!isMounted || startIndex >= frameCount) return;
 
         const task = () => {
           const batchSize = 3;
-          const end = Math.min(startIndex + batchSize, FRAME_COUNT);
+          const end = Math.min(startIndex + batchSize, frameCount);
           
           for (let i = startIndex; i < end; i++) {
             const img = new Image();
             img.src = frameNames[i];
             img.onload = () => {
-              imagesRef.current[i] = img;
-              loadedCount++;
-              setLoadProgress(Math.round((loadedCount / FRAME_COUNT) * 100));
+              if (isMounted) {
+                imagesRef.current[i] = img;
+                loadedCount++;
+                setLoadProgress(Math.round((loadedCount / frameCount) * 100));
+              }
             };
           }
           
-          if (end < FRAME_COUNT) {
+          if (end < frameCount) {
             if ('requestIdleCallback' in window) {
               window.requestIdleCallback(() => loadRemaining(end));
             } else {
@@ -137,22 +175,22 @@ export function Process() {
         task();
       };
 
-      loadRemaining(PRIORITY_FRAMES);
+      loadRemaining(priorityCount);
     };
 
     loadImages();
     return () => { isMounted = false; };
-  }, [drawFrame]);
+  }, [drawFrame, frameCount, frameNames, priorityFrames, prefersReducedMotion]);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
     gsapManager.createContext("process-section", () => {
       // Canvas Sequence ScrollTrigger
-      if (isLoaded && canvasRef.current) {
+      if (!prefersReducedMotion && isLoaded && canvasRef.current) {
         const frameObj = { frame: 0 };
         gsap.to(frameObj, {
-          frame: FRAME_COUNT - 1,
+          frame: frameCount - 1,
           snap: "frame",
           ease: "none",
           scrollTrigger: {
@@ -168,23 +206,39 @@ export function Process() {
 
       // Card reveal animations
       gsap.utils.toArray<HTMLElement>(".process-card").forEach((card) => {
-        gsap.fromTo(card,
-          { y: 80, opacity: 0, scale: 0.92 },
-          {
-            y: 0, opacity: 1, scale: 1,
-            ease: "power3.out", duration: 1,
-            scrollTrigger: {
-              trigger: card,
-              start: "top 95%",
-              end: "top 55%",
-              scrub: 1,
+        if (prefersReducedMotion) {
+          gsap.fromTo(card,
+            { opacity: 0, y: 0, scale: 1 },
+            {
+              opacity: 1,
+              duration: 0.8,
+              ease: "power2.out",
+              scrollTrigger: {
+                trigger: card,
+                start: "top 85%",
+                once: true,
+              }
             }
-          }
-        );
+          );
+        } else {
+          gsap.fromTo(card,
+            { y: 80, opacity: 0, scale: 0.92 },
+            {
+              y: 0, opacity: 1, scale: 1,
+              ease: "power3.out", duration: 1,
+              scrollTrigger: {
+                trigger: card,
+                start: "top 95%",
+                end: "top 55%",
+                scrub: 1,
+              }
+            }
+          );
+        }
       });
 
       // Parallax for diagonal bands - desktop only
-      if (window.innerWidth >= 768) {
+      if (!prefersReducedMotion && window.innerWidth >= 768) {
         gsap.to(".diagonal-band-1", {
           x: -120,
           scrollTrigger: { trigger: containerRef.current, start: "top bottom", end: "bottom top", scrub: 1.5 }
@@ -215,7 +269,7 @@ export function Process() {
     return () => {
       gsapManager.killContext("process-section");
     };
-  }, [isLoaded, drawFrame]);
+  }, [isLoaded, drawFrame, frameCount, prefersReducedMotion]);
 
   return (
     <section ref={containerRef} className="py-16 md:py-32 bg-background relative overflow-hidden">
@@ -245,26 +299,30 @@ export function Process() {
         <div className="process-grid-container relative min-h-[1900px] w-full hidden md:block">
 
           {/* Diagonal Bands */}
-          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
-            <div className="diagonal-band-1 absolute top-[3%] left-[-20%] w-[160%] h-[70px] bg-lime -rotate-[21deg] opacity-90" />
-            <div className="diagonal-band-2 absolute top-[45%] left-[-15%] w-[160%] h-[70px] bg-foreground rotate-[24deg] opacity-90" />
-            <div className="diagonal-band-3 absolute top-[85%] left-[-20%] w-[160%] h-[70px] bg-lime -rotate-[8deg] opacity-90" />
-          </div>
+          {!prefersReducedMotion && (
+            <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+              <div className="diagonal-band-1 absolute top-[3%] left-[-20%] w-[160%] h-[70px] bg-lime -rotate-[21deg] opacity-90" />
+              <div className="diagonal-band-2 absolute top-[45%] left-[-15%] w-[160%] h-[70px] bg-foreground rotate-[24deg] opacity-90" />
+              <div className="diagonal-band-3 absolute top-[85%] left-[-20%] w-[160%] h-[70px] bg-lime -rotate-[8deg] opacity-90" />
+            </div>
+          )}
 
           {/* GSAP Pinned Canvas Sequence */}
-          <div className="canvas-wrapper absolute top-0 left-0 h-screen w-full pointer-events-none z-[5] flex items-center justify-center"
-               style={{ WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)", maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)" }}>
-            {/* Loader shown if images are not ready */}
-            {!isLoaded && (
-              <div className="absolute inset-0 flex items-center justify-center">
-                <p className="text-lime font-mono text-[9px] tracking-[0.4em]">{loadProgress}% CACHING ASSETS</p>
-              </div>
-            )}
-            <canvas 
-              ref={canvasRef} 
-              className={`max-w-none w-auto h-[120%] lg:h-[150%] object-contain drop-shadow-2xl transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
-            />
-          </div>
+          {!prefersReducedMotion && (
+            <div className="canvas-wrapper absolute top-0 left-0 h-screen w-full pointer-events-none z-[5] flex items-center justify-center"
+                 style={{ WebkitMaskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)", maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)" }}>
+              {/* Loader shown if images are not ready */}
+              {!isLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <p className="text-lime font-mono text-[9px] tracking-[0.4em]">{loadProgress}% CACHING ASSETS</p>
+                </div>
+              )}
+              <canvas 
+                ref={canvasRef} 
+                className={`max-w-none w-auto h-[120%] lg:h-[150%] object-contain drop-shadow-2xl transition-opacity duration-1000 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}
+              />
+            </div>
+          )}
 
           {/* ─── Card 1 — Discover & Understand (top-right) ─── */}
           <div

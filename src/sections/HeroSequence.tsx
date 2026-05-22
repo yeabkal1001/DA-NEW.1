@@ -1,10 +1,9 @@
 'use client';
 
-import { useEffect, useRef, useState, useCallback, memo } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
 import { gsapManager } from "@/src/lib/gsapManager";
 
 // Register GSAP plugin once at module level
@@ -83,7 +82,6 @@ export function HeroSequence() {
   useEffect(() => {
     let loadedCount = 0;
     let isMounted = true;
-    let rafId: number = 0;
 
     const loadImages = async () => {
       // Priority 1: First frame immediately
@@ -157,7 +155,6 @@ export function HeroSequence() {
     loadImages();
     return () => { 
       isMounted = false; 
-      cancelAnimationFrame(rafId);
     };
   }, [drawFrame]);
 
@@ -169,7 +166,6 @@ export function HeroSequence() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       // Re-draw current frame at new size
-      const frameObj = { frame: 0 }; // will re-draw whatever GSAP last set
       drawFrame(0);
     };
 

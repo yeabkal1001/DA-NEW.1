@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { gsap } from 'gsap';
+import { OptimizedImage } from "@/components/OptimizedImage";
 
 export function PageLoader() {
   const [isLoading, setIsLoading] = useState(true);
@@ -64,11 +65,13 @@ export function PageLoader() {
       
       {/* Content wrapper */}
       <div className="loader-content relative z-10 text-center opacity-0 translate-y-10">
-        <div className="mb-8">
-          <img 
+        <div className="mb-8 relative h-16 md:h-24 w-40 md:w-56 mx-auto">
+          <OptimizedImage 
             src="/dalogo.webp" 
             alt="Digital Addis" 
-            className="h-16 md:h-24 mx-auto object-contain brightness-0 dark:invert" 
+            className="brightness-0 dark:invert object-contain"
+            fill
+            priority
           />
         </div>
         
